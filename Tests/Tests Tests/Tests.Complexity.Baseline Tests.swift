@@ -17,7 +17,7 @@ extension Tests.Complexity.Baseline {
     struct Test {
         @Suite struct Construction {}
         @Suite struct `Comparison` {}
-        @Suite struct `JSONRound Trip` {}
+        @Suite struct `JSON Round Trip` {}
     }
 }
 
@@ -254,7 +254,7 @@ extension Tests.Complexity.Baseline.Test.Comparison {
 
 // MARK: - JSON Round Trip
 
-extension Tests.Complexity.Baseline.Test.JSONRoundTrip {
+extension Tests.Complexity.Baseline.Test.`JSON Round Trip` {
 
     @Test
     func `linear baseline survives round trip`() throws {

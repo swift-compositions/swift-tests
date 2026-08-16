@@ -29,8 +29,7 @@ extension Test_Primitives.Test.Snapshot.Test.Unit {
                     <html>
                       <head>
                       </head>
-                      <body>
-                        Hello
+                      <body>Hello
                       </body>
                     </html>
                     """

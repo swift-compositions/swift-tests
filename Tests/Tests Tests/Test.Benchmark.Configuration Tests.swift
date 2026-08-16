@@ -76,7 +76,7 @@ extension Test_Primitives.Test.Benchmark.Configuration.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Benchmark.Configuration.Test.EdgeCase {
+extension Test_Primitives.Test.Benchmark.Configuration.Test.`Edge Case` {
     @Test
     func `different configs are not equal`() {
         let a = Test_Primitives.Test.Benchmark.Configuration(

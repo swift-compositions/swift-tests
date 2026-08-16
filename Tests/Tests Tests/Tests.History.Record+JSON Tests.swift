@@ -113,7 +113,7 @@ extension Tests.History.Record.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Tests.History.Record.Test.EdgeCase {
+extension Tests.History.Record.Test.`Edge Case` {
     @Test
     func `roundtrip with nil suite`() throws {
         let id = Tests_Core.Test.ID.stub("t", module: "M")

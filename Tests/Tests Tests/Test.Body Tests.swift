@@ -89,7 +89,7 @@ extension Test_Primitives.Test.Body.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Body.Test.EdgeCase {
+extension Test_Primitives.Test.Body.Test.`Edge Case` {
     @Test
     func `caught error stores type and description`() async {
         struct SpecificError: Swift.Error, Swift.CustomStringConvertible {

@@ -11,10 +11,13 @@ extension Test_Primitives.Test.Environment.Test {
 extension Test_Primitives.Test.Environment.Test.JSON {
     @Test
     func `serialize and deserialize preserves all fields`() throws {
-        let original = Test.Environment.capture()
+        // `Test` here names this suite's enclosing Suite (see Test.Environment
+        // Tests.swift), which shadows the top-level `Test_Primitives.Test`
+        // namespace, so the source type must be qualified from the module root.
+        let original = Test_Primitives.Test.Environment.capture()
 
-        let json = Test.Environment.serialize(original)
-        let roundtripped = try Test.Environment.deserialize(json)
+        let json = Test_Primitives.Test.Environment.serialize(original)
+        let roundtripped = try Test_Primitives.Test.Environment.deserialize(json)
 
         #expect(roundtripped.architecture == original.architecture)
         #expect(roundtripped.physicalCPUCount == original.physicalCPUCount)
@@ -28,10 +31,10 @@ extension Test_Primitives.Test.Environment.Test.JSON {
 
     @Test
     func `features roundtrip correctly`() throws {
-        let original = Test.Environment.capture()
+        let original = Test_Primitives.Test.Environment.capture()
 
-        let json = Test.Environment.serialize(original)
-        let roundtripped = try Test.Environment.deserialize(json)
+        let json = Test_Primitives.Test.Environment.serialize(original)
+        let roundtripped = try Test_Primitives.Test.Environment.deserialize(json)
 
         #expect(
             roundtripped.features.nonisolatedNonsendingByDefault
@@ -49,7 +52,7 @@ extension Test_Primitives.Test.Environment.Test.JSON {
             ("architecture", .string("arm64"))
         ])
         #expect(throws: JSON.Error.self) {
-            _ = try Test.Environment.deserialize(incomplete)
+            _ = try Test_Primitives.Test.Environment.deserialize(incomplete)
         }
     }
 }

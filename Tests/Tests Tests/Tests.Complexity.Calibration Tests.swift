@@ -57,7 +57,7 @@ extension Tests.Complexity.Test.Calibration {
 
 // MARK: - Power Law Classes
 
-extension Tests.Complexity.Test.Calibration.PowerLaw {
+extension Tests.Complexity.Test.Calibration.`Power Law` {
 
     @Test
     func `O(1) constant`() {
@@ -140,7 +140,7 @@ extension Tests.Complexity.Test.Calibration.PowerLaw {
 
 // MARK: - Non-Power-Law Classes
 
-extension Tests.Complexity.Test.Calibration.NonPowerLaw {
+extension Tests.Complexity.Test.Calibration.`Non Power Law` {
 
     @Test
     func `O(log n) logarithmic`() {

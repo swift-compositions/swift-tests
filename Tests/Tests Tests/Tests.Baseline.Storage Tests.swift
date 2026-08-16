@@ -67,7 +67,7 @@ extension Tests.Baseline.Storage.Test.Unit {
 
     @Test
     func `save and load roundtrip preserves durations`() throws {
-        let measurement = Test.Benchmark.Measurement(durations: [
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
             .seconds(1), .seconds(2), .seconds(3),
         ])
 
@@ -90,7 +90,7 @@ extension Tests.Baseline.Storage.Test.Unit {
 
     @Test
     func `save creates parent directories`() throws {
-        let measurement = Test.Benchmark.Measurement(durations: [.seconds(1)])
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [.seconds(1)])
 
         try File.Directory.temporary { dir in
             let path = dir.path / "deep" / "nested" / "dir" / "fp.json"
@@ -102,7 +102,7 @@ extension Tests.Baseline.Storage.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Tests.Baseline.Storage.Test.EdgeCase {
+extension Tests.Baseline.Storage.Test.`Edge Case` {
     @Test
     func `path omits suite directory when nil`() {
         let root = File.Path(stringLiteral: "/baselines")

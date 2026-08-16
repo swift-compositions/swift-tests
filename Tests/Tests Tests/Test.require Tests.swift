@@ -2,7 +2,7 @@ import Testing
 import Tests_Test_Support
 
 @Suite
-struct Test {
+struct TestRequireTests {
     @Suite struct Runner {}
     @Suite struct Unit {}
 }

@@ -261,7 +261,17 @@ extension Tests.History.Storage {
         at path: File.Path
     ) async throws(Kernel.Thread.Pool.Error) -> [Tests.History.Record] {
         let path = path
-        return try await Kernel.Thread.Pool.shared.run(timeout: nil) { () -> [Tests.History.Record] in
+        // See the disambiguation note in Tests.Baseline.Storage.swift: a
+        // plain closure literal is ambiguous between Thread_Pool's two
+        // `run(timeout:_:)` overloads, and explicit specialization is not
+        // permitted on this instance method. Binding the member to its
+        // exact, non-generic function type selects the matching overload.
+        let run:
+            (
+                Duration?, sending @escaping () -> [Tests.History.Record]
+            ) async throws(Kernel.Thread.Pool.Error) -> sending [Tests.History.Record] = Kernel
+                .Thread.Pool.shared.run
+        return try await run(nil) {
             load(at: path)
         }
     }
@@ -281,7 +291,17 @@ extension Tests.History.Storage {
         fingerprint: Swift.String
     ) async throws(Kernel.Thread.Pool.Error) -> [Tests.History.Record] {
         let filePath = path(root: root, testID: testID, fingerprint: fingerprint)
-        return try await Kernel.Thread.Pool.shared.run(timeout: nil) { () -> [Tests.History.Record] in
+        // See the disambiguation note in Tests.Baseline.Storage.swift: a
+        // plain closure literal is ambiguous between Thread_Pool's two
+        // `run(timeout:_:)` overloads, and explicit specialization is not
+        // permitted on this instance method. Binding the member to its
+        // exact, non-generic function type selects the matching overload.
+        let run:
+            (
+                Duration?, sending @escaping () -> [Tests.History.Record]
+            ) async throws(Kernel.Thread.Pool.Error) -> sending [Tests.History.Record] = Kernel
+                .Thread.Pool.shared.run
+        return try await run(nil) {
             load(at: filePath)
         }
     }
