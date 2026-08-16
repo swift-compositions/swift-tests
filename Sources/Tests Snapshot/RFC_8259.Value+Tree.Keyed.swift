@@ -24,12 +24,20 @@ internal import Tree_Keyed_Primitives
 ///   member, so a duplicate key maps to `.keyOccupied` at its parent node.
 func _jsonToKeyedTree(
     _ value: RFC_8259.Value
-) throws(Tree<RFC_8259.Value>.Keyed<Swift.String>.Error) -> Tree<RFC_8259.Value>.Keyed<Swift.String> {
+) throws(Tree<RFC_8259.Value>.Keyed<Swift.String>.Error) -> Tree<RFC_8259.Value>.Keyed<Swift.String>
+{
     var tree = Tree<RFC_8259.Value>.Keyed<Swift.String>()
 
-    let rootPos = try tree.insert(_jsonLocalValue(value), at: Tree<RFC_8259.Value>.Keyed<Swift.String>.Insert.Position.root)
+    let rootPos = try tree.insert(
+        _jsonLocalValue(value),
+        at: Tree<RFC_8259.Value>.Keyed<Swift.String>.Insert.Position.root
+    )
 
-    var pending: [(parent: Tree<RFC_8259.Value>.Keyed<Swift.String>.Position, key: Swift.String, value: RFC_8259.Value)] = []
+    var pending:
+        [(
+            parent: Tree<RFC_8259.Value>.Keyed<Swift.String>.Position, key: Swift.String,
+            value: RFC_8259.Value
+        )] = []
     _jsonAppendChildren(of: value, parent: rootPos, to: &pending)
 
     while let (parent, key, childValue) = pending.popLast() {
@@ -58,7 +66,11 @@ private func _jsonLocalValue(_ value: RFC_8259.Value) -> RFC_8259.Value {
 private func _jsonAppendChildren(
     of value: RFC_8259.Value,
     parent: Tree<RFC_8259.Value>.Keyed<Swift.String>.Position,
-    to pending: inout [(parent: Tree<RFC_8259.Value>.Keyed<Swift.String>.Position, key: Swift.String, value: RFC_8259.Value)]
+    to pending:
+        inout [(
+            parent: Tree<RFC_8259.Value>.Keyed<Swift.String>.Position, key: Swift.String,
+            value: RFC_8259.Value
+        )]
 ) {
     switch value {
     case .object(let obj):

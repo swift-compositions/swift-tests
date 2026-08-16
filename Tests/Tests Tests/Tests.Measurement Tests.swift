@@ -15,13 +15,13 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
     @Test
     func `init stores durations`() {
         let durations: [Duration] = [.milliseconds(10), .milliseconds(20), .milliseconds(30)]
-        let measurement = Test.Benchmark.Measurement(durations: durations)
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: durations)
         #expect(measurement.durations.count == 3)
     }
 
     @Test
     func `min returns smallest duration`() {
-        let measurement = Test.Benchmark.Measurement(durations: [
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
             .milliseconds(10), .milliseconds(5), .milliseconds(20),
         ])
         #expect(measurement.min == .milliseconds(5))
@@ -29,7 +29,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
     @Test
     func `max returns largest duration`() {
-        let measurement = Test.Benchmark.Measurement(durations: [
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
             .milliseconds(10), .milliseconds(5), .milliseconds(20),
         ])
         #expect(measurement.max == .milliseconds(20))
@@ -37,7 +37,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
     @Test
     func `median returns middle value for odd count`() {
-        let measurement = Test.Benchmark.Measurement(durations: [
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
             .seconds(3), .seconds(1), .seconds(2),
         ])
         #expect(measurement.median == .seconds(2))
@@ -45,7 +45,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
     @Test
     func `mean computes average`() {
-        let measurement = Test.Benchmark.Measurement(durations: [
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
             .seconds(1), .seconds(2), .seconds(3),
         ])
         #expect(measurement.mean == .seconds(2))
@@ -53,7 +53,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
     @Test
     func `p50 equals median`() {
-        let measurement = Test.Benchmark.Measurement(durations: [
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
             .seconds(3), .seconds(1), .seconds(2),
         ])
         #expect(measurement.p50 == measurement.median)
@@ -62,7 +62,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
     @Test
     func `percentile with 100 values`() {
         let durations = (0..<100).map { Duration.milliseconds($0) }
-        let measurement = Test.Benchmark.Measurement(durations: durations)
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: durations)
 
         // percentile(p) = sorted[Int(count * p)] clamped
         // p75: index = Int(100 * 0.75) = 75
@@ -77,7 +77,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
     @Test
     func `standardDeviation is zero for identical durations`() {
-        let measurement = Test.Benchmark.Measurement(durations: [
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
             .seconds(5), .seconds(5), .seconds(5),
         ])
         #expect(measurement.standardDeviation == .zero)
@@ -85,8 +85,12 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
     @Test
     func `Comparable orders by median`() {
-        let a = Test.Benchmark.Measurement(durations: [.seconds(1), .seconds(2), .seconds(3)])
-        let b = Test.Benchmark.Measurement(durations: [.seconds(4), .seconds(5), .seconds(6)])
+        let a = Test_Primitives.Test.Benchmark.Measurement(durations: [
+            .seconds(1), .seconds(2), .seconds(3),
+        ])
+        let b = Test_Primitives.Test.Benchmark.Measurement(durations: [
+            .seconds(4), .seconds(5), .seconds(6),
+        ])
         #expect(a < b)
         #expect(!(b < a))
     }
@@ -94,10 +98,10 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Benchmark.Measurement.Test.EdgeCase {
+extension Test_Primitives.Test.Benchmark.Measurement.Test.`Edge Case` {
     @Test
     func `empty durations returns zero for all metrics`() {
-        let measurement = Test.Benchmark.Measurement(durations: [])
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [])
         #expect(measurement.min == .zero)
         #expect(measurement.max == .zero)
         #expect(measurement.median == .zero)
@@ -113,7 +117,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.EdgeCase {
 
     @Test
     func `single duration returns that value for all metrics`() {
-        let measurement = Test.Benchmark.Measurement(durations: [.milliseconds(42)])
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [.milliseconds(42)])
         #expect(measurement.min == .milliseconds(42))
         #expect(measurement.max == .milliseconds(42))
         #expect(measurement.median == .milliseconds(42))
@@ -122,13 +126,13 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.EdgeCase {
 
     @Test
     func `standardDeviation returns zero for single element`() {
-        let measurement = Test.Benchmark.Measurement(durations: [.seconds(1)])
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [.seconds(1)])
         #expect(measurement.standardDeviation == .zero)
     }
 
     @Test
     func `percentile zero returns minimum`() {
-        let measurement = Test.Benchmark.Measurement(durations: [
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
             .seconds(3), .seconds(1), .seconds(2),
         ])
         #expect(measurement.percentile(0.0) == .seconds(1))
@@ -136,7 +140,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.EdgeCase {
 
     @Test
     func `percentile one returns maximum`() {
-        let measurement = Test.Benchmark.Measurement(durations: [
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
             .seconds(3), .seconds(1), .seconds(2),
         ])
         // percentile(1.0): index = Int(3 * 1.0) = 3, clamped to 2

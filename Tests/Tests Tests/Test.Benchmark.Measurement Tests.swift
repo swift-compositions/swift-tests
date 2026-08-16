@@ -45,7 +45,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Benchmark.Measurement.Test.EdgeCase {
+extension Test_Primitives.Test.Benchmark.Measurement.Test.`Edge Case` {
     @Test
     func `empty durations returns zero`() {
         let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [])

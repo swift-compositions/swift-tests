@@ -153,7 +153,17 @@ extension Tests.Complexity.Baseline {
         at path: File.Path
     ) async throws(Kernel.Thread.Pool.Error) -> Tests.Complexity.Baseline? {
         let path = path
-        return try await Kernel.Thread.Pool.shared.run { () -> Tests.Complexity.Baseline? in
+        // See the disambiguation note in Tests.Baseline.Storage.swift: a
+        // plain closure literal is ambiguous between Thread_Pool's two
+        // `run(timeout:_:)` overloads, and explicit specialization is not
+        // permitted on this instance method. Binding the member to its
+        // exact, non-generic function type selects the matching overload.
+        let run:
+            (
+                Duration?, sending @escaping () -> Tests.Complexity.Baseline?
+            ) async throws(Kernel.Thread.Pool.Error) -> sending Tests.Complexity.Baseline? = Kernel
+                .Thread.Pool.shared.run
+        return try await run(nil) {
             load(at: path)
         }
     }

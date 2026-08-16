@@ -69,7 +69,10 @@ extension Test_Primitives.Test.Plan.Test.Unit {
         )
         let plan = registry.finalize()
 
-        var tagFilter = Test.Trait.Tag.liveValue
+        // `Test` here names this suite's enclosing Suite (declared above),
+        // which shadows the top-level `Test_Primitives.Test` namespace, so
+        // the source type must be qualified from the module root.
+        var tagFilter = Test_Primitives.Test.Trait.Tag.liveValue
         tagFilter.insert("smoke")
         let filtered = plan.filter(tags: tagFilter)
         #expect(filtered.count == 1)
@@ -90,9 +93,9 @@ extension Test_Primitives.Test.Plan.Test.Unit {
     }
 }
 
-// MARK: - EdgeCase
+// MARK: - Edge Case
 
-extension Test_Primitives.Test.Plan.Test.EdgeCase {
+extension Test_Primitives.Test.Plan.Test.`Edge Case` {
     @Test
     func `filter returns empty when nothing matches`() {
         var registry = Test_Primitives.Test.Plan.Registry()

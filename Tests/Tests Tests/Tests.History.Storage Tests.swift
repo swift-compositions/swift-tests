@@ -155,7 +155,7 @@ extension Tests.History.Storage.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Tests.History.Storage.Test.EdgeCase {
+extension Tests.History.Storage.Test.`Edge Case` {
     @Test
     func `load returns empty for nonexistent path`() {
         let path = File.Path(stringLiteral: "/tmp/swift-tests-nonexistent-history-e7f2c4a1.jsonl")

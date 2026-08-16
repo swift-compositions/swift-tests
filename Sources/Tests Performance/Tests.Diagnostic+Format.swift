@@ -39,17 +39,28 @@ extension Tests.Diagnostic {
         // Distribution
         lines.append("")
         lines.append("  Distribution:")
-        lines.append("    Median: \(m.median.formatted())  Mean: \(m.mean.formatted())  StdDev: \(m.standardDeviation.formatted())")
+        lines.append(
+            "    Median: \(m.median.formatted())  Mean: \(m.mean.formatted())  StdDev: \(m.standardDeviation.formatted())"
+        )
 
         if let cv = coefficientOfVariation {
             let cvStr = "\(cv.formatted(.number.precision(2)))%"
             let label: Swift.String
             if cv <= 5.0 {
-                label = Console.Style.success.apply(to: "STABLE - result is trustworthy", capability: cap)
+                label = Console.Style.success.apply(
+                    to: "STABLE - result is trustworthy",
+                    capability: cap
+                )
             } else if cv <= 10.0 {
-                label = Console.Style.warning.apply(to: "MODERATE - consider more iterations", capability: cap)
+                label = Console.Style.warning.apply(
+                    to: "MODERATE - consider more iterations",
+                    capability: cap
+                )
             } else {
-                label = Console.Style.error.apply(to: "NOISY - result may be unreliable", capability: cap)
+                label = Console.Style.error.apply(
+                    to: "NOISY - result may be unreliable",
+                    capability: cap
+                )
             }
             lines.append("    CV:     \(cvStr) (\(label))")
         }
@@ -138,7 +149,9 @@ extension Tests.Diagnostic {
         lines.append("")
         lines.append("  Environment:")
         lines.append("    Architecture:  \(environment.architecture)")
-        lines.append("    CPU Cores:     \(environment.physicalCPUCount) (physical) / \(environment.logicalCPUCount) (logical)")
+        lines.append(
+            "    CPU Cores:     \(environment.physicalCPUCount) (physical) / \(environment.logicalCPUCount) (logical)"
+        )
         let memGB = Double(environment.memoryBytes.underlying.rawValue) / (1024.0 * 1024.0 * 1024.0)
         lines.append("    Memory:        \(Int(memGB.rounded())) GB")
         lines.append("    Swift:         \(environment.swiftVersion)")
@@ -177,7 +190,9 @@ extension Tests.Diagnostic {
             json.append("  \"suite\": \(_jsonString(suiteName)),")
         }
         json.append("  \"qualified_name\": \(_jsonString(qualifiedName)),")
-        json.append("  \"status\": \(exceedanceFactor != nil ? "\"THRESHOLD_EXCEEDED\"" : "\"PASS\""),")
+        json.append(
+            "  \"status\": \(exceedanceFactor != nil ? "\"THRESHOLD_EXCEEDED\"" : "\"PASS\""),"
+        )
         json.append("  \"metric\": \(_jsonString("\(metric)")),")
 
         if let t = threshold {
@@ -227,7 +242,9 @@ extension Tests.Diagnostic {
         json.append("    \"swift_version\": \(_jsonString(environment.swiftVersion)),")
         json.append("    \"optimization\": \(_jsonString(environment.optimization.rawValue)),")
         json.append("    \"feature_flags\": {")
-        json.append("      \"NonisolatedNonsendingByDefault\": \(environment.features.nonisolatedNonsendingByDefault),")
+        json.append(
+            "      \"NonisolatedNonsendingByDefault\": \(environment.features.nonisolatedNonsendingByDefault),"
+        )
         json.append("      \"StrictMemorySafety\": \(environment.features.strictMemorySafety)")
         json.append("    },")
         json.append("    \"os\": \(_jsonString(environment.osVersion))")
@@ -246,16 +263,23 @@ extension Tests.Diagnostic {
         if let history = historyAnalysis {
             json.append("  \"history\": {")
             json.append("    \"record_count\": \(history.recordCount),")
-            json.append("    \"mann_kendall_z\": \(history.trend.z.formatted(.number.precision(2))),")
-            json.append("    \"interpretation\": \(_jsonString(history.trend.interpretation.rawValue)),")
+            json.append(
+                "    \"mann_kendall_z\": \(history.trend.z.formatted(.number.precision(2))),"
+            )
+            json.append(
+                "    \"interpretation\": \(_jsonString(history.trend.interpretation.rawValue)),"
+            )
             json.append("    \"earliest_s\": \(history.earliestValue.inSeconds),")
             json.append("    \"latest_s\": \(history.latestValue.inSeconds),")
-            json.append("    \"overall_change\": \(history.overallChange.formatted(.number.precision(4)))")
+            json.append(
+                "    \"overall_change\": \(history.overallChange.formatted(.number.precision(4)))"
+            )
             json.append("  },")
         }
 
         // Raw durations
-        let durationsStr = m.durations.map { "\($0.inSeconds.formatted(.number.precision(6)))" }.joined(separator: ", ")
+        let durationsStr = m.durations.map { "\($0.inSeconds.formatted(.number.precision(6)))" }
+            .joined(separator: ", ")
         json.append("  \"durations_seconds\": [\(durationsStr)]")
 
         json.append("}")

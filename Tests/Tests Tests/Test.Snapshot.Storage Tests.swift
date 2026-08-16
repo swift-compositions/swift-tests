@@ -84,7 +84,7 @@ extension Test_Primitives.Test.Snapshot.Storage.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Snapshot.Storage.Test.EdgeCase {
+extension Test_Primitives.Test.Snapshot.Storage.Test.`Edge Case` {
     @Test
     func `subdirectory combined with custom snapshot directory`() throws {
         let sub = try File.Path.Component("MyType")

@@ -110,7 +110,7 @@ extension Tests.History.Analysis.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Tests.History.Analysis.Test.EdgeCase {
+extension Tests.History.Analysis.Test.`Edge Case` {
     @Test
     func `returns nil with fewer than 3 records`() {
         let records = [

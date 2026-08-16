@@ -109,7 +109,9 @@ extension Test.Reporter {
             case .issueRecorded:
                 _counts.withLock { $0.issues += 1 }
                 if let issue = event.issue {
-                    print("    \(Console.Style.warning.apply(to: "⚠", capability: capability)) \(issue.kind)")
+                    print(
+                        "    \(Console.Style.warning.apply(to: "⚠", capability: capability)) \(issue.kind)"
+                    )
                     if let context = issue.context {
                         indented(render(context), indent: "      ")
                     }
@@ -117,7 +119,9 @@ extension Test.Reporter {
 
             case .expectationChecked:
                 if let expectation = event.expectation, expectation.isFailing {
-                    print("    \(Console.Style.error.apply(to: "✗", capability: capability)) \(expectation.expression.sourceCode)")
+                    print(
+                        "    \(Console.Style.error.apply(to: "✗", capability: capability)) \(expectation.expression.sourceCode)"
+                    )
 
                     // Source location
                     let loc = expectation.expression.sourceLocation

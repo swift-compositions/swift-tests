@@ -14,7 +14,9 @@
     public import Testing
     public import Test_Primitives
 
-    extension Test_Primitives.Test.Trait.Collection.Modifier: Testing.SuiteTrait, Testing.TestScoping {
+    extension Test_Primitives.Test.Trait.Collection.Modifier:
+        Testing.SuiteTrait, Testing.TestScoping
+    {
         public var isRecursive: Bool { true }
 
         @concurrent

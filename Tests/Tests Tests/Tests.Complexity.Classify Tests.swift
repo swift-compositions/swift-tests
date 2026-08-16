@@ -22,7 +22,7 @@ struct `Complexity Classify Tests` {
 
 // MARK: - Helpers
 
-extension ComplexityClassifyTests {
+extension `Complexity Classify Tests` {
     static let defaultSizes = [
         100, 300, 1_000, 3_000, 10_000,
         30_000, 100_000, 300_000, 1_000_000, 3_000_000,
@@ -45,11 +45,11 @@ extension ComplexityClassifyTests {
 
 // MARK: - Confidence Levels
 
-extension ComplexityClassifyTests.ConfidenceLevels {
+extension `Complexity Classify Tests`.ConfidenceLevels {
 
     @Test
     func `quadratic data classified correctly`() {
-        let evidence = ComplexityClassifyTests.evidence { n in 1e-12 * n * n }
+        let evidence = `Complexity Classify Tests`.evidence { n in 1e-12 * n * n }
         let result = Tests.Complexity.classify(evidence)
 
         #expect(result.best?.complexity == .quadratic)
@@ -58,7 +58,7 @@ extension ComplexityClassifyTests.ConfidenceLevels {
 
     @Test
     func `cubic data classified correctly`() {
-        let evidence = ComplexityClassifyTests.evidence { n in 1e-17 * n * n * n }
+        let evidence = `Complexity Classify Tests`.evidence { n in 1e-17 * n * n * n }
         let result = Tests.Complexity.classify(evidence)
 
         #expect(result.best?.complexity == .cubic)
@@ -67,7 +67,7 @@ extension ComplexityClassifyTests.ConfidenceLevels {
 
     @Test
     func `linear data classified correctly`() {
-        let evidence = ComplexityClassifyTests.evidence { n in 1e-8 * n }
+        let evidence = `Complexity Classify Tests`.evidence { n in 1e-8 * n }
         let result = Tests.Complexity.classify(evidence)
 
         #expect(result.best?.complexity == .linear)
@@ -78,7 +78,7 @@ extension ComplexityClassifyTests.ConfidenceLevels {
     func `relaxed separation thresholds elevate confidence`() {
         // Default thresholds may give low confidence even with clean data
         // when candidate R² values are close. Lowering thresholds helps.
-        let evidence = ComplexityClassifyTests.evidence { n in 1e-8 * n }
+        let evidence = `Complexity Classify Tests`.evidence { n in 1e-8 * n }
 
         let defaultResult = Tests.Complexity.classify(evidence)
 
@@ -96,14 +96,14 @@ extension ComplexityClassifyTests.ConfidenceLevels {
 
 // MARK: - Inconclusive Reasons
 
-extension ComplexityClassifyTests.InconclusiveReasons {
+extension `Complexity Classify Tests`.`Inconclusive Reasons` {
 
     @Test
     func `weak continuous fit triggers weakContinuousFit reason`() {
         // Data that fits poorly in log-log space: mix linear and constant.
         // Use sizes where some are constant and some grow,
         // creating a bad log-log R².
-        let sizes = ComplexityClassifyTests.defaultSizes
+        let sizes = `Complexity Classify Tests`.defaultSizes
         let points: [(size: Int, metric: Duration)] = sizes.enumerated().map { i, n in
             // Alternating between constant and growing durations.
             let seconds = i % 2 == 0 ? 0.001 : 1e-8 * Double(n)
@@ -111,7 +111,7 @@ extension ComplexityClassifyTests.InconclusiveReasons {
         }
         let evidence = SUT.Benchmark.Complexity.evidence(
             from: points,
-            classes: ComplexityClassifyTests.classes
+            classes: `Complexity Classify Tests`.classes
         )
 
         // Force the R² floor high enough to trigger.
@@ -130,7 +130,7 @@ extension ComplexityClassifyTests.InconclusiveReasons {
         // Data that is noisy enough that no candidate achieves R² ≥ floor.
         // Use alternating growth rates to create poor discrete fits
         // while keeping a monotonic trend.
-        let sizes = ComplexityClassifyTests.defaultSizes
+        let sizes = `Complexity Classify Tests`.defaultSizes
         let points: [(size: Int, metric: Duration)] = sizes.enumerated().map { i, n in
             let base = 1e-8 * Double(n)
             // Add oscillation: even indices get 3× longer.
@@ -139,7 +139,7 @@ extension ComplexityClassifyTests.InconclusiveReasons {
         }
         let evidence = SUT.Benchmark.Complexity.evidence(
             from: points,
-            classes: ComplexityClassifyTests.classes
+            classes: `Complexity Classify Tests`.classes
         )
 
         // Set the candidate floor very high so noisy fits don't pass.
@@ -163,7 +163,7 @@ extension ComplexityClassifyTests.InconclusiveReasons {
         ]
         let evidence = SUT.Benchmark.Complexity.evidence(
             from: points,
-            classes: ComplexityClassifyTests.classes
+            classes: `Complexity Classify Tests`.classes
         )
 
         var policy = Tests.Complexity.Policy.default
@@ -179,11 +179,11 @@ extension ComplexityClassifyTests.InconclusiveReasons {
 
 // MARK: - Custom Policy
 
-extension ComplexityClassifyTests.CustomPolicy {
+extension `Complexity Classify Tests`.`Custom Policy` {
 
     @Test
     func `relaxed thresholds produce higher confidence`() {
-        let evidence = ComplexityClassifyTests.evidence { n in 1e-8 * n }
+        let evidence = `Complexity Classify Tests`.evidence { n in 1e-8 * n }
 
         var relaxed = Tests.Complexity.Policy.default
         relaxed.highSeparationThreshold = 0.0001
@@ -199,7 +199,7 @@ extension ComplexityClassifyTests.CustomPolicy {
 
     @Test
     func `strict thresholds produce lower confidence`() {
-        let evidence = ComplexityClassifyTests.evidence { n in 1e-12 * n * n }
+        let evidence = `Complexity Classify Tests`.evidence { n in 1e-12 * n * n }
 
         var strict = Tests.Complexity.Policy.default
         strict.highSeparationThreshold = 0.5
@@ -216,7 +216,7 @@ extension ComplexityClassifyTests.CustomPolicy {
     func `reduced candidate set at evidence level changes classification`() {
         // When Evidence is built with only constant and cubic,
         // linear data can't match linear.
-        let sizes = ComplexityClassifyTests.defaultSizes
+        let sizes = `Complexity Classify Tests`.defaultSizes
         let points: [(size: Int, metric: Duration)] = sizes.map { n in
             (size: n, metric: Duration.seconds(1e-8 * Double(n)))
         }
@@ -236,7 +236,7 @@ extension ComplexityClassifyTests.CustomPolicy {
         // Raise the candidate R² floor so that only the best-fitting
         // class survives. With linear data, linear should still pass
         // even a high floor, but other classes may be filtered.
-        let evidence = ComplexityClassifyTests.evidence { n in 1e-8 * n }
+        let evidence = `Complexity Classify Tests`.evidence { n in 1e-8 * n }
 
         var policy = Tests.Complexity.Policy.default
         policy.candidateRSquaredFloor = 0.999

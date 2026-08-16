@@ -61,7 +61,7 @@ extension Test_Primitives.Test.Snapshot.Counter.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Snapshot.Counter.Test.EdgeCase {
+extension Test_Primitives.Test.Snapshot.Counter.Test.`Edge Case` {
     @Test
     func `fresh counter returns 1 for first call`() {
         let counter = Test_Primitives.Test.Snapshot.Counter()

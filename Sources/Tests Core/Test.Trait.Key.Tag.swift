@@ -18,7 +18,9 @@ extension Test.Trait {
 }
 
 extension Test.Trait.Tag: Witness.Key {
-    public typealias Value = __SetOrdered<Ownership.Shared<Swift.String, Hash.Indexed<Column.Heap<Swift.String>>>>
+    public typealias Value = __SetOrdered<
+        Ownership.Shared<Swift.String, Hash.Indexed<Column.Heap<Swift.String>>>
+    >
 
     @inlinable
     public static var liveValue: Value { .init() }

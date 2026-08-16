@@ -21,6 +21,7 @@ extension Tests.History.Record.Test.Unit {
         let environment = Test_Primitives.Test.Environment.capture()
 
         let original = Tests.History.Record(
+            // swiftlint:disable:next force_try
             timestamp: try! Instant(
                 secondsSinceUnixEpoch: 1_710_100_000,
                 nanosecondFraction: 500_000_000
@@ -39,6 +40,7 @@ extension Tests.History.Record.Test.Unit {
 
         #expect(
             roundtripped.timestamp
+                // swiftlint:disable:next force_try
                 == (try! Instant(
                     secondsSinceUnixEpoch: 1_710_100_000,
                     nanosecondFraction: 500_000_000
@@ -113,7 +115,7 @@ extension Tests.History.Record.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Tests.History.Record.Test.EdgeCase {
+extension Tests.History.Record.Test.`Edge Case` {
     @Test
     func `roundtrip with nil suite`() throws {
         let id = Tests_Core.Test.ID.stub("t", module: "M")

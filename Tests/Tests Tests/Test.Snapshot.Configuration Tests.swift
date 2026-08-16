@@ -40,7 +40,7 @@ extension Test_Primitives.Test.Snapshot.Configuration.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Snapshot.Configuration.Test.EdgeCase {
+extension Test_Primitives.Test.Snapshot.Configuration.Test.`Edge Case` {
     @Test
     func `snapshotDirectory defaults to nil`() {
         let config = Test_Primitives.Test.Snapshot.Configuration.default

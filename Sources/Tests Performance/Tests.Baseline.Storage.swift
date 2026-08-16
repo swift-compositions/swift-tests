@@ -112,7 +112,19 @@ extension Tests.Baseline.Storage {
         at path: File.Path
     ) async throws(Kernel.Thread.Pool.Error) -> Test.Benchmark.Measurement? {
         let path = path
-        return try await Kernel.Thread.Pool.shared.run { () -> Test.Benchmark.Measurement? in
+        // `run(timeout:_:)` is ambiguous between Thread_Pool's non-throwing
+        // `run<T>` and generically-throwing `run<T, E>` overloads for a
+        // plain closure literal (both accept it; explicit specialization is
+        // not permitted on this instance method). Binding the member to its
+        // exact, non-generic function type selects the matching overload:
+        // only `run<T>`'s instantiated type can equal a target throwing
+        // this function's own (unwrapped) error type.
+        let run:
+            (
+                Duration?, sending @escaping () -> Test.Benchmark.Measurement?
+            ) async throws(Kernel.Thread.Pool.Error) -> sending Test.Benchmark.Measurement? = Kernel
+                .Thread.Pool.shared.run
+        return try await run(nil) {
             load(at: path)
         }
     }

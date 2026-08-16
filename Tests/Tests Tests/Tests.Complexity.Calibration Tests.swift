@@ -57,7 +57,7 @@ extension Tests.Complexity.Test.Calibration {
 
 // MARK: - Power Law Classes
 
-extension Tests.Complexity.Test.Calibration.PowerLaw {
+extension Tests.Complexity.Test.Calibration.`Power Law` {
 
     @Test
     func `O(1) constant`() {
@@ -89,7 +89,8 @@ extension Tests.Complexity.Test.Calibration.PowerLaw {
     func `O(sqrt n) with squareRoot in candidates classifies correctly`() {
         // Evidence must be constructed with squareRoot in the candidate set.
         let classesWithSqrt = Tests.Complexity.Test.Calibration.classes + [.squareRoot]
-        let points: [(size: Int, metric: Duration)] = Tests.Complexity.Test.Calibration.sizes.map { n in
+        let points: [(size: Int, metric: Duration)] = Tests.Complexity.Test.Calibration.sizes.map {
+            n in
             (size: n, metric: Duration.seconds(1e-6 * Double(n).squareRoot()))
         }
         let evidence = SUT.Benchmark.Complexity.evidence(
@@ -140,7 +141,7 @@ extension Tests.Complexity.Test.Calibration.PowerLaw {
 
 // MARK: - Non-Power-Law Classes
 
-extension Tests.Complexity.Test.Calibration.NonPowerLaw {
+extension Tests.Complexity.Test.Calibration.`Non Power Law` {
 
     @Test
     func `O(log n) logarithmic`() {

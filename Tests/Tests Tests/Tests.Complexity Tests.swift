@@ -220,7 +220,7 @@ extension Tests.Complexity.Test.Sizes {
 
 // MARK: - Edge Case
 
-extension Tests.Complexity.Test.EdgeCase {
+extension Tests.Complexity.Test.`Edge Case` {
 
     @Test
     func `constant data classified as constant`() {

@@ -305,6 +305,7 @@ public func snapshot<Value, Format: Sendable>(
 // MARK: - Inline Resolution
 
 extension Test_Primitives.Test.Snapshot.Inline {
+    // swiftlint:disable function_parameter_count
     /// Resolves an inline snapshot against the closure-provided expected value.
     ///
     /// Returns a failure message, or `nil` when the snapshot matches.
@@ -368,6 +369,7 @@ extension Test_Primitives.Test.Snapshot.Inline {
             return nil
         }
     }
+    // swiftlint:enable function_parameter_count
 }
 
 // MARK: - File Resolution

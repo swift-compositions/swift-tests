@@ -20,7 +20,9 @@ extension Test.Exclusion {
     /// are mutually exclusive.
     public actor Controller {
         /// Tracks which groups are currently running.
-        private var runningGroups: __SetOrdered<Ownership.Shared<Swift.String, Hash.Indexed<Column.Heap<Swift.String>>>> = .init()
+        private var runningGroups:
+            __SetOrdered<Ownership.Shared<Swift.String, Hash.Indexed<Column.Heap<Swift.String>>>> =
+                .init()
 
         /// Continuations waiting for access, keyed by group.
         private var waiters: [Swift.String: [CheckedContinuation<Void, Never>]] = [:]
