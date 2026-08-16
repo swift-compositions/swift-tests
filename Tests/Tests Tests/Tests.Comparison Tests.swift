@@ -71,7 +71,8 @@ extension Tests.Comparison.Test.Unit {
 extension Tests.Comparison.Test.`Edge Case` {
     @Test
     func `identical measurements produce zero change`() {
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [.milliseconds(100)])
+        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [.milliseconds(100)]
+        )
         let comparison = Tests.Comparison(
             name: "test",
             current: measurement,

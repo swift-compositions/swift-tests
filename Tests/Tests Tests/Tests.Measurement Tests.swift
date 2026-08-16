@@ -85,8 +85,12 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
     @Test
     func `Comparable orders by median`() {
-        let a = Test_Primitives.Test.Benchmark.Measurement(durations: [.seconds(1), .seconds(2), .seconds(3)])
-        let b = Test_Primitives.Test.Benchmark.Measurement(durations: [.seconds(4), .seconds(5), .seconds(6)])
+        let a = Test_Primitives.Test.Benchmark.Measurement(durations: [
+            .seconds(1), .seconds(2), .seconds(3),
+        ])
+        let b = Test_Primitives.Test.Benchmark.Measurement(durations: [
+            .seconds(4), .seconds(5), .seconds(6),
+        ])
         #expect(a < b)
         #expect(!(b < a))
     }

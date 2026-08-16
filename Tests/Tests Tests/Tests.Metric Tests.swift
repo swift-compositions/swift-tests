@@ -20,11 +20,25 @@ extension Test_Primitives.Test.Benchmark.Metric.Test.Unit {
             .milliseconds(100),
         ])
 
-        #expect(Test_Primitives.Test.Benchmark.Metric.min.extract(from: measurement) == measurement.min)
-        #expect(Test_Primitives.Test.Benchmark.Metric.max.extract(from: measurement) == measurement.max)
-        #expect(Test_Primitives.Test.Benchmark.Metric.median.extract(from: measurement) == measurement.median)
-        #expect(Test_Primitives.Test.Benchmark.Metric.mean.extract(from: measurement) == measurement.mean)
-        #expect(Test_Primitives.Test.Benchmark.Metric.p95.extract(from: measurement) == measurement.p95)
-        #expect(Test_Primitives.Test.Benchmark.Metric.p99.extract(from: measurement) == measurement.p99)
+        #expect(
+            Test_Primitives.Test.Benchmark.Metric.min.extract(from: measurement) == measurement.min
+        )
+        #expect(
+            Test_Primitives.Test.Benchmark.Metric.max.extract(from: measurement) == measurement.max
+        )
+        #expect(
+            Test_Primitives.Test.Benchmark.Metric.median.extract(from: measurement)
+                == measurement.median
+        )
+        #expect(
+            Test_Primitives.Test.Benchmark.Metric.mean.extract(from: measurement)
+                == measurement.mean
+        )
+        #expect(
+            Test_Primitives.Test.Benchmark.Metric.p95.extract(from: measurement) == measurement.p95
+        )
+        #expect(
+            Test_Primitives.Test.Benchmark.Metric.p99.extract(from: measurement) == measurement.p99
+        )
     }
 }

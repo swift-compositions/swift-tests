@@ -89,7 +89,8 @@ extension Tests.Complexity.Test.Calibration.`Power Law` {
     func `O(sqrt n) with squareRoot in candidates classifies correctly`() {
         // Evidence must be constructed with squareRoot in the candidate set.
         let classesWithSqrt = Tests.Complexity.Test.Calibration.classes + [.squareRoot]
-        let points: [(size: Int, metric: Duration)] = Tests.Complexity.Test.Calibration.sizes.map { n in
+        let points: [(size: Int, metric: Duration)] = Tests.Complexity.Test.Calibration.sizes.map {
+            n in
             (size: n, metric: Duration.seconds(1e-6 * Double(n).squareRoot()))
         }
         let evidence = SUT.Benchmark.Complexity.evidence(
