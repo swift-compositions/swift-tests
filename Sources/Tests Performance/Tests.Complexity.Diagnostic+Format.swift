@@ -132,8 +132,12 @@ extension Tests.Complexity.Diagnostic {
             lines.append("  Baseline Comparison:")
             let prevClass = comparison.previous.bestClass?.rawValue ?? "inconclusive"
             let currClass = comparison.current.bestClass?.rawValue ?? "inconclusive"
-            lines.append("    Previous: \(prevClass) (k=\(comparison.previous.exponent.formatted(.number.precision(3))))")
-            lines.append("    Current:  \(currClass) (k=\(comparison.current.exponent.formatted(.number.precision(3))))")
+            lines.append(
+                "    Previous: \(prevClass) (k=\(comparison.previous.exponent.formatted(.number.precision(3))))"
+            )
+            lines.append(
+                "    Current:  \(currClass) (k=\(comparison.current.exponent.formatted(.number.precision(3))))"
+            )
 
             if comparison.classRegressed {
                 let label = Console.Style.error.apply(
@@ -172,14 +176,18 @@ extension Tests.Complexity.Diagnostic {
         // Exponent
         json.append("  \"exponent\": {")
         json.append("    \"k\": \(evidence.exponent.value.formatted(.number.precision(4))),")
-        json.append("    \"r_squared\": \(evidence.exponent.fit.rSquared.formatted(.number.precision(4)))")
+        json.append(
+            "    \"r_squared\": \(evidence.exponent.fit.rSquared.formatted(.number.precision(4)))"
+        )
         json.append("  },")
 
         // Best
         if let best = result.best {
             json.append("  \"best\": {")
             json.append("    \"class\": \(_jsonString(best.complexity.rawValue)),")
-            json.append("    \"r_squared\": \(best.regression.rSquared.formatted(.number.precision(4)))")
+            json.append(
+                "    \"r_squared\": \(best.regression.rSquared.formatted(.number.precision(4)))"
+            )
             json.append("  },")
         } else {
             json.append("  \"best\": null,")
@@ -200,7 +208,9 @@ extension Tests.Complexity.Diagnostic {
         json.append("  \"candidates\": [")
         for (i, c) in evidence.candidates.enumerated() {
             let comma = i < evidence.candidates.count - 1 ? "," : ""
-            json.append("    {\"class\": \(_jsonString(c.complexity.rawValue)), \"r_squared\": \(c.regression.rSquared.formatted(.number.precision(4)))}\(comma)")
+            json.append(
+                "    {\"class\": \(_jsonString(c.complexity.rawValue)), \"r_squared\": \(c.regression.rSquared.formatted(.number.precision(4)))}\(comma)"
+            )
         }
         json.append("  ],")
 
@@ -208,12 +218,16 @@ extension Tests.Complexity.Diagnostic {
         json.append("  \"points\": [")
         for (i, p) in points.enumerated() {
             let comma = i < points.count - 1 ? "," : ""
-            json.append("    {\"size\": \(p.size), \"seconds\": \(p.metric.inSeconds.formatted(.number.precision(6)))}\(comma)")
+            json.append(
+                "    {\"size\": \(p.size), \"seconds\": \(p.metric.inSeconds.formatted(.number.precision(6)))}\(comma)"
+            )
         }
         json.append("  ],")
 
         // Doubling ratios
-        let ratioStr = evidence.growthRatios.map { $0.formatted(.number.precision(3)) }.joined(separator: ", ")
+        let ratioStr = evidence.growthRatios.map { $0.formatted(.number.precision(3)) }.joined(
+            separator: ", "
+        )
         json.append("  \"growth_ratios\": [\(ratioStr)],")
 
         // Baseline
@@ -224,8 +238,12 @@ extension Tests.Complexity.Diagnostic {
             } else {
                 json.append("    \"previous_class\": null,")
             }
-            json.append("    \"previous_exponent\": \(comparison.previous.exponent.formatted(.number.precision(4))),")
-            json.append("    \"exponent_drift\": \(comparison.exponentDrift.formatted(.number.precision(4))),")
+            json.append(
+                "    \"previous_exponent\": \(comparison.previous.exponent.formatted(.number.precision(4))),"
+            )
+            json.append(
+                "    \"exponent_drift\": \(comparison.exponentDrift.formatted(.number.precision(4))),"
+            )
             json.append("    \"class_regressed\": \(comparison.classRegressed),")
             json.append("    \"is_regression\": \(comparison.isRegression)")
             json.append("  }")

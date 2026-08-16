@@ -30,10 +30,6 @@ extension Test {
     public struct Body: Sendable {
         /// The kind of body (sync or async).
         private let kind: Kind
-
-        private init(kind: Kind) {
-            self.kind = kind
-        }
     }
 }
 

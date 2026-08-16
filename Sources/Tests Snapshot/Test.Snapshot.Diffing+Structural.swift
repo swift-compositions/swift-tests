@@ -65,7 +65,10 @@ extension Test.Snapshot.Diffing where Format == Swift.String {
                     // ill-defined — fall back to line diff, like invalid JSON.
                     return Self.lines.diff(old, new)
                 }
-                let treeDiff = Tree<RFC_8259.Value>.Keyed<Swift.String>.diff(from: oldTree, to: newTree)
+                let treeDiff = Tree<RFC_8259.Value>.Keyed<Swift.String>.diff(
+                    from: oldTree,
+                    to: newTree
+                )
 
                 guard !treeDiff.isEmpty else { return nil }
 

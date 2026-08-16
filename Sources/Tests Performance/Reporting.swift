@@ -102,7 +102,10 @@ extension Tests {
 
         let summaryText =
             "Summary: \(improvements) improvements, \(neutral) neutral, \(regressions) regressions"
-        let summaryColored = Console.Style.bold.apply(to: summaryText, capability: consoleCapability)
+        let summaryColored = Console.Style.bold.apply(
+            to: summaryText,
+            capability: consoleCapability
+        )
         print(summaryColored)
         print("╚══════════════════════════════════════════════════════════╝\n")
     }

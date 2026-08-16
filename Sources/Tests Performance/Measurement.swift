@@ -14,6 +14,9 @@ public import Time_Primitives
 
 // MARK: - Measurement API
 
+// The two `time(operation:)` overloads are intentionally same-named; see the
+// note on the synchronous one. The compiler resolves them without ambiguity.
+// swift-format-ignore: AmbiguousTrailingClosureOverload
 extension Tests {
     /// Measure performance of an operation
     ///
@@ -71,6 +74,10 @@ extension Tests {
     }
 
     /// Single-shot timing measurement
+    ///
+    /// The async overload below shares this name deliberately: the compiler
+    /// prefers this synchronous, non-throwing candidate for a plain closure
+    /// literal and falls through to the async one only when the body needs it.
     @discardableResult
     public static func time<T>(operation: () -> T) -> (result: T, duration: Duration) {
         let start = Clock_Primitives.Clock.Continuous.now

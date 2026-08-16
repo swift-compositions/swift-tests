@@ -148,7 +148,10 @@ extension Test.Snapshot {
         _ configuration: Configuration,
         operation: () throws(E) -> T
     ) throws(E) -> T {
-        try Dependency.Scope.with({ $0[Configuration.Key.self] = configuration }, operation: operation)
+        try Dependency.Scope.with(
+            { $0[Configuration.Key.self] = configuration },
+            operation: operation
+        )
     }
 
     /// Runs an async operation with the given configuration.
@@ -161,6 +164,9 @@ extension Test.Snapshot {
         _ configuration: Configuration,
         operation: () async throws(E) -> T
     ) async throws(E) -> T {
-        try await Dependency.Scope.with({ $0[Configuration.Key.self] = configuration }, operation: operation)
+        try await Dependency.Scope.with(
+            { $0[Configuration.Key.self] = configuration },
+            operation: operation
+        )
     }
 }

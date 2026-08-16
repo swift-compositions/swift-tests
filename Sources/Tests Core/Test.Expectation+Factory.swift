@@ -39,7 +39,8 @@ extension Test.Expectation {
     /// Set once before tests run; read during test execution.
     /// When the Institute's runner is active, ``Collector/current`` is
     /// non-nil and this handler is never invoked.
-    nonisolated(unsafe) public static var externalFailureHandler: (@Sendable (_ message: Swift.String, _ location: Source.Location) -> Void)?
+    nonisolated(unsafe) public static var externalFailureHandler:
+        (@Sendable (_ message: Swift.String, _ location: Source.Location) -> Void)?
 }
 
 // MARK: - External Bridge Resolution

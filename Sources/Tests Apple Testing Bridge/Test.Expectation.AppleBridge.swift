@@ -31,7 +31,8 @@
         /// Safe to call multiple times — subsequent calls overwrite with the
         /// same handler. Must be called before test execution begins.
         public static func install() {
-            unsafe (Test_Primitives.Test.Expectation.externalFailureHandler) = { message, location in
+            typealias Expectation = Test_Primitives.Test.Expectation
+            unsafe (Expectation.externalFailureHandler) = { message, location in
                 Testing.Issue.record(
                     Testing.Comment(rawValue: message),
                     sourceLocation: Testing.SourceLocation(

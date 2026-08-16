@@ -38,7 +38,7 @@ extension Test_Primitives.Test.Plan.Registry.Test.Unit {
     @Test
     func `add with async body closure`() {
         var registry = Test_Primitives.Test.Plan.Registry()
-        registry.add(id: .stub("async")) { @Sendable () async in /* async body */ }
+        registry.add(id: .stub("async")) { @Sendable () async in }  // async body
         #expect(registry.count == 1)
     }
 

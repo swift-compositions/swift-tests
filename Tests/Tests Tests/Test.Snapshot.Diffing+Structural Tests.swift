@@ -150,17 +150,20 @@ extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
 extension `Test.Snapshot.Diffing+Structural Tests`.Integration {
 
     @Test func `structuralJSON strategy has json extension`() {
-        let strategy = Test_Primitives.Test.Snapshot.Strategy<Swift.String, Swift.String>.structuralJSON
+        let strategy = Test_Primitives.Test.Snapshot.Strategy<Swift.String, Swift.String>
+            .structuralJSON
         #expect(strategy.pathExtension == "json")
     }
 
     @Test func `structuralJSON strategy is synchronous`() {
-        let strategy = Test_Primitives.Test.Snapshot.Strategy<Swift.String, Swift.String>.structuralJSON
+        let strategy = Test_Primitives.Test.Snapshot.Strategy<Swift.String, Swift.String>
+            .structuralJSON
         #expect(strategy.isSynchronous)
     }
 
     @Test func `structuralJSON strategy captures JSON string`() {
-        let strategy = Test_Primitives.Test.Snapshot.Strategy<Swift.String, Swift.String>.structuralJSON
+        let strategy = Test_Primitives.Test.Snapshot.Strategy<Swift.String, Swift.String>
+            .structuralJSON
         let captured = strategy.syncSnapshot!("raw input")
         #expect(!captured.isEmpty)
     }

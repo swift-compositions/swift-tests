@@ -235,7 +235,11 @@ private func _replaceAtPathDynamic(
 
     case .array(let arr):
         if let idx = Int(segment), arr.indices.contains(idx) {
-            let replaced = _replaceAtPathDynamic(arr[idx], path: remaining, replacement: replacement)
+            let replaced = _replaceAtPathDynamic(
+                arr[idx],
+                path: remaining,
+                replacement: replacement
+            )
             return .array(_arrayReplacing(arr, index: idx, value: replaced))
         }
         return value
@@ -268,14 +272,21 @@ private func _replaceGlob(
         case .object(let obj):
             var newPairs: [(key: Swift.String, value: RFC_8259.Value)] = []
             for (key, childValue) in obj {
-                newPairs.append((key: key, value: _replaceGlob(childValue, pattern: pattern, replacement: replacement)))
+                newPairs.append(
+                    (
+                        key: key,
+                        value: _replaceGlob(childValue, pattern: pattern, replacement: replacement)
+                    )
+                )
             }
             result = .object(RFC_8259.Object(newPairs))
 
         case .array(let arr):
             var newElements: [RFC_8259.Value] = []
             for element in arr {
-                newElements.append(_replaceGlob(element, pattern: pattern, replacement: replacement))
+                newElements.append(
+                    _replaceGlob(element, pattern: pattern, replacement: replacement)
+                )
             }
             result = .array(RFC_8259.Array(newElements))
 
@@ -292,14 +303,25 @@ private func _replaceGlob(
         case .object(let obj):
             var newPairs: [(key: Swift.String, value: RFC_8259.Value)] = []
             for (key, childValue) in obj {
-                newPairs.append((key: key, value: _replaceGlob(childValue, pattern: remaining, replacement: replacement)))
+                newPairs.append(
+                    (
+                        key: key,
+                        value: _replaceGlob(
+                            childValue,
+                            pattern: remaining,
+                            replacement: replacement
+                        )
+                    )
+                )
             }
             return .object(RFC_8259.Object(newPairs))
 
         case .array(let arr):
             var newElements: [RFC_8259.Value] = []
             for element in arr {
-                newElements.append(_replaceGlob(element, pattern: remaining, replacement: replacement))
+                newElements.append(
+                    _replaceGlob(element, pattern: remaining, replacement: replacement)
+                )
             }
             return .array(RFC_8259.Array(newElements))
 

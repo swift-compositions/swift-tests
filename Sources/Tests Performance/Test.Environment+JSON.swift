@@ -18,14 +18,23 @@ extension Test.Environment: JSON.Serializable {
     /// for human inspection and debugging.
     public static func serialize(_ value: Self) -> JSON {
         let features: JSON = .object([
-            ("NonisolatedNonsendingByDefault", JSON.bool(value.features.nonisolatedNonsendingByDefault)),
+            (
+                "NonisolatedNonsendingByDefault",
+                JSON.bool(value.features.nonisolatedNonsendingByDefault)
+            ),
             ("StrictMemorySafety", JSON.bool(value.features.strictMemorySafety)),
         ])
 
         return .object([
             ("architecture", JSON.string(value.architecture)),
-            ("physical_cores", JSON.number(Int(bitPattern: value.physicalCPUCount.underlying.rawValue))),
-            ("logical_cores", JSON.number(Int(bitPattern: value.logicalCPUCount.underlying.rawValue))),
+            (
+                "physical_cores",
+                JSON.number(Int(bitPattern: value.physicalCPUCount.underlying.rawValue))
+            ),
+            (
+                "logical_cores",
+                JSON.number(Int(bitPattern: value.logicalCPUCount.underlying.rawValue))
+            ),
             ("memory_bytes", JSON.number(Int(bitPattern: value.memoryBytes.underlying.rawValue))),
             ("os", JSON.string(value.osVersion)),
             ("swift_version", JSON.string(value.swiftVersion)),
