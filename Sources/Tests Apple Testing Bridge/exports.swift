@@ -5,5 +5,4 @@
 //  Re-exports for Tests Apple Testing Bridge consumers.
 //
 
-@_exported public import Tests_Core
-@_exported public import Tests_Snapshot
+@_exported public import Test_Primitives_Core

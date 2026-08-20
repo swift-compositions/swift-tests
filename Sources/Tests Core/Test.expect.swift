@@ -82,7 +82,7 @@ public func expect(
 
     Test.Expectation.Collector.current?.record(expectation)
     if !expectation.isPassing {
-        Test.Expectation._reportExternalFailure(
+        Test.Expectation._recordIssue(
             comment.map { "Expectation failed: \($0)" } ?? "Expectation failed",
             at: location
         )
@@ -156,7 +156,7 @@ public func expect<T: Equatable>(
 
     Test.Expectation.Collector.current?.record(expectation)
     if !expectation.isPassing {
-        Test.Expectation._reportExternalFailure(
+        Test.Expectation._recordIssue(
             comment.map { "Values are not equal: \($0)" }
                 ?? "Values are not equal: expected \(rhs), got \(lhs)",
             at: location

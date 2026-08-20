@@ -5,7 +5,6 @@
 //  Convenience factories for creating and recording expectations.
 //
 
-import Loader
 import Synchronization
 public import Test_Primitives
 
@@ -26,64 +25,19 @@ func _nextExpectationID() -> Test.Expectation.ID {
     )
 }
 
-// MARK: - External Failure Handler
-
 extension Test.Expectation {
-    /// External failure handler for bridging to test frameworks.
-    ///
-    /// When no ``Collector`` is installed (i.e., tests run without the
-    /// Institute's `Test.Runner`), this handler is called for each failure.
-    /// It can be set by a bridge module (e.g., `Tests Apple Testing Bridge`)
-    /// to forward failures to the active test runner.
-    ///
-    /// Set once before tests run; read during test execution.
-    /// When the Institute's runner is active, ``Collector/current`` is
-    /// non-nil and this handler is never invoked.
-    nonisolated(unsafe) public static var externalFailureHandler:
-        (@Sendable (_ message: Swift.String, _ location: Source.Location) -> Void)?
-}
-
-// MARK: - External Bridge Resolution
-
-extension Test.Expectation {
-    /// Lazily resolves and installs the external failure bridge.
-    ///
-    /// Uses symbol lookup to find `_swift_tests_bridge_install` at runtime.
-    /// If the bridge module is linked, its installer is called. If not
-    /// linked, the symbol is not found and no action is taken.
-    ///
-    /// Thread-safe: `static let` guarantees exactly-once initialization.
-    private static let _resolveBridge: Void = {
-        guard unsafe externalFailureHandler == nil else { return }
-        let symbol: UnsafeRawPointer
-        do throws(Loader.Error) {
-            symbol = try unsafe Loader.Symbol.lookup(
-                name: "_swift_tests_bridge_install",
-                in: .default
-            )
-        } catch {
-            return
-        }
-        unsafe unsafeBitCast(symbol, to: (@convention(c) () -> Void).self)()
-    }()
-
-    /// Reports a failure to the external bridge when no collector is active.
-    ///
-    /// Called by `expect()` and `require()` to ensure failures surface
-    /// under Apple's Swift Testing runner (where ``Collector/current`` is nil).
-    ///
-    /// On first call, lazily resolves the bridge via symbol lookup.
-    ///
-    /// - Parameters:
-    ///   - message: Description of the failure.
-    ///   - location: Source location of the failing assertion.
-    static func _reportExternalFailure(
+    /// Records a neutral issue when no incumbent collector is active.
+    static func _recordIssue(
         _ message: Swift.String,
         at location: Source.Location
     ) {
         guard Collector.current == nil else { return }
-        _ = _resolveBridge
-        unsafe externalFailureHandler?(message, location)
+        Test.Context.current?.recorder(
+            .init(
+                kind: .unconditional(Test.Text(message)),
+                sourceLocation: location
+            )
+        )
     }
 }
 
@@ -157,9 +111,8 @@ extension Test.Expectation {
 
     /// Creates a failing expectation and records it with the current collector.
     ///
-    /// When no collector is installed, the failure is forwarded to
-    /// ``externalFailureHandler`` if one has been installed by a bridge
-    /// module (e.g., `Tests Apple Testing Bridge`).
+    /// When no collector is installed, the failure is sent to the explicit
+    /// recorder in ``Test/Context/current``.
     ///
     /// - Parameters:
     ///   - message: Description of the failure.
@@ -174,7 +127,7 @@ extension Test.Expectation {
     ) -> Self {
         let result = failing(message, sourceCode: sourceCode, at: location)
         Collector.current?.record(result)
-        _reportExternalFailure(message, at: location)
+        _recordIssue(message, at: location)
         return result
     }
 }

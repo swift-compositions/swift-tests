@@ -212,9 +212,13 @@ let package = Package(
         .target(
             name: "Tests Apple Testing Bridge",
             dependencies: [
-                "Tests Snapshot",
-                .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
+                .product(name: "Test Primitives Core", package: "swift-test-primitives")
             ]
+        ),
+
+        .testTarget(
+            name: "Tests Apple Testing Bridge Tests",
+            dependencies: ["Tests Apple Testing Bridge"]
         ),
 
         // MARK: - Test Support
