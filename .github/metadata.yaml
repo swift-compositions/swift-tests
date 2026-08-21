@@ -1,9 +1,8 @@
-# .github/metadata.yaml
-# Triaged by AI-assisted bulk pass (2026-04-29).
-description: "Snapshot testing (inline and file-backed), timed benchmarks with regression detection, and algorithmic-complexity assertions for Swift."
+description: "Test × Snapshot policy: verification, recording, reference naming, storage, and scoped configuration."
 topics:
   - foundations
-  - tests
+  - test
+  - snapshot
 homepage: "https://swift-institute.org"
 readme:
   family: E

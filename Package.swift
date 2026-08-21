@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-tests",
+    name: "swift-test-snapshot",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -12,66 +12,19 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: "Tests Core", targets: ["Tests Core"]),
-        .library(name: "Tests Snapshot", targets: ["Tests Snapshot"]),
-        .library(name: "Tests Inline Snapshot", targets: ["Tests Inline Snapshot"]),
-        .library(name: "Tests Performance", targets: ["Tests Performance"]),
-        .library(name: "Tests Reporter", targets: ["Tests Reporter"]),
-        .library(name: "Tests", targets: ["Tests"]),
-        .library(name: "Tests Apple Testing Bridge", targets: ["Tests Apple Testing Bridge"]),
-        .library(name: "Tests Test Support", targets: ["Tests Test Support"]),
+        .library(name: "Test Snapshot", targets: ["Test Snapshot"])
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-ascii-primitives.git",
+            url: "https://github.com/swift-primitives/swift-test.git",
+            branch: "testing-stack/neutral-test-boundary"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-snapshot.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-test-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-binary-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-time-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-format-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-dependency-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-ownership-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-set-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-set-ordered-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-hash-table-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-column-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-ownership-shared-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-buffer-linear-primitives.git",
+            url: "https://github.com/swift-primitives/swift-source-primitives.git",
             branch: "main"
         ),
         .package(
@@ -79,182 +32,30 @@ let package = Package(
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-tree-keyed-primitives.git",
+            url: "https://github.com/swift-foundations/swift-file-system.git",
             branch: "main"
         ),
-        .package(url: "https://github.com/swift-foundations/swift-kernel.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-memory.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-console.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-file-system.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-io.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-json.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-loader.git", branch: "main"),
-        .package(
-            url: "https://github.com/swift-primitives/swift-sample-primitives.git",
-            branch: "main"
-        ),
-        .package(url: "https://github.com/swift-foundations/swift-clocks.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-environment.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-witnesses.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-html-render.git", branch: "main"),
-        .package(url: "https://github.com/swift-iec/swift-iec-80000-13.git", branch: "main"),
-        .package(url: "https://github.com/swiftlang/swift-syntax.git", "602.0.0"..<"603.0.0"),
     ],
     targets: [
-
-        // MARK: - Core
-
         .target(
-            name: "Tests Core",
+            name: "Test Snapshot",
             dependencies: [
-                .product(name: "ASCII Primitives", package: "swift-ascii-primitives"),
-                .product(name: "Test Primitives", package: "swift-test-primitives"),
-                .product(name: "Ownership Primitives", package: "swift-ownership-primitives"),
-                .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
-                .product(name: "Loader", package: "swift-loader"),
-                .product(name: "Witnesses", package: "swift-witnesses"),
-                .product(name: "Set Primitives", package: "swift-set-primitives"),
-                .product(name: "Set Ordered Primitives", package: "swift-set-ordered-primitives"),
-                .product(name: "Tree Keyed Primitives", package: "swift-tree-keyed-primitives"),
-                .product(name: "Hash Indexed Primitive", package: "swift-hash-table-primitives"),
-                .product(name: "Column Primitives", package: "swift-column-primitives"),
-                .product(
-                    name: "Ownership Shared Primitive",
-                    package: "swift-ownership-shared-primitives"
-                ),
-                .product(
-                    name: "Buffer Linear Primitive",
-                    package: "swift-buffer-linear-primitives"
-                ),
-            ]
-        ),
-
-        // MARK: - Snapshot
-
-        .target(
-            name: "Tests Snapshot",
-            dependencies: [
-                "Tests Core",
+                .product(name: "Test", package: "swift-test"),
+                .product(name: "Snapshot", package: "swift-snapshot"),
+                .product(name: "Source Primitives", package: "swift-source-primitives"),
+                .product(name: "Byte Primitives", package: "swift-byte-primitives"),
                 .product(name: "File System", package: "swift-file-system"),
-                .product(name: "JSON", package: "swift-json"),
-                .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
-                .product(name: "Kernel", package: "swift-kernel"),
-                .product(
-                    name: "Byte Primitives Standard Library Integration",
-                    package: "swift-byte-primitives"
-                ),
             ]
         ),
-
-        // MARK: - Inline Snapshot
-
-        .target(
-            name: "Tests Inline Snapshot",
+        .testTarget(
+            name: "Test Snapshot Tests",
             dependencies: [
-                "Tests Snapshot",
-                .product(name: "HTML Snapshot Test Support", package: "swift-html-render"),
-                .product(name: "SwiftParser", package: "swift-syntax"),
-                .product(name: "SwiftSyntax", package: "swift-syntax"),
-                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
-            ]
-        ),
-
-        // MARK: - Performance
-
-        .target(
-            name: "Tests Performance",
-            dependencies: [
-                "Tests Core",
-                .product(name: "Sample Primitives", package: "swift-sample-primitives"),
-                .product(name: "Time Primitives", package: "swift-time-primitives"),
-                .product(name: "Console", package: "swift-console"),
-                .product(name: "Kernel", package: "swift-kernel"),
-                .product(name: "Memory", package: "swift-memory"),
-                .product(name: "Binary Primitives", package: "swift-binary-primitives"),
-                .product(name: "Format Primitives", package: "swift-format-primitives"),
-                .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
-                .product(name: "Clocks", package: "swift-clocks"),
+                .target(name: "Test Snapshot"),
+                .product(name: "Test", package: "swift-test"),
+                .product(name: "Snapshot", package: "swift-snapshot"),
+                .product(name: "Source Primitives", package: "swift-source-primitives"),
                 .product(name: "File System", package: "swift-file-system"),
-                .product(name: "JSON", package: "swift-json"),
-                .product(name: "Environment", package: "swift-environment"),
-                .product(name: "IO", package: "swift-io"),
-                .product(name: "IEC 80000-13 Formatting", package: "swift-iec-80000-13"),
             ]
-        ),
-
-        // MARK: - Reporter
-
-        .target(
-            name: "Tests Reporter",
-            dependencies: [
-                "Tests Core",
-                .product(name: "Console", package: "swift-console"),
-                .product(name: "Kernel", package: "swift-kernel"),
-                .product(name: "JSON", package: "swift-json"),
-                .product(name: "Time Primitives", package: "swift-time-primitives"),
-            ]
-        ),
-
-        // MARK: - Umbrella
-
-        .target(
-            name: "Tests",
-            dependencies: [
-                "Tests Core",
-                "Tests Reporter",
-                "Tests Snapshot",
-                "Tests Performance",
-            ]
-        ),
-
-        // MARK: - Apple Testing Bridge
-
-        .target(
-            name: "Tests Apple Testing Bridge",
-            dependencies: [
-                .product(name: "Test Primitives Core", package: "swift-test-primitives")
-            ]
-        ),
-
-        .testTarget(
-            name: "Tests Apple Testing Bridge Tests",
-            dependencies: ["Tests Apple Testing Bridge"]
-        ),
-
-        // MARK: - Test Support
-
-        .target(
-            name: "Tests Test Support",
-            dependencies: [
-                "Tests",
-                .product(
-                    name: "Test Primitives Test Support",
-                    package: "swift-test-primitives"
-                ),
-                .product(
-                    name: "Kernel Test Support",
-                    package: "swift-kernel"
-                ),
-                .product(
-                    name: "File System Test Support",
-                    package: "swift-file-system"
-                ),
-            ],
-            path: "Tests/Support"
-        ),
-
-        // MARK: - Tests
-
-        .testTarget(
-            name: "Tests Tests",
-            dependencies: [
-                "Tests",
-                "Tests Inline Snapshot",
-                "Tests Test Support",
-            ],
-            // Explicit path: the nested test manifest at Tests/Package.swift makes
-            // SwiftPM skip automatic target discovery under Tests/.
-            path: "Tests/Tests Tests"
         ),
     ],
     swiftLanguageModes: [.v6]
@@ -265,7 +66,6 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
-        .enableUpcomingFeature("MemberImportVisibility"),
         .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
         .enableExperimentalFeature("LifetimeDependence"),
         .enableExperimentalFeature("Lifetimes"),
@@ -273,8 +73,8 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableUpcomingFeature("InferIsolatedConformances"),
         .enableUpcomingFeature("LifetimeDependence"),
     ]
-
-    let package: [SwiftSetting] = []
-
-    target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package
+    let memberVisibility: [SwiftSetting] = target.name == "Test Snapshot"
+        ? [.enableUpcomingFeature("MemberImportVisibility")]
+        : []
+    target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + memberVisibility
 }
