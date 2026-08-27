@@ -5,9 +5,9 @@
 //  Per-test counter for unnamed snapshots.
 //
 
-public import Dependency_Primitives
+public import Dependency
 import Synchronization
-public import Test_Primitives
+public import Test
 
 extension Test.Snapshot {
     /// Thread-safe counter for unnamed snapshots within a test.

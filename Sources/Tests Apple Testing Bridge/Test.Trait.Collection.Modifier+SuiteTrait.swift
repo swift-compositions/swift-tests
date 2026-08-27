@@ -12,9 +12,9 @@
 
 #if canImport(Testing)
     public import Testing
-    public import Test_Primitives
+    public import Test
 
-    extension Test_Primitives.Test.Trait.Collection.Modifier:
+    extension Test.Test.Trait.Collection.Modifier:
         Testing.SuiteTrait, Testing.TestScoping
     {
         public var isRecursive: Bool { true }

@@ -6,7 +6,7 @@
 //
 
 import JSON
-internal import Tree_Keyed_Primitives
+internal import Tree_Keyed
 
 // MARK: - JSON → Tree<RFC_8259.Value>.Keyed<String>
 

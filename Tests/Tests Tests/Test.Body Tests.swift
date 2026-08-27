@@ -1,7 +1,7 @@
 import Testing
 import Tests_Test_Support
 
-extension Test_Primitives.Test.Body {
+extension Test.Test.Body {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -11,25 +11,25 @@ extension Test_Primitives.Test.Body {
 
 // MARK: - Unit
 
-extension Test_Primitives.Test.Body.Test.Unit {
+extension Test.Test.Body.Test.Unit {
     @Test
     func `sync factory creates synchronous body`() {
-        let body = Test_Primitives.Test.Body.sync {}
+        let body = Test.Test.Body.sync {}
         #expect(body.isSync)
         #expect(!body.isAsync)
     }
 
     @Test
     func `async factory creates asynchronous body`() {
-        let body = Test_Primitives.Test.Body.async {}
+        let body = Test.Test.Body.async {}
         #expect(body.isAsync)
         #expect(!body.isSync)
     }
 
     @Test
     func `sync body run succeeds`() async throws {
-        let body = Test_Primitives.Test.Body.sync {}
-        do throws(Test_Primitives.Test.Body.Error) {
+        let body = Test.Test.Body.sync {}
+        do throws(Test.Test.Body.Error) {
             try await body.run()
         } catch {
             Issue.record("Expected sync body to succeed, got: \(error)")
@@ -38,8 +38,8 @@ extension Test_Primitives.Test.Body.Test.Unit {
 
     @Test
     func `async body run succeeds`() async throws {
-        let body = Test_Primitives.Test.Body.async {}
-        do throws(Test_Primitives.Test.Body.Error) {
+        let body = Test.Test.Body.async {}
+        do throws(Test.Test.Body.Error) {
             try await body.run()
         } catch {
             Issue.record("Expected async body to succeed, got: \(error)")
@@ -52,8 +52,8 @@ extension Test_Primitives.Test.Body.Test.Unit {
             var description: Swift.String { "test failure" }
         }
 
-        let body = Test_Primitives.Test.Body.sync { throw TestError() }
-        do throws(Test_Primitives.Test.Body.Error) {
+        let body = Test.Test.Body.sync { throw TestError() }
+        do throws(Test.Test.Body.Error) {
             try await body.run()
             Issue.record("Expected body.run() to throw")
         } catch {
@@ -72,8 +72,8 @@ extension Test_Primitives.Test.Body.Test.Unit {
             var description: Swift.String { "async failure" }
         }
 
-        let body = Test_Primitives.Test.Body.async { throw TestError() }
-        do throws(Test_Primitives.Test.Body.Error) {
+        let body = Test.Test.Body.async { throw TestError() }
+        do throws(Test.Test.Body.Error) {
             try await body.run()
             Issue.record("Expected body.run() to throw")
         } catch {
@@ -89,7 +89,7 @@ extension Test_Primitives.Test.Body.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Body.Test.`Edge Case` {
+extension Test.Test.Body.Test.`Edge Case` {
     @Test
     func `caught error stores type and description`() async {
         struct SpecificError: Swift.Error, Swift.CustomStringConvertible {
@@ -97,8 +97,8 @@ extension Test_Primitives.Test.Body.Test.`Edge Case` {
             var description: Swift.String { "detail: \(detail)" }
         }
 
-        let body = Test_Primitives.Test.Body.sync { throw SpecificError(detail: "abc123") }
-        do throws(Test_Primitives.Test.Body.Error) {
+        let body = Test.Test.Body.sync { throw SpecificError(detail: "abc123") }
+        do throws(Test.Test.Body.Error) {
             try await body.run()
         } catch {
             if case .caught(let type, let description) = error {

@@ -5,7 +5,7 @@
 //  Performance benchmark suite for running and reporting multiple benchmarks.
 //
 
-import Time_Primitives
+import Time
 
 extension Tests {
     /// Performance benchmark suite for running and reporting multiple benchmarks.

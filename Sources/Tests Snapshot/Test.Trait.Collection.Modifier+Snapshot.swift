@@ -5,7 +5,7 @@
 //  Snapshot modifier factory for macro-declared snapshot configuration.
 //
 
-import Dependency_Primitives
+import Dependency
 
 extension Test.Trait.Collection.Modifier {
     /// Creates a modifier that sets snapshot configuration on the trait collection.

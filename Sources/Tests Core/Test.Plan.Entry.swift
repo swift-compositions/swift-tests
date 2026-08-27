@@ -5,7 +5,7 @@
 //  A single entry in an execution plan.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Test.Plan {
     /// A single entry in an execution plan.

@@ -1,10 +1,10 @@
 import Testing
 import Tests_Test_Support
 
-// NOTE: filename says "Tests.Trend" but the tested type is Test_Primitives.Test.Benchmark.Trend
+// NOTE: filename says "Tests.Trend" but the tested type is Test.Test.Benchmark.Trend
 // (grep-resolved per [SWIFT-TEST-002] STEP-2 ladder step 2 — "Tests.Trend" does
 // not exist as a type in this repo or its dependencies).
-extension Test_Primitives.Test.Benchmark.Trend {
+extension Test.Test.Benchmark.Trend {
     @Suite
     struct Test {
         @Suite struct MannKendall {}
@@ -13,24 +13,24 @@ extension Test_Primitives.Test.Benchmark.Trend {
 
 // MARK: - Mann-Kendall
 
-extension Test_Primitives.Test.Benchmark.Trend.Test.MannKendall {
+extension Test.Test.Benchmark.Trend.Test.MannKendall {
     @Test
     func `empty Sequence`() {
-        let trend = Test_Primitives.Test.Benchmark.Trend.mannKendall([])
+        let trend = Test.Test.Benchmark.Trend.mannKendall([])
         #expect(trend.z == 0.0)
         #expect(trend.interpretation == .none)
     }
 
     @Test
     func `two Elements`() {
-        let trend = Test_Primitives.Test.Benchmark.Trend.mannKendall([.seconds(1), .seconds(2)])
+        let trend = Test.Test.Benchmark.Trend.mannKendall([.seconds(1), .seconds(2)])
         #expect(trend.interpretation == .none)
     }
 
     @Test
     func `strictly Increasing`() {
         let durations = (1...10).map { Duration.seconds($0) }
-        let trend = Test_Primitives.Test.Benchmark.Trend.mannKendall(durations)
+        let trend = Test.Test.Benchmark.Trend.mannKendall(durations)
         #expect(trend.z > 1.96)
         #expect(trend.interpretation == .increasing)
     }
@@ -38,7 +38,7 @@ extension Test_Primitives.Test.Benchmark.Trend.Test.MannKendall {
     @Test
     func `strictly Decreasing`() {
         let durations = (1...10).reversed().map { Duration.seconds($0) }
-        let trend = Test_Primitives.Test.Benchmark.Trend.mannKendall(durations)
+        let trend = Test.Test.Benchmark.Trend.mannKendall(durations)
         #expect(trend.z < -1.96)
         #expect(trend.interpretation == .decreasing)
     }
@@ -46,7 +46,7 @@ extension Test_Primitives.Test.Benchmark.Trend.Test.MannKendall {
     @Test
     func `flat Sequence`() {
         let durations = Array(repeating: Duration.seconds(5), count: 10)
-        let trend = Test_Primitives.Test.Benchmark.Trend.mannKendall(durations)
+        let trend = Test.Test.Benchmark.Trend.mannKendall(durations)
         #expect(trend.z == 0.0)
         #expect(trend.interpretation == .none)
     }
@@ -57,7 +57,7 @@ extension Test_Primitives.Test.Benchmark.Trend.Test.MannKendall {
             .seconds(5), .seconds(3), .seconds(7), .seconds(2),
             .seconds(6), .seconds(4), .seconds(8), .seconds(1),
         ]
-        let trend = Test_Primitives.Test.Benchmark.Trend.mannKendall(durations)
+        let trend = Test.Test.Benchmark.Trend.mannKendall(durations)
         #expect(trend.interpretation == .none)
     }
 }

@@ -5,7 +5,7 @@
 //  Namespace for mutual exclusion in test execution.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Test {
     /// Namespace for mutual exclusion in test execution.

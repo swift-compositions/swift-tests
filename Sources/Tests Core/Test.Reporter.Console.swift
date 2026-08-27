@@ -16,7 +16,7 @@
 // This file provides only the null reporter for minimal dependencies.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Test.Reporter {
     /// A reporter that discards all events.

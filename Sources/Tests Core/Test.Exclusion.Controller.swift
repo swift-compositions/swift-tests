@@ -6,12 +6,12 @@
 //
 
 public import Buffer_Linear_Primitive
-public import Column_Primitives
+public import Column
 public import Hash_Indexed_Primitive
 public import Ownership_Shared_Primitive
-public import Set_Ordered_Primitives
-public import Set_Primitives
-public import Test_Primitives
+public import Set_Ordered
+public import Set
+public import Test
 
 extension Test.Exclusion {
     /// Actor that provides mutual exclusion for test execution.

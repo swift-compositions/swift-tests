@@ -5,7 +5,7 @@
 //  Global teardown registry for static test fixtures.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Test {
     /// Global teardown actions executed after all tests complete.

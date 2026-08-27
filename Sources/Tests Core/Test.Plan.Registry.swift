@@ -5,8 +5,8 @@
 //  ~Copyable builder for test plans.
 //
 
-public import Test_Primitives
-internal import Tree_Keyed_Primitives
+public import Test
+internal import Tree_Keyed
 
 extension Test.Plan {
     /// A builder for creating test execution plans.

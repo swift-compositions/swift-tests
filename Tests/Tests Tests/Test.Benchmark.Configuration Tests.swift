@@ -1,7 +1,7 @@
 import Testing
 import Tests_Test_Support
 
-extension Test_Primitives.Test.Benchmark.Configuration {
+extension Test.Test.Benchmark.Configuration {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -11,10 +11,10 @@ extension Test_Primitives.Test.Benchmark.Configuration {
 
 // MARK: - Unit
 
-extension Test_Primitives.Test.Benchmark.Configuration.Test.Unit {
+extension Test.Test.Benchmark.Configuration.Test.Unit {
     @Test
     func `default values match specification`() {
-        let config = Test_Primitives.Test.Benchmark.Configuration()
+        let config = Test.Test.Benchmark.Configuration()
         #expect(config.iteration.count == 10)
         #expect(config.iteration.warmup == 0)
         #expect(config.evaluation.printResults == true)
@@ -24,7 +24,7 @@ extension Test_Primitives.Test.Benchmark.Configuration.Test.Unit {
 
     @Test
     func `custom init stores all values`() {
-        let config = Test_Primitives.Test.Benchmark.Configuration(
+        let config = Test.Test.Benchmark.Configuration(
             iteration: .init(count: 50, warmup: 5),
             evaluation: .init(
                 threshold: .milliseconds(100),
@@ -41,11 +41,11 @@ extension Test_Primitives.Test.Benchmark.Configuration.Test.Unit {
 
     @Test
     func `Hashable equal configs hash equally`() {
-        let a = Test_Primitives.Test.Benchmark.Configuration(
+        let a = Test.Test.Benchmark.Configuration(
             iteration: .init(count: 10, warmup: 0),
             evaluation: .init(metric: .median)
         )
-        let b = Test_Primitives.Test.Benchmark.Configuration(
+        let b = Test.Test.Benchmark.Configuration(
             iteration: .init(count: 10, warmup: 0),
             evaluation: .init(metric: .median)
         )
@@ -54,7 +54,7 @@ extension Test_Primitives.Test.Benchmark.Configuration.Test.Unit {
 
     @Test
     func `Equatable configs`() {
-        let a = Test_Primitives.Test.Benchmark.Configuration(
+        let a = Test.Test.Benchmark.Configuration(
             iteration: .init(count: 25, warmup: 2),
             evaluation: .init(
                 threshold: .milliseconds(500),
@@ -62,7 +62,7 @@ extension Test_Primitives.Test.Benchmark.Configuration.Test.Unit {
                 printResults: false
             )
         )
-        let b = Test_Primitives.Test.Benchmark.Configuration(
+        let b = Test.Test.Benchmark.Configuration(
             iteration: .init(count: 25, warmup: 2),
             evaluation: .init(
                 threshold: .milliseconds(500),
@@ -76,13 +76,13 @@ extension Test_Primitives.Test.Benchmark.Configuration.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Benchmark.Configuration.Test.`Edge Case` {
+extension Test.Test.Benchmark.Configuration.Test.`Edge Case` {
     @Test
     func `different configs are not equal`() {
-        let a = Test_Primitives.Test.Benchmark.Configuration(
+        let a = Test.Test.Benchmark.Configuration(
             iteration: .init(count: 10)
         )
-        let b = Test_Primitives.Test.Benchmark.Configuration(
+        let b = Test.Test.Benchmark.Configuration(
             iteration: .init(count: 20)
         )
         #expect(a != b)
@@ -90,7 +90,7 @@ extension Test_Primitives.Test.Benchmark.Configuration.Test.`Edge Case` {
 
     @Test
     func `config without threshold`() {
-        let config = Test_Primitives.Test.Benchmark.Configuration(
+        let config = Test.Test.Benchmark.Configuration(
             evaluation: .init(threshold: nil)
         )
         #expect(config.evaluation.threshold == nil)

@@ -9,7 +9,7 @@
 //
 // ===----------------------------------------------------------------------===//
 
-public import Test_Primitives
+public import Test
 
 extension Test {
     /// A test registration record created by @Test macro expansion.

@@ -5,7 +5,7 @@
 //  Tree node value for hierarchical test plans.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Test.Plan {
     /// A node in the hierarchical test plan tree.

@@ -9,11 +9,11 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Binary_Primitives
+import Binary
 import Console
-import Format_Primitives
+import Format
 import IEC_80000_13_Formatting
-import Time_Primitives
+import Time
 
 extension Tests {
     /// Print a performance measurement summary

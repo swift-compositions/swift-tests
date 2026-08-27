@@ -5,7 +5,7 @@
 //  L3 event kinds for structured test data.
 //
 
-import Test_Primitives
+import Test
 
 extension Tagged where Tag == Test.Event, Underlying == Swift.String {
 

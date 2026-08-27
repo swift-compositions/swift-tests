@@ -9,7 +9,7 @@
 //
 // ===----------------------------------------------------------------------===//
 
-internal import ASCII_Primitives
+internal import ASCII
 
 extension Test {
     /// FourCC record kind values for test content records.

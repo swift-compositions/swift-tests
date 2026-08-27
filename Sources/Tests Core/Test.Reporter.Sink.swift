@@ -5,7 +5,7 @@
 //  ~Copyable event sink with witness-based storage.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Test.Reporter {
     /// A sink that receives test events.

@@ -5,7 +5,7 @@
 //  Namespace for test requirement types.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Test {
     /// Namespace for test requirement types.

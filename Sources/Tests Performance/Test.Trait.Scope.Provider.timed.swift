@@ -9,7 +9,7 @@ import Clocks
 import File_System
 import IO
 import Kernel
-import Memory
+import Memory_Mapping
 import Thread_Pool
 
 extension Test.Trait.Scope.Provider {
@@ -47,9 +47,9 @@ extension Test.Trait.Scope.Provider {
                 config.evaluation.trackAllocations
                 ? Memory.Allocation.Statistics.capture()
                 : nil
-            let start = Clock_Primitives.Clock.Continuous.now
+            let start = Clock.Clock.Continuous.now
             try await operation()
-            durations.append(Clock_Primitives.Clock.Continuous.now - start)
+            durations.append(Clock.Clock.Continuous.now - start)
             if let before {
                 let after = Memory.Allocation.Statistics.capture()
                 allocationStats?.append(Memory.Allocation.Statistics.delta(from: before, to: after))

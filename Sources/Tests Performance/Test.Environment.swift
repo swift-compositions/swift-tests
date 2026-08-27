@@ -1,6 +1,6 @@
 public import Kernel
-import Tagged_Primitives
-import Time_Primitives
+import Tagged
+import Time
 
 extension Test {
     /// Runtime and compile-time environment fingerprint for performance diagnostics.

@@ -12,7 +12,7 @@ struct `Test.Snapshot.Redaction+JSON Tests` {
 extension `Test.Snapshot.Redaction+JSON Tests`.Unit {
 
     @Test func `json path replaces simple key`() {
-        let redaction = Test_Primitives.Test.Snapshot.Redaction<Swift.String>.json(
+        let redaction = Test.Test.Snapshot.Redaction<Swift.String>.json(
             path: "id",
             replacement: "[id]"
         )
@@ -23,7 +23,7 @@ extension `Test.Snapshot.Redaction+JSON Tests`.Unit {
     }
 
     @Test func `json path replaces nested key`() {
-        let redaction = Test_Primitives.Test.Snapshot.Redaction<Swift.String>.json(
+        let redaction = Test.Test.Snapshot.Redaction<Swift.String>.json(
             path: "user.id",
             replacement: "[uuid]"
         )
@@ -34,7 +34,7 @@ extension `Test.Snapshot.Redaction+JSON Tests`.Unit {
     }
 
     @Test func `json path replaces array element`() {
-        let redaction = Test_Primitives.Test.Snapshot.Redaction<Swift.String>.json(
+        let redaction = Test.Test.Snapshot.Redaction<Swift.String>.json(
             path: "items.0",
             replacement: "[first]"
         )
@@ -46,7 +46,7 @@ extension `Test.Snapshot.Redaction+JSON Tests`.Unit {
     }
 
     @Test func `json glob replaces recursive descent`() {
-        let redaction = Test_Primitives.Test.Snapshot.Redaction<Swift.String>.json(
+        let redaction = Test.Test.Snapshot.Redaction<Swift.String>.json(
             glob: "**.created_at",
             replacement: "[timestamp]"
         )
@@ -58,7 +58,7 @@ extension `Test.Snapshot.Redaction+JSON Tests`.Unit {
     }
 
     @Test func `json glob replaces single level wildcard`() {
-        let redaction = Test_Primitives.Test.Snapshot.Redaction<Swift.String>.json(
+        let redaction = Test.Test.Snapshot.Redaction<Swift.String>.json(
             glob: "meta.*",
             replacement: "[redacted]"
         )
@@ -69,7 +69,7 @@ extension `Test.Snapshot.Redaction+JSON Tests`.Unit {
     }
 
     @Test func `json dynamic replacement receives current value`() {
-        let redaction = Test_Primitives.Test.Snapshot.Redaction<Swift.String>.json(
+        let redaction = Test.Test.Snapshot.Redaction<Swift.String>.json(
             path: "count"
         ) { value in
             "[was:\(value)]"
@@ -80,7 +80,7 @@ extension `Test.Snapshot.Redaction+JSON Tests`.Unit {
     }
 
     @Test func `json path on missing key returns unchanged`() {
-        let redaction = Test_Primitives.Test.Snapshot.Redaction<Swift.String>.json(
+        let redaction = Test.Test.Snapshot.Redaction<Swift.String>.json(
             path: "nonexistent.key",
             replacement: "[replaced]"
         )
@@ -91,7 +91,7 @@ extension `Test.Snapshot.Redaction+JSON Tests`.Unit {
     }
 
     @Test func `json redaction on invalid JSON returns input unchanged`() {
-        let redaction = Test_Primitives.Test.Snapshot.Redaction<Swift.String>.json(
+        let redaction = Test.Test.Snapshot.Redaction<Swift.String>.json(
             path: "id",
             replacement: "[id]"
         )

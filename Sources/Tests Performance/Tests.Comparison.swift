@@ -6,9 +6,9 @@
 //
 
 import Console
-import Format_Primitives
-public import Sample_Primitives
-public import Time_Primitives
+import Format
+public import Sample
+public import Time
 
 extension Tests {
     /// Performance comparison report between current and baseline measurements.

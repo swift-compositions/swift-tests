@@ -6,8 +6,8 @@
 //
 
 import Console
-import Format_Primitives
-import Time_Primitives
+import Format
+import Time
 
 extension Tests.Diagnostic {
     /// Prints a summary comparison table from an array of diagnostics.

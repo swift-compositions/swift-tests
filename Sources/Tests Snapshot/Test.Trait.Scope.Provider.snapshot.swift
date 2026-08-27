@@ -5,7 +5,7 @@
 //  Scope provider for snapshot configuration injection.
 //
 
-import Dependency_Primitives
+import Dependency
 
 extension Test.Trait.Scope.Provider {
     /// Scope provider that injects snapshot configuration into the dependency scope.

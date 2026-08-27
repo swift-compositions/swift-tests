@@ -5,9 +5,9 @@
 //  Errors from inline snapshot source rewriting.
 //
 
-public import Test_Primitives
+public import Test
 
-extension Test_Primitives.Test.Snapshot.Inline.Rewriter {
+extension Test.Test.Snapshot.Inline.Rewriter {
     /// Errors that occur during inline snapshot source file rewriting.
     public enum Error: Swift.Error, Sendable {
         /// Failed to read the source file.

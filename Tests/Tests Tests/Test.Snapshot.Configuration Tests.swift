@@ -1,7 +1,7 @@
 import Testing
 import Tests_Test_Support
 
-extension Test_Primitives.Test.Snapshot.Configuration {
+extension Test.Test.Snapshot.Configuration {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -11,28 +11,28 @@ extension Test_Primitives.Test.Snapshot.Configuration {
 
 // MARK: - Unit
 
-extension Test_Primitives.Test.Snapshot.Configuration.Test.Unit {
+extension Test.Test.Snapshot.Configuration.Test.Unit {
     @Test
     func `default uses missing recording mode`() {
-        let config = Test_Primitives.Test.Snapshot.Configuration.default
+        let config = Test.Test.Snapshot.Configuration.default
         #expect(config.recording == .missing)
     }
 
     @Test
     func `init stores custom values`() {
-        let config = Test_Primitives.Test.Snapshot.Configuration(recording: .all)
+        let config = Test.Test.Snapshot.Configuration(recording: .all)
         #expect(config.recording == .all)
     }
 
     @Test
     func `resolve returns explicit when provided`() {
-        let result = Test_Primitives.Test.Snapshot.Configuration.resolve(recording: .all)
+        let result = Test.Test.Snapshot.Configuration.resolve(recording: .all)
         #expect(result == .all)
     }
 
     @Test
     func `resolve returns missing as default fallback`() {
-        let result = Test_Primitives.Test.Snapshot.Configuration.resolve(recording: nil)
+        let result = Test.Test.Snapshot.Configuration.resolve(recording: nil)
         // Without task-local or env var, falls back to .missing
         #expect(result == .missing)
     }
@@ -40,10 +40,10 @@ extension Test_Primitives.Test.Snapshot.Configuration.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Snapshot.Configuration.Test.`Edge Case` {
+extension Test.Test.Snapshot.Configuration.Test.`Edge Case` {
     @Test
     func `snapshotDirectory defaults to nil`() {
-        let config = Test_Primitives.Test.Snapshot.Configuration.default
+        let config = Test.Test.Snapshot.Configuration.default
         #expect(config.snapshotDirectory == nil)
     }
 }

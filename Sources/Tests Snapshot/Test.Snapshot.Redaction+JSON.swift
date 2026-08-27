@@ -6,7 +6,7 @@
 //
 
 import JSON
-public import Test_Primitives
+public import Test
 
 // MARK: - JSON Path Redaction
 

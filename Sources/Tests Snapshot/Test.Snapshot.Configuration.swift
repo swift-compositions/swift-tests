@@ -5,12 +5,12 @@
 //  Task-local snapshot testing configuration.
 //
 
-public import Dependency_Primitives
+public import Dependency
 public import File_System
 internal import Kernel
 import Standard_Library_Extensions
 internal import Strings
-public import Test_Primitives
+public import Test
 
 extension Test.Snapshot {
     /// Runtime configuration for snapshot testing.

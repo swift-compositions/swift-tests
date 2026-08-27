@@ -18,7 +18,7 @@
 
 import Kernel
 import Synchronization
-import Test_Primitives
+import Test
 
 extension Test.Reporter {
     /// Creates a JSON reporter.

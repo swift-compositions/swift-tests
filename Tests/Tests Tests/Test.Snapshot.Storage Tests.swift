@@ -2,7 +2,7 @@ import Paths
 import Testing
 import Tests_Test_Support
 
-extension Test_Primitives.Test.Snapshot.Storage {
+extension Test.Test.Snapshot.Storage {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -12,10 +12,10 @@ extension Test_Primitives.Test.Snapshot.Storage {
 
 // MARK: - Unit
 
-extension Test_Primitives.Test.Snapshot.Storage.Test.Unit {
+extension Test.Test.Snapshot.Storage.Test.Unit {
     @Test
     func `path is flat under .snapshots by default`() {
-        let path = Test_Primitives.Test.Snapshot.Storage.path(
+        let path = Test.Test.Snapshot.Storage.path(
             testFilePath: "/path/to/MyTests.swift",
             function: "testExample()",
             name: "my-snapshot",
@@ -29,7 +29,7 @@ extension Test_Primitives.Test.Snapshot.Storage.Test.Unit {
     @Test
     func `path uses custom snapshot directory when provided`() {
         let customDir = File.Path("/custom/snapshots")
-        let path = Test_Primitives.Test.Snapshot.Storage.path(
+        let path = Test.Test.Snapshot.Storage.path(
             testFilePath: "/path/to/MyTests.swift",
             function: "testExample()",
             name: "my-snapshot",
@@ -43,7 +43,7 @@ extension Test_Primitives.Test.Snapshot.Storage.Test.Unit {
     @Test
     func `path uses subdirectory when provided`() throws {
         let sub = try File.Path.Component("PDF.Test.Snapshot")
-        let path = Test_Primitives.Test.Snapshot.Storage.path(
+        let path = Test.Test.Snapshot.Storage.path(
             testFilePath: "/path/to/Tests.swift",
             function: "testExample()",
             name: "my-snapshot",
@@ -57,7 +57,7 @@ extension Test_Primitives.Test.Snapshot.Storage.Test.Unit {
 
     @Test
     func `unnamed path uses function and counter`() {
-        let path = Test_Primitives.Test.Snapshot.Storage.path(
+        let path = Test.Test.Snapshot.Storage.path(
             testFilePath: "/path/to/Tests.swift",
             function: "testFoo(bar:)",
             name: nil,
@@ -70,7 +70,7 @@ extension Test_Primitives.Test.Snapshot.Storage.Test.Unit {
 
     @Test
     func `named path uses name directly without function prefix`() {
-        let path = Test_Primitives.Test.Snapshot.Storage.path(
+        let path = Test.Test.Snapshot.Storage.path(
             testFilePath: "/path/to/Tests.swift",
             function: "testExample()",
             name: "user-profile",
@@ -84,11 +84,11 @@ extension Test_Primitives.Test.Snapshot.Storage.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Snapshot.Storage.Test.`Edge Case` {
+extension Test.Test.Snapshot.Storage.Test.`Edge Case` {
     @Test
     func `subdirectory combined with custom snapshot directory`() throws {
         let sub = try File.Path.Component("MyType")
-        let path = Test_Primitives.Test.Snapshot.Storage.path(
+        let path = Test.Test.Snapshot.Storage.path(
             testFilePath: "/path/to/Tests.swift",
             function: "testExample()",
             name: "output",

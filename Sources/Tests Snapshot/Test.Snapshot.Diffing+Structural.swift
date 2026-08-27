@@ -5,10 +5,10 @@
 //  Structural JSON diffing — tree-aware comparison.
 //
 
-import Byte_Primitives_Standard_Library_Integration
+import Byte_Standard_Library_Integration
 import JSON
-public import Test_Primitives
-internal import Tree_Keyed_Primitives
+public import Test
+internal import Tree_Keyed
 
 // MARK: - Structural JSON Diffing
 

@@ -1,7 +1,7 @@
-import Cardinal_Primitives
+import Cardinal
 import Console
-import Format_Primitives
-import Tagged_Primitives
+import Format
+import Tagged
 
 extension Tests.Diagnostic {
 

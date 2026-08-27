@@ -5,7 +5,7 @@
 //  Error thrown when a test requirement fails.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Test.Requirement {
     /// Error thrown when a requirement fails.

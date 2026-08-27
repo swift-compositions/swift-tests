@@ -13,14 +13,14 @@ extension TestRequireTests.Runner {
 
     @Test
     func `failing require causes test failure`() async {
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
         registry.add(id: .stub("failingRequire")) {
             try require(false)
         }
         let plan = registry.finalize()
 
         let (reporter, _) = SpyReporter.make()
-        let runner = Test_Primitives.Test.Runner(reporter: reporter)
+        let runner = Test.Test.Runner(reporter: reporter)
         let result = await runner.run(plan)
 
         #expect(result.hasFailures)
@@ -29,14 +29,14 @@ extension TestRequireTests.Runner {
 
     @Test
     func `failing require emits expectationChecked event`() async {
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
         registry.add(id: .stub("requireEvent")) {
             try require(false)
         }
         let plan = registry.finalize()
 
         let (reporter, spy) = SpyReporter.make()
-        let runner = Test_Primitives.Test.Runner(reporter: reporter)
+        let runner = Test.Test.Runner(reporter: reporter)
         _ = await runner.run(plan)
 
         let expectationEvents = spy.events.filter {
@@ -50,14 +50,14 @@ extension TestRequireTests.Runner {
 
     @Test
     func `failing require emits issueRecorded with expectationFailed`() async {
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
         registry.add(id: .stub("requireIssue")) {
             try require(false)
         }
         let plan = registry.finalize()
 
         let (reporter, spy) = SpyReporter.make()
-        let runner = Test_Primitives.Test.Runner(reporter: reporter)
+        let runner = Test.Test.Runner(reporter: reporter)
         _ = await runner.run(plan)
 
         let expectationFailedIssues = spy.events.filter {
@@ -73,14 +73,14 @@ extension TestRequireTests.Runner {
 
     @Test
     func `failing require does not emit redundant errorCaught`() async {
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
         registry.add(id: .stub("noRedundant")) {
             try require(false)
         }
         let plan = registry.finalize()
 
         let (reporter, spy) = SpyReporter.make()
-        let runner = Test_Primitives.Test.Runner(reporter: reporter)
+        let runner = Test.Test.Runner(reporter: reporter)
         _ = await runner.run(plan)
 
         let errorCaughtIssues = spy.events.filter {
@@ -98,14 +98,14 @@ extension TestRequireTests.Runner {
     func `independent throw still emits errorCaught`() async {
         struct TestError: Swift.Error {}
 
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
         registry.add(id: .stub("independentThrow")) {
             throw TestError()
         }
         let plan = registry.finalize()
 
         let (reporter, spy) = SpyReporter.make()
-        let runner = Test_Primitives.Test.Runner(reporter: reporter)
+        let runner = Test.Test.Runner(reporter: reporter)
         _ = await runner.run(plan)
 
         let errorCaughtIssues = spy.events.filter {
@@ -121,14 +121,14 @@ extension TestRequireTests.Runner {
 
     @Test
     func `passing require records passing expectation`() async {
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
         registry.add(id: .stub("passingRequire")) {
             try require(true)
         }
         let plan = registry.finalize()
 
         let (reporter, spy) = SpyReporter.make()
-        let runner = Test_Primitives.Test.Runner(reporter: reporter)
+        let runner = Test.Test.Runner(reporter: reporter)
         let result = await runner.run(plan)
 
         #expect(result.allPassed)
@@ -149,8 +149,8 @@ extension TestRequireTests.Unit {
 
     @Test
     func `require registers with collector when present`() {
-        let collector = Test_Primitives.Test.Expectation.Collector()
-        Test_Primitives.Test.Expectation.Collector.with(collector) {
+        let collector = Test.Test.Expectation.Collector()
+        Test.Test.Expectation.Collector.with(collector) {
             try? require(true)
             try? require(false)
         }
@@ -164,8 +164,8 @@ extension TestRequireTests.Unit {
 
     @Test
     func `require unwrap registers with collector`() {
-        let collector = Test_Primitives.Test.Expectation.Collector()
-        Test_Primitives.Test.Expectation.Collector.with(collector) {
+        let collector = Test.Test.Expectation.Collector()
+        Test.Test.Expectation.Collector.with(collector) {
             _ = try? require(Optional(42))
             _ = try? require(nil as Int?)
         }
@@ -179,8 +179,8 @@ extension TestRequireTests.Unit {
 
     @Test
     func `require equality registers with collector`() {
-        let collector = Test_Primitives.Test.Expectation.Collector()
-        Test_Primitives.Test.Expectation.Collector.with(collector) {
+        let collector = Test.Test.Expectation.Collector()
+        Test.Test.Expectation.Collector.with(collector) {
             try? require(1, equals: 1)
             try? require(1, equals: 2)
         }

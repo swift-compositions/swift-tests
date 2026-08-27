@@ -9,7 +9,7 @@
 //
 // ===----------------------------------------------------------------------===//
 
-public import Time_Primitives
+public import Time
 
 extension Tests {
     /// Assert that an operation completes within a duration threshold

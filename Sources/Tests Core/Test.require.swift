@@ -5,7 +5,7 @@
 //  Requirement API for test assertions with typed throws.
 //
 
-public import Test_Primitives
+public import Test
 
 // MARK: - Require Functions
 

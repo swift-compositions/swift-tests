@@ -5,8 +5,8 @@
 //  Policy-based interpretation of complexity evidence.
 //
 
-import Sample_Primitives
-public import Test_Primitives
+import Sample
+public import Test
 
 extension Tests.Complexity {
     /// Interprets raw complexity evidence under a policy to produce a result.

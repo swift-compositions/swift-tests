@@ -5,7 +5,7 @@
 //  Reporter factory type.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Test {
     /// A factory for creating test event sinks.

@@ -10,7 +10,7 @@ import Real_Primitives
 import Testing
 import Tests_Test_Support
 
-private typealias SUT = Test_Primitives.Test
+private typealias SUT = Test.Test
 
 @Suite
 struct `Complexity Classify Tests` {

@@ -1,7 +1,7 @@
 import Testing
 import Tests_Test_Support
 
-extension Test_Primitives.Test.Requirement.Failed {
+extension Test.Test.Requirement.Failed {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -10,7 +10,7 @@ extension Test_Primitives.Test.Requirement.Failed {
 
 // MARK: - Unit
 
-extension Test_Primitives.Test.Requirement.Failed.Test.Unit {
+extension Test.Test.Requirement.Failed.Test.Unit {
     @Test
     func `init stores message and sourceLocation`() {
         let location = Source.Location(
@@ -18,8 +18,8 @@ extension Test_Primitives.Test.Requirement.Failed.Test.Unit {
             line: 42,
             column: 5
         )
-        let message = Test_Primitives.Test.Text("requirement not met")
-        let failed = Test_Primitives.Test.Requirement.Failed(
+        let message = Test.Test.Text("requirement not met")
+        let failed = Test.Test.Requirement.Failed(
             message: message,
             sourceLocation: location
         )
@@ -35,8 +35,8 @@ extension Test_Primitives.Test.Requirement.Failed.Test.Unit {
             line: 10,
             column: 1
         )
-        let failed = Test_Primitives.Test.Requirement.Failed(
-            message: Test_Primitives.Test.Text("expected true"),
+        let failed = Test.Test.Requirement.Failed(
+            message: Test.Test.Text("expected true"),
             sourceLocation: location
         )
         #expect(failed.description.contains("expected true"))
@@ -49,8 +49,8 @@ extension Test_Primitives.Test.Requirement.Failed.Test.Unit {
             line: 99,
             column: 3
         )
-        let failed = Test_Primitives.Test.Requirement.Failed(
-            message: Test_Primitives.Test.Text("failed"),
+        let failed = Test.Test.Requirement.Failed(
+            message: Test.Test.Text("failed"),
             sourceLocation: location
         )
         let desc = failed.description

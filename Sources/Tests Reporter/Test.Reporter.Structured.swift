@@ -8,7 +8,7 @@
 import JSON
 import Kernel
 import Synchronization
-import Test_Primitives
+import Test
 
 extension Test.Reporter {
     /// Creates a structured JSONL reporter.

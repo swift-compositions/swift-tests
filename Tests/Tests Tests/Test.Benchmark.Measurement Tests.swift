@@ -1,6 +1,6 @@
 import Testing
 import Tests_Test_Support
-import Time_Primitives
+import Time
 
 // NOTE: Test.Benchmark.Measurement already carries a Test suite (see
 // "Tests.Measurement Tests.swift"). Per [SWIFT-TEST-002] collision rule
@@ -8,10 +8,10 @@ import Time_Primitives
 // merged directly into the existing Test.Unit / Test.EdgeCase categories
 // rather than declaring a second Test suite for the same type.
 
-extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
+extension Test.Test.Benchmark.Measurement.Test.Unit {
     @Test
     func `min max median mean compute correctly`() {
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
+        let measurement = Test.Test.Benchmark.Measurement(durations: [
             .milliseconds(10), .milliseconds(5), .milliseconds(20),
         ])
         #expect(measurement.min == .milliseconds(5))
@@ -26,7 +26,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
     @Test
     func `percentiles at known indices`() {
         let durations = (0..<100).map { Duration.milliseconds($0) }
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: durations)
+        let measurement = Test.Test.Benchmark.Measurement(durations: durations)
 
         #expect(measurement.p75 == .milliseconds(75))
         #expect(measurement.p90 == .milliseconds(90))
@@ -36,7 +36,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
     @Test
     func `standardDeviation for known distribution`() {
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
+        let measurement = Test.Test.Benchmark.Measurement(durations: [
             .seconds(5), .seconds(5), .seconds(5),
         ])
         #expect(measurement.standardDeviation == .zero)
@@ -45,10 +45,10 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Test_Primitives.Test.Benchmark.Measurement.Test.`Edge Case` {
+extension Test.Test.Benchmark.Measurement.Test.`Edge Case` {
     @Test
     func `empty durations returns zero`() {
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [])
+        let measurement = Test.Test.Benchmark.Measurement(durations: [])
         #expect(measurement.min == .zero)
         #expect(measurement.max == .zero)
         #expect(measurement.median == .zero)
@@ -58,7 +58,7 @@ extension Test_Primitives.Test.Benchmark.Measurement.Test.`Edge Case` {
 
     @Test
     func `single duration for all metrics`() {
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(
+        let measurement = Test.Test.Benchmark.Measurement(
             durations: [.milliseconds(42)]
         )
         #expect(measurement.min == .milliseconds(42))

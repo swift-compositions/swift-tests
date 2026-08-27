@@ -5,7 +5,7 @@
 //  Reporter that forwards events to two reporters.
 //
 
-import Test_Primitives
+import Test
 
 extension Test.Reporter {
     /// Creates a reporter that forwards events to both reporters.

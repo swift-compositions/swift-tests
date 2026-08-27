@@ -5,11 +5,11 @@
 //  JSON.Serializable conformance for Test.Environment.
 //
 
-import Cardinal_Primitives
+import Cardinal
 public import JSON
 public import Kernel
-import Tagged_Primitives
-import Time_Primitives
+import Tagged
+import Time
 
 extension Test.Environment: JSON.Serializable {
     /// Serializes the environment as a JSON object.

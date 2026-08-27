@@ -5,7 +5,7 @@
 //  A scope provider that wraps test execution.
 //
 
-public import Witness_Primitives
+public import Witness
 
 extension Test.Trait.Scope {
     /// A scope provider that wraps test execution with trait-specific behavior.

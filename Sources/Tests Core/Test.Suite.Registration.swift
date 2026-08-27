@@ -9,7 +9,7 @@
 //
 // ===----------------------------------------------------------------------===//
 
-public import Test_Primitives
+public import Test
 
 extension Test.Suite {
     /// A suite registration record created by @Suite macro expansion.

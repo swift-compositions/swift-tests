@@ -15,10 +15,10 @@ extension Tests.History.Record.Test.Unit {
     @Test
     func `serialize roundtrip preserves all fields`() throws {
         let id = Tests_Core.Test.ID.stub("benchTest", module: "MyModule", suite: "MySuite")
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
+        let measurement = Test.Test.Benchmark.Measurement(durations: [
             .milliseconds(10), .milliseconds(12), .milliseconds(11),
         ])
-        let environment = Test_Primitives.Test.Environment.capture()
+        let environment = Test.Test.Environment.capture()
 
         let original = Tests.History.Record(
             // swiftlint:disable:next force_try
@@ -57,10 +57,10 @@ extension Tests.History.Record.Test.Unit {
     @Test
     func `serialize roundtrip preserves metric value`() throws {
         let id = Tests_Core.Test.ID.stub("t", module: "M")
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [
+        let measurement = Test.Test.Benchmark.Measurement(durations: [
             .milliseconds(50)
         ])
-        let environment = Test_Primitives.Test.Environment.capture()
+        let environment = Test.Test.Environment.capture()
 
         let original = Tests.History.Record(
             timestamp: Instant(secondsSinceUnixEpoch: 1_710_100_000),
@@ -83,10 +83,10 @@ extension Tests.History.Record.Test.Unit {
     @Test
     func `all metric cases roundtrip`() throws {
         let id = Tests_Core.Test.ID.stub("t", module: "M")
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [.seconds(1)])
-        let environment = Test_Primitives.Test.Environment.capture()
+        let measurement = Test.Test.Benchmark.Measurement(durations: [.seconds(1)])
+        let environment = Test.Test.Environment.capture()
 
-        let metrics: [Test_Primitives.Test.Benchmark.Metric] = [
+        let metrics: [Test.Test.Benchmark.Metric] = [
             .min, .max, .median, .mean, .p50, .p75, .p90, .p95, .p99, .p999,
         ]
 
@@ -119,8 +119,8 @@ extension Tests.History.Record.Test.`Edge Case` {
     @Test
     func `roundtrip with nil suite`() throws {
         let id = Tests_Core.Test.ID.stub("t", module: "M")
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [.seconds(1)])
-        let environment = Test_Primitives.Test.Environment.capture()
+        let measurement = Test.Test.Benchmark.Measurement(durations: [.seconds(1)])
+        let environment = Test.Test.Environment.capture()
 
         let record = Tests.History.Record(
             timestamp: Instant(secondsSinceUnixEpoch: 1),
@@ -142,8 +142,8 @@ extension Tests.History.Record.Test.`Edge Case` {
     @Test
     func `roundtrip with nil optional fields`() throws {
         let id = Tests_Core.Test.ID.stub("t", module: "M")
-        let measurement = Test_Primitives.Test.Benchmark.Measurement(durations: [.seconds(1)])
-        let environment = Test_Primitives.Test.Environment.capture()
+        let measurement = Test.Test.Benchmark.Measurement(durations: [.seconds(1)])
+        let environment = Test.Test.Environment.capture()
 
         let record = Tests.History.Record(
             timestamp: Instant(secondsSinceUnixEpoch: 1),

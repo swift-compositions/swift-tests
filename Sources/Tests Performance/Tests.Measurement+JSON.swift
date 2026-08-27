@@ -6,7 +6,7 @@
 //
 
 public import JSON
-import Time_Primitives
+import Time
 
 extension Test.Benchmark.Measurement: JSON.Serializable {
     /// Serializes a measurement as a JSON object with a durations array.

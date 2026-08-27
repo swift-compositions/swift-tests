@@ -9,11 +9,11 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Binary_Primitives
-import Dependency_Primitives
-import Format_Primitives
+import Binary
+import Dependency
+import Format
 import IEC_80000_13_Formatting
-import Memory
+import Memory_Mapping
 
 // MARK: - Error Types
 

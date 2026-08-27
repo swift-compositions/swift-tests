@@ -2,22 +2,22 @@ import JSON
 import Testing
 import Tests_Test_Support
 
-extension Test_Primitives.Test.Environment.Test {
+extension Test.Test.Environment.Test {
     @Suite struct JSON {}
 }
 
 // MARK: - JSON
 
-extension Test_Primitives.Test.Environment.Test.JSON {
+extension Test.Test.Environment.Test.JSON {
     @Test
     func `serialize and deserialize preserves all fields`() throws {
         // `Test` here names this suite's enclosing Suite (see Test.Environment
-        // Tests.swift), which shadows the top-level `Test_Primitives.Test`
+        // Tests.swift), which shadows the top-level `Test.Test`
         // namespace, so the source type must be qualified from the module root.
-        let original = Test_Primitives.Test.Environment.capture()
+        let original = Test.Test.Environment.capture()
 
-        let json = Test_Primitives.Test.Environment.serialize(original)
-        let roundtripped = try Test_Primitives.Test.Environment.deserialize(json)
+        let json = Test.Test.Environment.serialize(original)
+        let roundtripped = try Test.Test.Environment.deserialize(json)
 
         #expect(roundtripped.architecture == original.architecture)
         #expect(roundtripped.physicalCPUCount == original.physicalCPUCount)
@@ -31,10 +31,10 @@ extension Test_Primitives.Test.Environment.Test.JSON {
 
     @Test
     func `features roundtrip correctly`() throws {
-        let original = Test_Primitives.Test.Environment.capture()
+        let original = Test.Test.Environment.capture()
 
-        let json = Test_Primitives.Test.Environment.serialize(original)
-        let roundtripped = try Test_Primitives.Test.Environment.deserialize(json)
+        let json = Test.Test.Environment.serialize(original)
+        let roundtripped = try Test.Test.Environment.deserialize(json)
 
         #expect(
             roundtripped.features.nonisolatedNonsendingByDefault
@@ -52,7 +52,7 @@ extension Test_Primitives.Test.Environment.Test.JSON {
             ("architecture", .string("arm64"))
         ])
         #expect(throws: JSON.Error.self) {
-            _ = try Test_Primitives.Test.Environment.deserialize(incomplete)
+            _ = try Test.Test.Environment.deserialize(incomplete)
         }
     }
 }

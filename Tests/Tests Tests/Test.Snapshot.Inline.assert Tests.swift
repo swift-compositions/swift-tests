@@ -2,7 +2,7 @@ import Testing
 import Tests_Inline_Snapshot
 import Tests_Test_Support
 
-extension Test_Primitives.Test.Snapshot.Inline {
+extension Test.Test.Snapshot.Inline {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -11,12 +11,12 @@ extension Test_Primitives.Test.Snapshot.Inline {
 
 // MARK: - Unit
 
-extension Test_Primitives.Test.Snapshot.Inline.Test.Unit {
+extension Test.Test.Snapshot.Inline.Test.Unit {
 
     @Test
     func `snapshot registers passing expectation with collector`() {
-        let collector = Test_Primitives.Test.Expectation.Collector()
-        Test_Primitives.Test.Expectation.Collector.with(collector) {
+        let collector = Test.Test.Expectation.Collector()
+        Test.Test.Expectation.Collector.with(collector) {
             snapshot(as: .lines, record: .never, { "hello" }, matches: { "hello" })
         }
         let expectations = collector.drain()
@@ -28,8 +28,8 @@ extension Test_Primitives.Test.Snapshot.Inline.Test.Unit {
 
     @Test
     func `snapshot registers failing expectation with collector`() {
-        let collector = Test_Primitives.Test.Expectation.Collector()
-        Test_Primitives.Test.Expectation.Collector.with(collector) {
+        let collector = Test.Test.Expectation.Collector()
+        Test.Test.Expectation.Collector.with(collector) {
             snapshot(as: .lines, record: .never, { "hello" }, matches: { "world" })
         }
         let expectations = collector.drain()
@@ -41,8 +41,8 @@ extension Test_Primitives.Test.Snapshot.Inline.Test.Unit {
 
     @Test
     func `snapshot registers multiple expectations with collector`() {
-        let collector = Test_Primitives.Test.Expectation.Collector()
-        Test_Primitives.Test.Expectation.Collector.with(collector) {
+        let collector = Test.Test.Expectation.Collector()
+        Test.Test.Expectation.Collector.with(collector) {
             snapshot(as: .lines, record: .never, { "hello" }, matches: { "hello" })
             snapshot(as: .lines, record: .never, { "hello" }, matches: { "world" })
             snapshot(as: .lines, record: .never, { "foo" }, matches: { "foo" })
@@ -58,8 +58,8 @@ extension Test_Primitives.Test.Snapshot.Inline.Test.Unit {
 
     @Test
     func `async snapshot registers with collector`() async {
-        let collector = Test_Primitives.Test.Expectation.Collector()
-        await Test_Primitives.Test.Expectation.Collector.with(collector) {
+        let collector = Test.Test.Expectation.Collector()
+        await Test.Test.Expectation.Collector.with(collector) {
             await snapshot(as: .lines, record: .never, { "hello" }, matches: { "hello" })
             await snapshot(as: .lines, record: .never, { "hello" }, matches: { "world" })
         }

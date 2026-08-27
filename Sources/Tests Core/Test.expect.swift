@@ -5,7 +5,7 @@
 //  Expectation API for test assertions.
 //
 
-public import Test_Primitives
+public import Test
 
 // MARK: - Expect Functions
 

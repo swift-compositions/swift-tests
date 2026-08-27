@@ -13,7 +13,7 @@ struct `Test.Snapshot.Diffing+Structural Tests` {
 extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
 
     @Test func `identical JSON returns nil diff`() {
-        let diffing = Test_Primitives.Test.Snapshot.Diffing<Swift.String>.structuralJSON
+        let diffing = Test.Test.Snapshot.Diffing<Swift.String>.structuralJSON
         let result = diffing.diff(
             #"{"name":"Alice","age":30}"#,
             #"{"name":"Alice","age":30}"#
@@ -22,7 +22,7 @@ extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
     }
 
     @Test func `added key produces structural operation`() {
-        let diffing = Test_Primitives.Test.Snapshot.Diffing<Swift.String>.structuralJSON
+        let diffing = Test.Test.Snapshot.Diffing<Swift.String>.structuralJSON
         let result = diffing.diff(
             #"{"name":"Alice"}"#,
             #"{"name":"Alice","email":"a@b.com"}"#
@@ -42,7 +42,7 @@ extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
     }
 
     @Test func `removed key produces structural operation`() {
-        let diffing = Test_Primitives.Test.Snapshot.Diffing<Swift.String>.structuralJSON
+        let diffing = Test.Test.Snapshot.Diffing<Swift.String>.structuralJSON
         let result = diffing.diff(
             #"{"name":"Alice","age":30}"#,
             #"{"name":"Alice"}"#
@@ -61,7 +61,7 @@ extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
     }
 
     @Test func `modified value produces structural operation`() {
-        let diffing = Test_Primitives.Test.Snapshot.Diffing<Swift.String>.structuralJSON
+        let diffing = Test.Test.Snapshot.Diffing<Swift.String>.structuralJSON
         let result = diffing.diff(
             #"{"name":"Alice"}"#,
             #"{"name":"Bob"}"#
@@ -77,7 +77,7 @@ extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
     }
 
     @Test func `nested change produces correct path`() {
-        let diffing = Test_Primitives.Test.Snapshot.Diffing<Swift.String>.structuralJSON
+        let diffing = Test.Test.Snapshot.Diffing<Swift.String>.structuralJSON
         let result = diffing.diff(
             #"{"user":{"name":"Alice"}}"#,
             #"{"user":{"name":"Bob"}}"#
@@ -91,7 +91,7 @@ extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
     }
 
     @Test func `array element change uses index notation`() {
-        let diffing = Test_Primitives.Test.Snapshot.Diffing<Swift.String>.structuralJSON
+        let diffing = Test.Test.Snapshot.Diffing<Swift.String>.structuralJSON
         let result = diffing.diff(
             #"{"items":["apple","banana"]}"#,
             #"{"items":["apple","cherry"]}"#
@@ -114,7 +114,7 @@ extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
         // `.keyOccupied` on the second occurrence. The diffing strategy must
         // catch that typed failure and fall back to a line diff instead of
         // terminating, matching the invalid-JSON fallback below.
-        let diffing = Test_Primitives.Test.Snapshot.Diffing<Swift.String>.structuralJSON
+        let diffing = Test.Test.Snapshot.Diffing<Swift.String>.structuralJSON
         let result = diffing.diff(
             #"{"name":"Alice","name":"Alicia"}"#,
             #"{"name":"Bob","name":"Bobby"}"#
@@ -125,7 +125,7 @@ extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
     }
 
     @Test func `invalid JSON falls back to line diff`() {
-        let diffing = Test_Primitives.Test.Snapshot.Diffing<Swift.String>.structuralJSON
+        let diffing = Test.Test.Snapshot.Diffing<Swift.String>.structuralJSON
         let result = diffing.diff(
             "not json\nline 2",
             "not json\nline 3"
@@ -136,7 +136,7 @@ extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
     }
 
     @Test func `summary format shows count and operations`() {
-        let diffing = Test_Primitives.Test.Snapshot.Diffing<Swift.String>.structuralJSON
+        let diffing = Test.Test.Snapshot.Diffing<Swift.String>.structuralJSON
         let result = diffing.diff(
             #"{"a":1,"b":2}"#,
             #"{"a":1,"b":3,"c":4}"#
@@ -150,26 +150,26 @@ extension `Test.Snapshot.Diffing+Structural Tests`.Unit {
 extension `Test.Snapshot.Diffing+Structural Tests`.Integration {
 
     @Test func `structuralJSON strategy has json extension`() {
-        let strategy = Test_Primitives.Test.Snapshot.Strategy<Swift.String, Swift.String>
+        let strategy = Test.Test.Snapshot.Strategy<Swift.String, Swift.String>
             .structuralJSON
         #expect(strategy.pathExtension == "json")
     }
 
     @Test func `structuralJSON strategy is synchronous`() {
-        let strategy = Test_Primitives.Test.Snapshot.Strategy<Swift.String, Swift.String>
+        let strategy = Test.Test.Snapshot.Strategy<Swift.String, Swift.String>
             .structuralJSON
         #expect(strategy.isSynchronous)
     }
 
     @Test func `structuralJSON strategy captures JSON string`() {
-        let strategy = Test_Primitives.Test.Snapshot.Strategy<Swift.String, Swift.String>
+        let strategy = Test.Test.Snapshot.Strategy<Swift.String, Swift.String>
             .structuralJSON
         let captured = strategy.syncSnapshot!("raw input")
         #expect(!captured.isEmpty)
     }
 
     @Test func `structuralJSON diffing serializes to bytes and back`() {
-        let diffing = Test_Primitives.Test.Snapshot.Diffing<Swift.String>.structuralJSON
+        let diffing = Test.Test.Snapshot.Diffing<Swift.String>.structuralJSON
         let original = #"{"key":"value"}"#
         let bytes = diffing.toBytes(original)
         let roundtripped = diffing.fromBytes(bytes)

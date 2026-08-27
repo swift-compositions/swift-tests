@@ -5,7 +5,7 @@
 //  Stored complexity baseline for cross-run regression detection.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Tests.Complexity {
     /// Stored complexity baseline for regression detection.

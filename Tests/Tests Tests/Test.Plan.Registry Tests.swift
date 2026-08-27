@@ -1,7 +1,7 @@
 import Testing
 import Tests_Test_Support
 
-extension Test_Primitives.Test.Plan.Registry {
+extension Test.Test.Plan.Registry {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -10,16 +10,16 @@ extension Test_Primitives.Test.Plan.Registry {
 
 // MARK: - Unit
 
-extension Test_Primitives.Test.Plan.Registry.Test.Unit {
+extension Test.Test.Plan.Registry.Test.Unit {
     @Test
     func `init creates empty registry`() {
-        let registry = Test_Primitives.Test.Plan.Registry()
+        let registry = Test.Test.Plan.Registry()
         #expect(registry.count == 0)
     }
 
     @Test
     func `add increments count`() {
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
         registry.add(id: .stub("test1"), body: .sync {})
         #expect(registry.count == 1)
         registry.add(id: .stub("test2"), body: .sync {})
@@ -30,14 +30,14 @@ extension Test_Primitives.Test.Plan.Registry.Test.Unit {
 
     @Test
     func `add with sync body closure`() {
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
         registry.add(id: .stub("sync")) {}
         #expect(registry.count == 1)
     }
 
     @Test
     func `add with async body closure`() {
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
         registry.add(id: .stub("async")) { @Sendable () async in }  // async body
         #expect(registry.count == 1)
     }
@@ -45,7 +45,7 @@ extension Test_Primitives.Test.Plan.Registry.Test.Unit {
     @Test
     func `finalize produces plan with correct count`() {
         // Per [TEST-012]: var binding for mutation, [TEST-013]: consuming last
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
         registry.add(id: .stub("a"), body: .sync {})
         registry.add(id: .stub("b"), body: .sync {})
         #expect(registry.count == 2)
@@ -58,7 +58,7 @@ extension Test_Primitives.Test.Plan.Registry.Test.Unit {
 
     @Test
     func `components for suite omits empty name`() {
-        let suiteID = Test_Primitives.Test.ID(
+        let suiteID = Test.Test.ID(
             module: "M",
             suite: "MySuite",
             name: "",
@@ -70,7 +70,7 @@ extension Test_Primitives.Test.Plan.Registry.Test.Unit {
 
     @Test
     func `suite trait propagation via finalize`() {
-        var registry = Test_Primitives.Test.Plan.Registry()
+        var registry = Test.Test.Plan.Registry()
 
         // Register a suite with .serialized
         registry.add(

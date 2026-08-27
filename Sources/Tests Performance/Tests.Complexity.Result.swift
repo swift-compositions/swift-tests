@@ -5,7 +5,7 @@
 //  Interpreted complexity analysis result.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Tests.Complexity {
     /// Interpreted complexity analysis result.

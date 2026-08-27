@@ -1,6 +1,6 @@
-public import Memory
-public import Sample_Primitives
-public import Time_Primitives
+public import Memory_Mapping
+public import Sample
+public import Time
 
 extension Tests {
     /// Structured performance diagnostic aggregating all enrichment data.

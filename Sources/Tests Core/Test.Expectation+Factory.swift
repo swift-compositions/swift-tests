@@ -7,7 +7,7 @@
 
 import Loader
 import Synchronization
-public import Test_Primitives
+public import Test
 
 // MARK: - ID Counters
 

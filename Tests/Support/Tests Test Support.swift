@@ -1,10 +1,10 @@
 import Synchronization
-public import Test_Primitives
+public import Test
 public import Tests
 
 // MARK: - Test.Benchmark.Measurement Factory
 
-extension Test_Primitives.Test.Benchmark.Measurement {
+extension Test.Test.Benchmark.Measurement {
     /// Creates a measurement from millisecond integer values.
     ///
     /// Simplifies test data construction:
@@ -43,17 +43,17 @@ extension Tests_Core.Test.Plan.Entry {
 
 /// A sink that captures all events for test assertions.
 public final class SpySink: Tests_Core.Test.Reporter.Sink.Implementation, @unchecked Sendable {
-    private let _events = Mutex<[Test_Primitives.Test.Event]>([])
+    private let _events = Mutex<[Test.Test.Event]>([])
 
     public init() {}
 }
 
 extension SpySink {
-    public var events: [Test_Primitives.Test.Event] {
+    public var events: [Test.Test.Event] {
         _events.withLock { $0 }
     }
 
-    public func send(_ event: Test_Primitives.Test.Event) async {
+    public func send(_ event: Test.Test.Event) async {
         _events.withLock { $0.append(event) }
     }
 

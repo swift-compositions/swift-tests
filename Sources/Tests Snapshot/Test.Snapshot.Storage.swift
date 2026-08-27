@@ -6,7 +6,7 @@
 //
 
 public import File_System
-public import Test_Primitives
+public import Test
 
 extension Test.Snapshot {
     /// Handles snapshot file I/O.

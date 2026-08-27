@@ -11,8 +11,8 @@
 
 internal import Console
 import Synchronization
-public import Test_Primitives
-import Time_Primitives
+public import Test
+import Time
 
 extension Test.Reporter {
     /// Creates a console reporter with ANSI terminal styling.

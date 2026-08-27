@@ -23,80 +23,80 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-ascii-primitives.git",
+            url: "https://github.com/swift-molecules/swift-ascii.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-test-primitives.git",
+            url: "https://github.com/swift-molecules/swift-test.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-binary-primitives.git",
+            url: "https://github.com/swift-molecules/swift-binary.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-time-primitives.git",
+            url: "https://github.com/swift-molecules/swift-time.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-format-primitives.git",
+            url: "https://github.com/swift-molecules/swift-format.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-dependency-primitives.git",
+            url: "https://github.com/swift-molecules/swift-dependency.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-ownership-primitives.git",
+            url: "https://github.com/swift-molecules/swift-ownership.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-set-primitives.git",
+            url: "https://github.com/swift-molecules/swift-set.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-set-ordered-primitives.git",
+            url: "https://github.com/swift-molecules/swift-set-ordered.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-hash-table-primitives.git",
+            url: "https://github.com/swift-molecules/swift-hash-table.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-column-primitives.git",
+            url: "https://github.com/swift-molecules/swift-column.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-ownership-shared-primitives.git",
+            url: "https://github.com/swift-molecules/swift-ownership-shared.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-buffer-linear-primitives.git",
+            url: "https://github.com/swift-molecules/swift-buffer-linear.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-byte-primitives.git",
+            url: "https://github.com/swift-molecules/swift-byte.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-tree-keyed-primitives.git",
+            url: "https://github.com/swift-molecules/swift-tree-keyed.git",
             branch: "main"
         ),
-        .package(url: "https://github.com/swift-foundations/swift-kernel.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-memory.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-console.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-file-system.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-io.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-json.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-loader.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-kernel.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-memory-mapping.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-console.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-file-system.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-io.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-json.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-loader.git", branch: "main"),
         .package(
-            url: "https://github.com/swift-primitives/swift-sample-primitives.git",
+            url: "https://github.com/swift-molecules/swift-sample.git",
             branch: "main"
         ),
-        .package(url: "https://github.com/swift-foundations/swift-clocks.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-environment.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-witnesses.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-html-render.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-clocks.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-environment.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-witnesses.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-html-render.git", branch: "main"),
         .package(url: "https://github.com/swift-iec/swift-iec-80000-13.git", branch: "main"),
         .package(url: "https://github.com/swiftlang/swift-syntax.git", "602.0.0"..<"603.0.0"),
     ],
@@ -107,24 +107,24 @@ let package = Package(
         .target(
             name: "Tests Core",
             dependencies: [
-                .product(name: "ASCII Primitives", package: "swift-ascii-primitives"),
-                .product(name: "Test Primitives", package: "swift-test-primitives"),
-                .product(name: "Ownership Primitives", package: "swift-ownership-primitives"),
-                .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
+                .product(name: "ASCII", package: "swift-ascii"),
+                .product(name: "Test", package: "swift-test"),
+                .product(name: "Ownership", package: "swift-ownership"),
+                .product(name: "Dependency", package: "swift-dependency"),
                 .product(name: "Loader", package: "swift-loader"),
                 .product(name: "Witnesses", package: "swift-witnesses"),
-                .product(name: "Set Primitives", package: "swift-set-primitives"),
-                .product(name: "Set Ordered Primitives", package: "swift-set-ordered-primitives"),
-                .product(name: "Tree Keyed Primitives", package: "swift-tree-keyed-primitives"),
-                .product(name: "Hash Indexed Primitive", package: "swift-hash-table-primitives"),
-                .product(name: "Column Primitives", package: "swift-column-primitives"),
+                .product(name: "Set", package: "swift-set"),
+                .product(name: "Set Ordered", package: "swift-set-ordered"),
+                .product(name: "Tree Keyed", package: "swift-tree-keyed"),
+                .product(name: "Hash Indexed Primitive", package: "swift-hash-table"),
+                .product(name: "Column", package: "swift-column"),
                 .product(
                     name: "Ownership Shared Primitive",
-                    package: "swift-ownership-shared-primitives"
+                    package: "swift-ownership-shared"
                 ),
                 .product(
                     name: "Buffer Linear Primitive",
-                    package: "swift-buffer-linear-primitives"
+                    package: "swift-buffer-linear"
                 ),
             ]
         ),
@@ -137,11 +137,11 @@ let package = Package(
                 "Tests Core",
                 .product(name: "File System", package: "swift-file-system"),
                 .product(name: "JSON", package: "swift-json"),
-                .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
+                .product(name: "Dependency", package: "swift-dependency"),
                 .product(name: "Kernel", package: "swift-kernel"),
                 .product(
-                    name: "Byte Primitives Standard Library Integration",
-                    package: "swift-byte-primitives"
+                    name: "Byte Standard Library Integration",
+                    package: "swift-byte"
                 ),
             ]
         ),
@@ -166,14 +166,14 @@ let package = Package(
             name: "Tests Performance",
             dependencies: [
                 "Tests Core",
-                .product(name: "Sample Primitives", package: "swift-sample-primitives"),
-                .product(name: "Time Primitives", package: "swift-time-primitives"),
+                .product(name: "Sample", package: "swift-sample"),
+                .product(name: "Time", package: "swift-time"),
                 .product(name: "Console", package: "swift-console"),
                 .product(name: "Kernel", package: "swift-kernel"),
-                .product(name: "Memory", package: "swift-memory"),
-                .product(name: "Binary Primitives", package: "swift-binary-primitives"),
-                .product(name: "Format Primitives", package: "swift-format-primitives"),
-                .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
+                .product(name: "Memory Mapping", package: "swift-memory-mapping"),
+                .product(name: "Binary", package: "swift-binary"),
+                .product(name: "Format", package: "swift-format"),
+                .product(name: "Dependency", package: "swift-dependency"),
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "File System", package: "swift-file-system"),
                 .product(name: "JSON", package: "swift-json"),
@@ -192,7 +192,7 @@ let package = Package(
                 .product(name: "Console", package: "swift-console"),
                 .product(name: "Kernel", package: "swift-kernel"),
                 .product(name: "JSON", package: "swift-json"),
-                .product(name: "Time Primitives", package: "swift-time-primitives"),
+                .product(name: "Time", package: "swift-time"),
             ]
         ),
 
@@ -214,7 +214,7 @@ let package = Package(
             name: "Tests Apple Testing Bridge",
             dependencies: [
                 "Tests Snapshot",
-                .product(name: "Dependency Primitives", package: "swift-dependency-primitives"),
+                .product(name: "Dependency", package: "swift-dependency"),
             ]
         ),
 
@@ -225,8 +225,8 @@ let package = Package(
             dependencies: [
                 "Tests",
                 .product(
-                    name: "Test Primitives Test Support",
-                    package: "swift-test-primitives"
+                    name: "Test Test Support",
+                    package: "swift-test"
                 ),
                 .product(
                     name: "Kernel Test Support",

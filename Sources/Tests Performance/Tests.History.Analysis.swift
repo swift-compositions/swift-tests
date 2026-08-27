@@ -5,7 +5,7 @@
 //  Cross-run trend analysis from historical records.
 //
 
-public import Time_Primitives
+public import Time
 
 extension Tests.History {
     /// Cross-run trend analysis computed from historical records.

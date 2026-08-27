@@ -10,7 +10,7 @@ import JSON
 import Testing
 import Tests_Test_Support
 
-private typealias SUT = Test_Primitives.Test
+private typealias SUT = Test.Test
 
 extension Tests.Complexity.Baseline {
     @Suite

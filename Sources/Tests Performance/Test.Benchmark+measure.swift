@@ -10,8 +10,8 @@
 // ===----------------------------------------------------------------------===//
 
 import Clocks
-public import Test_Primitives
-public import Time_Primitives
+public import Test
+public import Time
 
 extension Test.Benchmark {
     /// Measures the execution time of a block of code with multiple iterations.
@@ -63,9 +63,9 @@ extension Test.Benchmark {
         durations.reserveCapacity(iterations)
 
         for _ in 0..<iterations {
-            let start = Clock_Primitives.Clock.Continuous.now
+            let start = Clock.Clock.Continuous.now
             try body()
-            durations.append(Clock_Primitives.Clock.Continuous.now - start)
+            durations.append(Clock.Clock.Continuous.now - start)
         }
 
         let measurement = Measurement(durations: durations)
@@ -111,9 +111,9 @@ extension Test.Benchmark {
         durations.reserveCapacity(iterations)
 
         for _ in 0..<iterations {
-            let start = Clock_Primitives.Clock.Continuous.now
+            let start = Clock.Clock.Continuous.now
             try await body()
-            durations.append(Clock_Primitives.Clock.Continuous.now - start)
+            durations.append(Clock.Clock.Continuous.now - start)
         }
 
         let measurement = Measurement(durations: durations)

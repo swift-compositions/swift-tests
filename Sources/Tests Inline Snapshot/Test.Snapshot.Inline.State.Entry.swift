@@ -5,9 +5,9 @@
 //  A single pending inline snapshot entry.
 //
 
-public import Test_Primitives
+public import Test
 
-extension Test_Primitives.Test.Snapshot.Inline.State {
+extension Test.Test.Snapshot.Inline.State {
     /// A pending inline snapshot entry awaiting source file write-back.
     ///
     /// Captures all information needed to locate the call site in source

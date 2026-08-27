@@ -5,7 +5,7 @@
 //  Configurable thresholds for complexity classification.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Tests.Complexity {
     /// Configurable thresholds for complexity classification.

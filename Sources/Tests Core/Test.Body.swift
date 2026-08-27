@@ -5,7 +5,7 @@
 //  Test body wrapper.
 //
 
-public import Test_Primitives
+public import Test
 
 extension Test {
     /// A wrapper for test body closures.

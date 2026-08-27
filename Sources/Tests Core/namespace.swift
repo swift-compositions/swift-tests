@@ -6,10 +6,10 @@
 //  Resolves ambiguity with Apple's Testing.Test.
 //
 
-public import Test_Primitives
+public import Test
 
-/// The Test namespace from Test_Primitives.
+/// The Test namespace from Test.
 ///
 /// This typealias ensures unambiguous reference to our Test types
 /// even when Apple's Testing module is transitively visible.
-public typealias Test = Test_Primitives.Test
+public typealias Test = Test.Test
