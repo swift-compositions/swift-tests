@@ -98,7 +98,7 @@ let package = Package(
         .package(url: "https://github.com/swift-compositions/swift-witnesses.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-html-render.git", branch: "main"),
         .package(url: "https://github.com/swift-iec/swift-iec-80000-13.git", branch: "main"),
-        .package(url: "https://github.com/swiftlang/swift-syntax.git", "602.0.0"..<"603.0.0"),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", "603.0.2"..<"604.0.0"),
     ],
     targets: [
 
