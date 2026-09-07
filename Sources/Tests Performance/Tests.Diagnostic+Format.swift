@@ -1,6 +1,6 @@
 import Cardinal
 import Console
-import Format
+import Formatter
 import Tagged
 
 extension Tests.Diagnostic {

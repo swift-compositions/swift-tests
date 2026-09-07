@@ -6,7 +6,7 @@
 //
 
 import Console
-import Format
+import Formatter
 import Time
 
 extension Tests.Diagnostic {

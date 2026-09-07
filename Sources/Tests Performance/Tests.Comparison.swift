@@ -6,7 +6,7 @@
 //
 
 import Console
-import Format
+import Formatter
 public import Sample
 public import Time
 

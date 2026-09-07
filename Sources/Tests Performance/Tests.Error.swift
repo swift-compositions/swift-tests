@@ -11,7 +11,7 @@
 
 import Binary
 import Dependency
-import Format
+import Formatter
 import IEC_80000_13_Formatting
 import Memory_Mapping
 

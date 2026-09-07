@@ -6,7 +6,7 @@
 //
 
 import Console
-import Format
+import Formatter
 
 extension Tests.Complexity.Diagnostic {
 
