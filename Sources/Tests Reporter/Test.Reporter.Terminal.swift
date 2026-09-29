@@ -10,6 +10,7 @@
 // ===----------------------------------------------------------------------===//
 
 internal import Console
+import Formatter
 import Synchronization
 public import Test
 import Time
@@ -91,7 +92,7 @@ extension Test.Reporter {
 
                     var message = "  \(style.apply(to: symbol, capability: capability)) \(id.name)"
                     if let elapsed = event.elapsed {
-                        message += dimmed(" (\(elapsed.formatted(.duration)))")
+                        message += dimmed(" (\(elapsed.formatted(Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number()))))")
                     }
                     print(message)
                 }

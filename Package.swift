@@ -23,7 +23,7 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-molecules/swift-ascii.git",
+            url: "https://github.com/swift-atoms/swift-ascii.git",
             branch: "main"
         ),
         .package(
@@ -31,27 +31,23 @@ let package = Package(
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-binary.git",
+            url: "https://github.com/swift-atoms/swift-binary.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-time.git",
+            url: "https://github.com/swift-atoms/swift-time.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-format.git",
+            url: "https://github.com/swift-atoms/swift-dependency.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-dependency.git",
+            url: "https://github.com/swift-atoms/swift-ownership.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-ownership.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-set.git",
+            url: "https://github.com/swift-atoms/swift-set.git",
             branch: "main"
         ),
         .package(
@@ -63,10 +59,6 @@ let package = Package(
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-column.git",
-            branch: "main"
-        ),
-        .package(
             url: "https://github.com/swift-molecules/swift-ownership-shared.git",
             branch: "main"
         ),
@@ -75,7 +67,7 @@ let package = Package(
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-byte.git",
+            url: "https://github.com/swift-atoms/swift-byte.git",
             branch: "main"
         ),
         .package(
@@ -86,11 +78,11 @@ let package = Package(
         .package(url: "https://github.com/swift-compositions/swift-memory-mapping.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-console.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-file-system.git", branch: "main"),
-        .package(url: "https://github.com/swift-compositions/swift-io.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-io-kernel.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-json.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-loader.git", branch: "main"),
         .package(
-            url: "https://github.com/swift-molecules/swift-sample.git",
+            url: "https://github.com/swift-atoms/swift-sample.git",
             branch: "main"
         ),
         .package(url: "https://github.com/swift-compositions/swift-clocks.git", branch: "main"),
@@ -99,6 +91,16 @@ let package = Package(
         .package(url: "https://github.com/swift-compositions/swift-html-render.git", branch: "main"),
         .package(url: "https://github.com/swift-iec/swift-iec-80000-13.git", branch: "main"),
         .package(url: "https://github.com/swiftlang/swift-syntax.git", "603.0.2"..<"604.0.0"),
+        .package(url: "https://github.com/swift-atoms/swift-buffer.git", branch: "main"),
+        .package(url: "https://github.com/swift-molecules/swift-buffer-ring.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-cardinal.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-formatter.git", branch: "main", traits: ["Number", "Time", "Conversions"]),
+        .package(url: "https://github.com/swift-atoms/swift-memory.git", branch: "main"),
+        .package(url: "https://github.com/swift-molecules/swift-memory-allocation.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-storage.git", branch: "main", traits: ["Generational", "Memory"]),
+        .package(url: "https://github.com/swift-atoms/swift-store.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-system.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
     ],
     targets: [
 
@@ -117,7 +119,6 @@ let package = Package(
                 .product(name: "Set Ordered", package: "swift-set-ordered"),
                 .product(name: "Tree Keyed", package: "swift-tree-keyed"),
                 .product(name: "Hash Indexed Primitive", package: "swift-hash-table"),
-                .product(name: "Column", package: "swift-column"),
                 .product(
                     name: "Ownership Shared Primitive",
                     package: "swift-ownership-shared"
@@ -126,6 +127,15 @@ let package = Package(
                     name: "Buffer Linear Primitive",
                     package: "swift-buffer-linear"
                 ),
+                .product(name: "Buffer", package: "swift-buffer"),
+                .product(name: "Buffer Linear Bounded Primitive", package: "swift-buffer-linear"),
+                .product(name: "Buffer Ring Primitive", package: "swift-buffer-ring"),
+                .product(name: "Memory Allocator Pool", package: "swift-memory-allocation"),
+                .product(name: "Memory Pool", package: "swift-memory-allocation"),
+                .product(name: "Memory Allocator", package: "swift-memory-allocation"),
+                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Storage", package: "swift-storage"),
+                .product(name: "Store", package: "swift-store"),
             ]
         ),
 
@@ -140,7 +150,7 @@ let package = Package(
                 .product(name: "Dependency", package: "swift-dependency"),
                 .product(name: "Kernel", package: "swift-kernel"),
                 .product(
-                    name: "Byte Standard Library Integration",
+                    name: "Byte",
                     package: "swift-byte"
                 ),
             ]
@@ -172,14 +182,17 @@ let package = Package(
                 .product(name: "Kernel", package: "swift-kernel"),
                 .product(name: "Memory Mapping", package: "swift-memory-mapping"),
                 .product(name: "Binary", package: "swift-binary"),
-                .product(name: "Format", package: "swift-format"),
                 .product(name: "Dependency", package: "swift-dependency"),
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "File System", package: "swift-file-system"),
                 .product(name: "JSON", package: "swift-json"),
                 .product(name: "Environment", package: "swift-environment"),
-                .product(name: "IO", package: "swift-io"),
+                .product(name: "IO Kernel", package: "swift-io-kernel"),
                 .product(name: "IEC 80000-13 Formatting", package: "swift-iec-80000-13"),
+                .product(name: "System", package: "swift-system"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Formatter", package: "swift-formatter"),
+                .product(name: "Tagged", package: "swift-tagged"),
             ]
         ),
 
@@ -193,6 +206,7 @@ let package = Package(
                 .product(name: "Kernel", package: "swift-kernel"),
                 .product(name: "JSON", package: "swift-json"),
                 .product(name: "Time", package: "swift-time"),
+                .product(name: "Formatter", package: "swift-formatter"),
             ]
         ),
 

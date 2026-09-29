@@ -1,3 +1,4 @@
+public import Cardinal
 public import Kernel
 import Tagged
 import Time
@@ -13,13 +14,13 @@ extension Test {
         public var architecture: Swift.String
 
         /// Number of physical CPU cores.
-        public var physicalCPUCount: System.Processor.Count
+        public var physicalCPUCount: Int
 
         /// Number of logical CPU cores (includes hyperthreading).
-        public var logicalCPUCount: System.Processor.Count
+        public var logicalCPUCount: Int
 
         /// Total physical memory in bytes.
-        public var memoryBytes: System.Memory.Capacity
+        public var memoryBytes: Cardinal
 
         /// OS version string (e.g., "Darwin 24.3.0").
         public var osVersion: Swift.String
@@ -39,9 +40,9 @@ extension Test {
 
         public init(
             architecture: Swift.String,
-            physicalCPUCount: System.Processor.Count,
-            logicalCPUCount: System.Processor.Count,
-            memoryBytes: System.Memory.Capacity,
+            physicalCPUCount: Int,
+            logicalCPUCount: Int,
+            memoryBytes: Cardinal,
             osVersion: Swift.String,
             swiftVersion: Swift.String,
             optimization: Optimization,

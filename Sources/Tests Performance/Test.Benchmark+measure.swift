@@ -12,6 +12,9 @@
 import Clocks
 public import Test
 public import Time
+import Formatter
+
+private let durationFormat = Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number())
 
 extension Test.Benchmark {
     /// Measures the execution time of a block of code with multiple iterations.
@@ -81,8 +84,8 @@ extension Test.Benchmark {
                 print(
                     """
                     ⚠️ Performance threshold exceeded in '\(displayName)':
-                    Expected \(metric): < \(threshold.formatted())
-                    Actual \(metric): \(actualMetric.formatted())
+                    Expected \(metric): < \(threshold.formatted(durationFormat))
+                    Actual \(metric): \(actualMetric.formatted(durationFormat))
                     """
                 )
             }
@@ -129,8 +132,8 @@ extension Test.Benchmark {
                 print(
                     """
                     ⚠️ Performance threshold exceeded in '\(displayName)':
-                    Expected \(metric): < \(threshold.formatted())
-                    Actual \(metric): \(actualMetric.formatted())
+                    Expected \(metric): < \(threshold.formatted(durationFormat))
+                    Actual \(metric): \(actualMetric.formatted(durationFormat))
                     """
                 )
             }
@@ -146,13 +149,13 @@ extension Test.Benchmark {
             """
             ⏱️ \(name)
                Iterations: \(measurement.durations.count)
-               Min:        \(measurement.min.formatted())
-               Median:     \(measurement.median.formatted())
-               Mean:       \(measurement.mean.formatted())
-               p95:        \(measurement.p95.formatted())
-               p99:        \(measurement.p99.formatted())
-               Max:        \(measurement.max.formatted())
-               StdDev:     \(measurement.standardDeviation.formatted())
+               Min:        \(measurement.min.formatted(durationFormat))
+               Median:     \(measurement.median.formatted(durationFormat))
+               Mean:       \(measurement.mean.formatted(durationFormat))
+               p95:        \(measurement.p95.formatted(durationFormat))
+               p99:        \(measurement.p99.formatted(durationFormat))
+               Max:        \(measurement.max.formatted(durationFormat))
+               StdDev:     \(measurement.standardDeviation.formatted(durationFormat))
             """
         )
     }

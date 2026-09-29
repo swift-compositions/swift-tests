@@ -4,9 +4,9 @@ extension Test.Environment {
     /// Captures the current runtime and compile-time environment.
     public static func capture() -> Self {
         let osVersion = System.name.map { "\($0.system) \($0.release)" } ?? "unknown"
-        let physical = System.Processor.Physical.count
-        let logical = System.Processor.count
-        let memory = System.Memory.total
+        let physical = System.physicalProcessorCount
+        let logical = System.processorCount
+        let memory = System.memoryCapacity
         return Self(
             architecture: _architecture,
             physicalCPUCount: physical,

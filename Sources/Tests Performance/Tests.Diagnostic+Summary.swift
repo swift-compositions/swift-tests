@@ -20,7 +20,9 @@ extension Tests.Diagnostic {
 
         let sorted = diagnostics.sorted { $0.qualifiedName < $1.qualifiedName }
         let cap = Tests.consoleCapability
-        let format: Time.Format = .duration.precision(3)
+        let format = Formatter::Formatter.Duration(
+            numeric: Formatter::Formatter.Number(fractionDigits: 3)
+        )
 
         // Strip common module prefix for compact display
         let displayNames = _stripCommonPrefix(sorted.map(\.qualifiedName))

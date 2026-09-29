@@ -7,7 +7,7 @@
 //
 
 public import File_System
-public import IO
+public import IO_Kernel
 public import JSON
 public import Thread_Pool
 

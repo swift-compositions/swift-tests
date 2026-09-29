@@ -3,6 +3,8 @@ import Console
 import Formatter
 import Tagged
 
+private let durationFormat = Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number())
+
 extension Tests.Diagnostic {
 
     /// Human-readable formatted diagnostic for console output.
@@ -21,9 +23,9 @@ extension Tests.Diagnostic {
             lines.append(header)
             lines.append("  Test:     \(qualifiedName)")
             lines.append("  Metric:   \(metric)")
-            lines.append("  Expected: < \(threshold!.formatted())")
-            lines.append("  Actual:   \(metric.extract(from: m).formatted())")
-            let factorStr = "\(factor.formatted(.number.precision(2)))x threshold"
+            lines.append("  Expected: < \(threshold!.formatted(durationFormat))")
+            lines.append("  Actual:   \(metric.extract(from: m).formatted(durationFormat))")
+            let factorStr = "\(factor.formatted(Formatter::Formatter.Number(fractionDigits: 2)))x threshold"
             lines.append("  Factor:   \(Console.Style.error.apply(to: factorStr, capability: cap))")
         } else {
             let header = Console.Style.success.apply(
@@ -33,18 +35,18 @@ extension Tests.Diagnostic {
             lines.append(header)
             lines.append("  Test:     \(qualifiedName)")
             lines.append("  Metric:   \(metric)")
-            lines.append("  Value:    \(metric.extract(from: m).formatted())")
+            lines.append("  Value:    \(metric.extract(from: m).formatted(durationFormat))")
         }
 
         // Distribution
         lines.append("")
         lines.append("  Distribution:")
         lines.append(
-            "    Median: \(m.median.formatted())  Mean: \(m.mean.formatted())  StdDev: \(m.standardDeviation.formatted())"
+            "    Median: \(m.median.formatted(durationFormat))  Mean: \(m.mean.formatted(durationFormat))  StdDev: \(m.standardDeviation.formatted(durationFormat))"
         )
 
         if let cv = coefficientOfVariation {
-            let cvStr = "\(cv.formatted(.number.precision(2)))%"
+            let cvStr = "\(cv.formatted(Formatter::Formatter.Number(fractionDigits: 2)))%"
             let label: Swift.String
             if cv <= 5.0 {
                 label = Console.Style.success.apply(
@@ -65,18 +67,18 @@ extension Tests.Diagnostic {
             lines.append("    CV:     \(cvStr) (\(label))")
         }
 
-        lines.append("    Min:    \(m.min.formatted())  Max: \(m.max.formatted())")
-        lines.append("    p95:    \(m.p95.formatted())  p99: \(m.p99.formatted())")
+        lines.append("    Min:    \(m.min.formatted(durationFormat))  Max: \(m.max.formatted(durationFormat))")
+        lines.append("    p95:    \(m.p95.formatted(durationFormat))  p99: \(m.p99.formatted(durationFormat))")
 
         if let mad = medianAbsoluteDeviation {
             let outlierStr = outlierCount.map { "\($0) of \(m.durations.count)" } ?? "?"
-            lines.append("    MAD:    \(mad.formatted())   Outliers: \(outlierStr)")
+            lines.append("    MAD:    \(mad.formatted(durationFormat))   Outliers: \(outlierStr)")
         }
 
         // Trend
         lines.append("")
         lines.append("  Trend:")
-        let zStr = trend.z.formatted(.number.precision(2))
+        let zStr = trend.z.formatted(Formatter::Formatter.Number(fractionDigits: 2))
         let trendLabel: Swift.String
         if trend.interpretation == .increasing {
             trendLabel = Console.Style.error.apply(
@@ -97,9 +99,9 @@ extension Tests.Diagnostic {
         if let comparison {
             lines.append("")
             lines.append("  Baseline Comparison:")
-            lines.append("    Baseline: \(comparison.baselineValue.formatted())")
-            lines.append("    Current:  \(comparison.currentValue.formatted())")
-            let changePercent = (comparison.change * 100.0).formatted(.number.precision(2))
+            lines.append("    Baseline: \(comparison.baselineValue.formatted(durationFormat))")
+            lines.append("    Current:  \(comparison.currentValue.formatted(durationFormat))")
+            let changePercent = (comparison.change * 100.0).formatted(Formatter::Formatter.Number(fractionDigits: 2))
             if comparison.isRegression {
                 let label = Console.Style.error.apply(
                     to: "REGRESSION +\(changePercent)%",
@@ -123,7 +125,7 @@ extension Tests.Diagnostic {
         if let history = historyAnalysis {
             lines.append("")
             lines.append("  History (\(history.recordCount) runs):")
-            let historyZStr = history.trend.z.formatted(.number.precision(2))
+            let historyZStr = history.trend.z.formatted(Formatter::Formatter.Number(fractionDigits: 2))
             let historyTrendLabel: Swift.String
             if history.trend.interpretation == .increasing {
                 historyTrendLabel = Console.Style.error.apply(
@@ -139,9 +141,9 @@ extension Tests.Diagnostic {
                 historyTrendLabel = "STABLE across runs"
             }
             lines.append("    Cross-run Z:  \(historyZStr) (\(historyTrendLabel))")
-            lines.append("    Earliest:     \(history.earliestValue.formatted())")
-            lines.append("    Latest:       \(history.latestValue.formatted())")
-            let changePercent = (history.overallChange * 100.0).formatted(.number.precision(2))
+            lines.append("    Earliest:     \(history.earliestValue.formatted(durationFormat))")
+            lines.append("    Latest:       \(history.latestValue.formatted(durationFormat))")
+            let changePercent = (history.overallChange * 100.0).formatted(Formatter::Formatter.Number(fractionDigits: 2))
             lines.append("    Overall:      \(changePercent)%")
         }
 
@@ -152,7 +154,7 @@ extension Tests.Diagnostic {
         lines.append(
             "    CPU Cores:     \(environment.physicalCPUCount) (physical) / \(environment.logicalCPUCount) (logical)"
         )
-        let memGB = Double(environment.memoryBytes.underlying.rawValue) / (1024.0 * 1024.0 * 1024.0)
+        let memGB = Double(environment.memoryBytes.rawValue) / (1024.0 * 1024.0 * 1024.0)
         lines.append("    Memory:        \(Int(memGB.rounded())) GB")
         lines.append("    Swift:         \(environment.swiftVersion)")
         lines.append("    Optimization:  \(environment.optimization.rawValue)")
@@ -201,7 +203,7 @@ extension Tests.Diagnostic {
         json.append("  \"actual\": \(metricValue.inSeconds),")
 
         if let factor = exceedanceFactor {
-            json.append("  \"factor\": \(factor.formatted(.number.precision(2))),")
+            json.append("  \"factor\": \(factor.formatted(Formatter::Formatter.Number(fractionDigits: 2))),")
         }
 
         // Distribution
@@ -213,7 +215,7 @@ extension Tests.Diagnostic {
         json.append("    \"max\": \(m.max.inSeconds),")
         json.append("    \"stddev\": \(m.standardDeviation.inSeconds),")
         if let cv = coefficientOfVariation {
-            json.append("    \"cv\": \(cv.formatted(.number.precision(2))),")
+            json.append("    \"cv\": \(cv.formatted(Formatter::Formatter.Number(fractionDigits: 2))),")
         }
         if let mad = medianAbsoluteDeviation {
             json.append("    \"mad\": \(mad.inSeconds),")
@@ -229,7 +231,7 @@ extension Tests.Diagnostic {
 
         // Trend
         json.append("  \"trend\": {")
-        json.append("    \"mann_kendall_z\": \(trend.z.formatted(.number.precision(2))),")
+        json.append("    \"mann_kendall_z\": \(trend.z.formatted(Formatter::Formatter.Number(fractionDigits: 2))),")
         json.append("    \"interpretation\": \(_jsonString(trend.interpretation.rawValue))")
         json.append("  },")
 
@@ -254,7 +256,7 @@ extension Tests.Diagnostic {
         if let comparison {
             json.append("  \"baseline\": {")
             json.append("    \"value\": \(comparison.baselineValue.inSeconds),")
-            json.append("    \"change\": \(comparison.change.formatted(.number.precision(4))),")
+            json.append("    \"change\": \(comparison.change.formatted(Formatter::Formatter.Number(fractionDigits: 4))),")
             json.append("    \"is_regression\": \(comparison.isRegression)")
             json.append("  },")
         }
@@ -264,7 +266,7 @@ extension Tests.Diagnostic {
             json.append("  \"history\": {")
             json.append("    \"record_count\": \(history.recordCount),")
             json.append(
-                "    \"mann_kendall_z\": \(history.trend.z.formatted(.number.precision(2))),"
+                "    \"mann_kendall_z\": \(history.trend.z.formatted(Formatter::Formatter.Number(fractionDigits: 2))),"
             )
             json.append(
                 "    \"interpretation\": \(_jsonString(history.trend.interpretation.rawValue)),"
@@ -272,13 +274,13 @@ extension Tests.Diagnostic {
             json.append("    \"earliest_s\": \(history.earliestValue.inSeconds),")
             json.append("    \"latest_s\": \(history.latestValue.inSeconds),")
             json.append(
-                "    \"overall_change\": \(history.overallChange.formatted(.number.precision(4)))"
+                "    \"overall_change\": \(history.overallChange.formatted(Formatter::Formatter.Number(fractionDigits: 4)))"
             )
             json.append("  },")
         }
 
         // Raw durations
-        let durationsStr = m.durations.map { "\($0.inSeconds.formatted(.number.precision(6)))" }
+        let durationsStr = m.durations.map { "\($0.inSeconds.formatted(Formatter::Formatter.Number(fractionDigits: 6)))" }
             .joined(separator: ", ")
         json.append("  \"durations_seconds\": [\(durationsStr)]")
 

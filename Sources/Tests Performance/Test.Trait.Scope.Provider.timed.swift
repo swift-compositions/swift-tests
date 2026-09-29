@@ -7,7 +7,7 @@
 
 import Clocks
 import File_System
-import IO
+import IO_Kernel
 import Kernel
 import Memory_Mapping
 import Thread_Pool

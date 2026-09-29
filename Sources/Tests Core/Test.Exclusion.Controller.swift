@@ -6,7 +6,11 @@
 //
 
 public import Buffer_Linear_Primitive
-public import Column
+public import Memory
+public import Memory_Allocator
+public import Storage
+public import Buffer
+
 public import Hash_Indexed_Primitive
 public import Ownership_Shared_Primitive
 public import Set_Ordered
@@ -21,7 +25,7 @@ extension Test.Exclusion {
     public actor Controller {
         /// Tracks which groups are currently running.
         private var runningGroups:
-            __SetOrdered<Ownership.Shared<Swift.String, Hash.Indexed<Column.Heap<Swift.String>>>> =
+            __SetOrdered<Ownership.Shared<Swift.String, Hash.Indexed<Buffer<Storage<Memory.Allocator<Memory.Heap>>.Contiguous<Swift.String>>.Linear>>> =
                 .init()
 
         /// Continuations waiting for access, keyed by group.

@@ -7,7 +7,7 @@
 
 import Environment
 public import File_System
-public import IO
+public import IO_Kernel
 import JSON
 public import Thread_Pool
 

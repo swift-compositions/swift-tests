@@ -5,7 +5,7 @@
 //  Structural JSON diffing — tree-aware comparison.
 //
 
-import Byte_Standard_Library_Integration
+import Byte
 import JSON
 public import Test
 internal import Tree_Keyed

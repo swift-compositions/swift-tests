@@ -17,6 +17,11 @@ extension Test.Environment: JSON.Serializable {
     /// Used to write an `environment.json` alongside baselines
     /// for human inspection and debugging.
     public static func serialize(_ value: Self) -> JSON {
+        guard let memoryBytes = Int(exactly: value.memoryBytes.rawValue) else {
+            preconditionFailure("Memory capacity is not representable as a JSON Int")
+        }
+        precondition(value.physicalCPUCount >= 0 && value.logicalCPUCount >= 0,
+                     "CPU counts must be nonnegative")
         let features: JSON = .object([
             (
                 "NonisolatedNonsendingByDefault",
@@ -29,13 +34,13 @@ extension Test.Environment: JSON.Serializable {
             ("architecture", JSON.string(value.architecture)),
             (
                 "physical_cores",
-                JSON.number(Int(bitPattern: value.physicalCPUCount.underlying.rawValue))
+                JSON.number(value.physicalCPUCount)
             ),
             (
                 "logical_cores",
-                JSON.number(Int(bitPattern: value.logicalCPUCount.underlying.rawValue))
+                JSON.number(value.logicalCPUCount)
             ),
-            ("memory_bytes", JSON.number(Int(bitPattern: value.memoryBytes.underlying.rawValue))),
+            ("memory_bytes", JSON.number(memoryBytes)),
             ("os", JSON.string(value.osVersion)),
             ("swift_version", JSON.string(value.swiftVersion)),
             ("optimization", JSON.string(value.optimization.rawValue)),
@@ -102,11 +107,16 @@ extension Test.Environment: JSON.Serializable {
             sms = false
         }
 
+        guard physicalCores >= 0, logicalCores >= 0,
+              let unsignedMemoryBytes = UInt(exactly: memoryBytes) else {
+            throw .typeMismatch(expected: "nonnegative hardware counts", got: "negative value")
+        }
+
         return Self(
             architecture: architecture,
-            physicalCPUCount: System.Processor.Count(_unchecked: Cardinal(UInt(physicalCores))),
-            logicalCPUCount: System.Processor.Count(_unchecked: Cardinal(UInt(logicalCores))),
-            memoryBytes: System.Memory.Capacity(_unchecked: Cardinal(UInt(memoryBytes))),
+            physicalCPUCount: physicalCores,
+            logicalCPUCount: logicalCores,
+            memoryBytes: Cardinal(unsignedMemoryBytes),
             osVersion: os,
             swiftVersion: swiftVersion,
             optimization: .init(rawValue: optimization),

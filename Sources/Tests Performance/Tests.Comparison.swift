@@ -61,14 +61,14 @@ extension Tests.Comparison {
         let nameColored = (isRegression ? Console.Style.error : .success)
             .apply(to: name, capability: Tests.consoleCapability)
 
-        let changeText = "\(changeSymbol) \(abs(change).formatted(.percent.precision(1)))"
+        let changeText = "\(changeSymbol) \(abs(change).formatted(Formatter::Formatter.Number(fractionDigits: 1, scale: .percent)))"
         let changeColored = (isRegression ? Console.Style.error : .success)
             .apply(to: changeText, capability: Tests.consoleCapability)
 
         return """
             \(changeEmoji) \(nameColored)
-                Baseline: \(baselineValue.formatted())
-                Current:  \(currentValue.formatted())
+                Baseline: \(baselineValue.formatted(Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number())))
+                Current:  \(currentValue.formatted(Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number())))
                 Change:   \(changeColored)
             """
     }

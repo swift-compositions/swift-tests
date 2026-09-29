@@ -15,6 +15,8 @@ import Formatter
 import IEC_80000_13_Formatting
 import Time
 
+private let durationFormat = Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number())
+
 extension Tests {
     /// Print a performance measurement summary
     ///
@@ -32,13 +34,13 @@ extension Tests {
         var output = """
             ⏱️ \(name)
                Iterations: \(measurement.durations.count)
-               Min:        \(measurement.min.formatted())
-               Median:     \(measurement.median.formatted())
-               Mean:       \(measurement.mean.formatted())
-               p95:        \(measurement.p95.formatted())
-               p99:        \(measurement.p99.formatted())
-               Max:        \(measurement.max.formatted())
-               StdDev:     \(measurement.standardDeviation.formatted())
+               Min:        \(measurement.min.formatted(durationFormat))
+               Median:     \(measurement.median.formatted(durationFormat))
+               Mean:       \(measurement.mean.formatted(durationFormat))
+               p95:        \(measurement.p95.formatted(durationFormat))
+               p99:        \(measurement.p99.formatted(durationFormat))
+               Max:        \(measurement.max.formatted(durationFormat))
+               StdDev:     \(measurement.standardDeviation.formatted(durationFormat))
             """
 
         if let allocations, !allocations.isEmpty {

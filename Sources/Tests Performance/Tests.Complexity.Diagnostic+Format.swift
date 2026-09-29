@@ -39,8 +39,8 @@ extension Tests.Complexity.Diagnostic {
         // Exponent
         lines.append("")
         lines.append("  Continuous Exponent:")
-        let k = evidence.exponent.value.formatted(.number.precision(3))
-        let r2 = evidence.exponent.fit.rSquared.formatted(.number.precision(4))
+        let k = evidence.exponent.value.formatted(Formatter::Formatter.Number(fractionDigits: 3))
+        let r2 = evidence.exponent.fit.rSquared.formatted(Formatter::Formatter.Number(fractionDigits: 4))
         lines.append("    k = \(k)  (T ≈ c·nᵏ)")
         lines.append("    R² = \(r2)")
 
@@ -48,7 +48,7 @@ extension Tests.Complexity.Diagnostic {
         if let best = result.best {
             lines.append("")
             lines.append("  Best Candidate:")
-            let bestR2 = best.regression.rSquared.formatted(.number.precision(4))
+            let bestR2 = best.regression.rSquared.formatted(Formatter::Formatter.Number(fractionDigits: 4))
             lines.append("    \(best.complexity.rawValue)  R² = \(bestR2)")
 
             // Confidence
@@ -101,7 +101,7 @@ extension Tests.Complexity.Diagnostic {
         lines.append("  Measurements:")
         for point in points {
             let size = Swift.String(point.size)
-            let duration = point.metric.formatted()
+            let duration = point.metric.formatted(Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number()))
             lines.append("    n=\(size)  →  \(duration)")
         }
 
@@ -110,7 +110,7 @@ extension Tests.Complexity.Diagnostic {
             lines.append("")
             lines.append("  Growth Ratios:")
             let ratioStrs = evidence.growthRatios.map {
-                $0.formatted(.number.precision(2))
+                $0.formatted(Formatter::Formatter.Number(fractionDigits: 2))
             }
             lines.append("    [\(ratioStrs.joined(separator: ", "))]")
         }
@@ -121,7 +121,7 @@ extension Tests.Complexity.Diagnostic {
             lines.append("")
             lines.append("  Top Candidates:")
             for candidate in evidence.candidates.prefix(topN) {
-                let cR2 = candidate.regression.rSquared.formatted(.number.precision(4))
+                let cR2 = candidate.regression.rSquared.formatted(Formatter::Formatter.Number(fractionDigits: 4))
                 lines.append("    \(candidate.complexity.rawValue)  R² = \(cR2)")
             }
         }
@@ -133,10 +133,10 @@ extension Tests.Complexity.Diagnostic {
             let prevClass = comparison.previous.bestClass?.rawValue ?? "inconclusive"
             let currClass = comparison.current.bestClass?.rawValue ?? "inconclusive"
             lines.append(
-                "    Previous: \(prevClass) (k=\(comparison.previous.exponent.formatted(.number.precision(3))))"
+                "    Previous: \(prevClass) (k=\(comparison.previous.exponent.formatted(Formatter::Formatter.Number(fractionDigits: 3))))"
             )
             lines.append(
-                "    Current:  \(currClass) (k=\(comparison.current.exponent.formatted(.number.precision(3))))"
+                "    Current:  \(currClass) (k=\(comparison.current.exponent.formatted(Formatter::Formatter.Number(fractionDigits: 3))))"
             )
 
             if comparison.classRegressed {
@@ -152,7 +152,7 @@ extension Tests.Complexity.Diagnostic {
                 )
                 lines.append("    \(label)")
             } else if comparison.exponentDriftExceeds(0.3) {
-                let drift = comparison.exponentDrift.formatted(.number.precision(3))
+                let drift = comparison.exponentDrift.formatted(Formatter::Formatter.Number(fractionDigits: 3))
                 let label = Console.Style.warning.apply(
                     to: "DRIFT — exponent shifted by \(drift)",
                     capability: cap
@@ -175,9 +175,9 @@ extension Tests.Complexity.Diagnostic {
 
         // Exponent
         json.append("  \"exponent\": {")
-        json.append("    \"k\": \(evidence.exponent.value.formatted(.number.precision(4))),")
+        json.append("    \"k\": \(evidence.exponent.value.formatted(Formatter::Formatter.Number(fractionDigits: 4))),")
         json.append(
-            "    \"r_squared\": \(evidence.exponent.fit.rSquared.formatted(.number.precision(4)))"
+            "    \"r_squared\": \(evidence.exponent.fit.rSquared.formatted(Formatter::Formatter.Number(fractionDigits: 4)))"
         )
         json.append("  },")
 
@@ -186,7 +186,7 @@ extension Tests.Complexity.Diagnostic {
             json.append("  \"best\": {")
             json.append("    \"class\": \(_jsonString(best.complexity.rawValue)),")
             json.append(
-                "    \"r_squared\": \(best.regression.rSquared.formatted(.number.precision(4)))"
+                "    \"r_squared\": \(best.regression.rSquared.formatted(Formatter::Formatter.Number(fractionDigits: 4)))"
             )
             json.append("  },")
         } else {
@@ -209,7 +209,7 @@ extension Tests.Complexity.Diagnostic {
         for (i, c) in evidence.candidates.enumerated() {
             let comma = i < evidence.candidates.count - 1 ? "," : ""
             json.append(
-                "    {\"class\": \(_jsonString(c.complexity.rawValue)), \"r_squared\": \(c.regression.rSquared.formatted(.number.precision(4)))}\(comma)"
+                "    {\"class\": \(_jsonString(c.complexity.rawValue)), \"r_squared\": \(c.regression.rSquared.formatted(Formatter::Formatter.Number(fractionDigits: 4)))}\(comma)"
             )
         }
         json.append("  ],")
@@ -219,13 +219,13 @@ extension Tests.Complexity.Diagnostic {
         for (i, p) in points.enumerated() {
             let comma = i < points.count - 1 ? "," : ""
             json.append(
-                "    {\"size\": \(p.size), \"seconds\": \(p.metric.inSeconds.formatted(.number.precision(6)))}\(comma)"
+                "    {\"size\": \(p.size), \"seconds\": \(p.metric.inSeconds.formatted(Formatter::Formatter.Number(fractionDigits: 6)))}\(comma)"
             )
         }
         json.append("  ],")
 
         // Doubling ratios
-        let ratioStr = evidence.growthRatios.map { $0.formatted(.number.precision(3)) }.joined(
+        let ratioStr = evidence.growthRatios.map { $0.formatted(Formatter::Formatter.Number(fractionDigits: 3)) }.joined(
             separator: ", "
         )
         json.append("  \"growth_ratios\": [\(ratioStr)],")
@@ -239,10 +239,10 @@ extension Tests.Complexity.Diagnostic {
                 json.append("    \"previous_class\": null,")
             }
             json.append(
-                "    \"previous_exponent\": \(comparison.previous.exponent.formatted(.number.precision(4))),"
+                "    \"previous_exponent\": \(comparison.previous.exponent.formatted(Formatter::Formatter.Number(fractionDigits: 4))),"
             )
             json.append(
-                "    \"exponent_drift\": \(comparison.exponentDrift.formatted(.number.precision(4))),"
+                "    \"exponent_drift\": \(comparison.exponentDrift.formatted(Formatter::Formatter.Number(fractionDigits: 4))),"
             )
             json.append("    \"class_regressed\": \(comparison.classRegressed),")
             json.append("    \"is_regression\": \(comparison.isRegression)")
