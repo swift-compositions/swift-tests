@@ -163,7 +163,7 @@ let package = Package(
             dependencies: [
                 "Tests Snapshot",
                 "Tests Apple Testing Bridge",
-                .product(name: "HTML Snapshot Test Support", package: "swift-html-render"),
+                .product(name: "HTML Rendering Core Test Support", package: "swift-html-render"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
@@ -239,7 +239,7 @@ let package = Package(
             dependencies: [
                 "Tests",
                 .product(
-                    name: "Test Test Support",
+                    name: "Test",
                     package: "swift-test"
                 ),
                 .product(

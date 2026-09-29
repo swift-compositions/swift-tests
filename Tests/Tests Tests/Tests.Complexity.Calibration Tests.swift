@@ -6,7 +6,7 @@
 //  synthetic workloads with known complexity classes.
 //
 
-import Real_Primitives
+import Numeric
 import Testing
 import Tests_Test_Support
 

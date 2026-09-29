@@ -6,7 +6,7 @@
 //  reason cases not covered by the main classification tests.
 //
 
-import Real_Primitives
+import Numeric
 import Testing
 import Tests_Test_Support
 
