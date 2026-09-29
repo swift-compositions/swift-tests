@@ -7,7 +7,7 @@
 
 public import Test
 
-extension Test.Test.Snapshot.Inline {
+extension Test::Test.Snapshot.Inline {
     /// Global state accumulator for the current test run.
     ///
     /// Entries are registered during test execution via ``assertInlineSnapshot``

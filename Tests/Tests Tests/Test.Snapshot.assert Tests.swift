@@ -2,7 +2,7 @@ import Testing
 import Tests_Inline_Snapshot
 import Tests_Test_Support
 
-extension Test.Test.Snapshot {
+extension Test::Test.Snapshot {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -11,12 +11,12 @@ extension Test.Test.Snapshot {
 
 // MARK: - Unit
 
-extension Test.Test.Snapshot.Test.Unit {
+extension Test::Test.Snapshot.Test.Unit {
 
     @Test
     func `HTML strategy renders a document through snapshot`() {
-        let collector = Test.Test.Expectation.Collector()
-        Test.Test.Expectation.Collector.with(collector) {
+        let collector = Test::Test.Expectation.Collector()
+        Test::Test.Expectation.Collector.with(collector) {
             snapshot(
                 as: .html,
                 record: .never,
@@ -45,8 +45,8 @@ extension Test.Test.Snapshot.Test.Unit {
 
     @Test
     func `snapshot registers passing expectation with collector`() {
-        let collector = Test.Test.Expectation.Collector()
-        Test.Test.Expectation.Collector.with(collector) {
+        let collector = Test::Test.Expectation.Collector()
+        Test::Test.Expectation.Collector.with(collector) {
             // .missing mode: no reference exists → records to /tmp/ → passes
             snapshot(
                 as: .lines,
@@ -66,8 +66,8 @@ extension Test.Test.Snapshot.Test.Unit {
 
     @Test
     func `snapshot registers failing expectation with collector`() {
-        let collector = Test.Test.Expectation.Collector()
-        Test.Test.Expectation.Collector.with(collector) {
+        let collector = Test::Test.Expectation.Collector()
+        Test::Test.Expectation.Collector.with(collector) {
             // .never mode: no reference exists → missingReference → fails
             snapshot(
                 as: .lines,
@@ -87,8 +87,8 @@ extension Test.Test.Snapshot.Test.Unit {
 
     @Test
     func `snapshot registers multiple expectations with collector`() {
-        let collector = Test.Test.Expectation.Collector()
-        Test.Test.Expectation.Collector.with(collector) {
+        let collector = Test::Test.Expectation.Collector()
+        Test::Test.Expectation.Collector.with(collector) {
             // Passes (records new snapshot in /tmp/)
             snapshot(
                 as: .lines,

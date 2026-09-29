@@ -86,7 +86,7 @@ extension Test.Runner {
         let sink = reporter.sink()
         let sender = sink.sender
 
-        let startTime = Clock.Clock.Continuous.now
+        let startTime = Clock::Clock.Continuous.now
 
         // Emit run started
         await sender.send(Test.Event(kind: .runStarted, elapsed: .zero))
@@ -181,7 +181,7 @@ extension Test.Runner {
         at position: Tree<Test.Plan.Node?>.Keyed<Swift.String>.Position,
         concurrency: Concurrency,
         sender: Test.Reporter.Sink.Sender,
-        startTime: Clock.Clock.Continuous.Instant
+        startTime: Clock::Clock.Continuous.Instant
     ) async -> Counters {
         switch tree.peek(at: position) as Test.Plan.Node?? {
         case nil:
@@ -267,7 +267,7 @@ extension Test.Runner {
         concurrency: Concurrency,
         traits: Test.Trait.Collection?,
         sender: Test.Reporter.Sink.Sender,
-        startTime: Clock.Clock.Continuous.Instant
+        startTime: Clock::Clock.Continuous.Instant
     ) async -> Counters {
         guard let children = tree.children(of: position), !children.isEmpty else {
             return Counters()
@@ -373,7 +373,7 @@ extension Test.Runner {
         _ node: Test.Plan.Node,
         traits: Test.Trait.Collection,
         sender: Test.Reporter.Sink.Sender,
-        startTime: Clock.Clock.Continuous.Instant
+        startTime: Clock::Clock.Continuous.Instant
     ) async -> Counters {
         await sender.send(
             Test.Event(
@@ -478,8 +478,8 @@ extension Test.Runner {
     // MARK: - Helpers
 
     /// Computes elapsed duration since start.
-    private func elapsed(since start: Clock.Clock.Continuous.Instant) -> Duration {
-        Clock.Clock.Continuous.now - start
+    private func elapsed(since start: Clock::Clock.Continuous.Instant) -> Duration {
+        Clock::Clock.Continuous.now - start
     }
 
     /// Checks if a test is enabled based on its trait collection.

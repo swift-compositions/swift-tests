@@ -1,7 +1,7 @@
 import Testing
 import Tests_Test_Support
 
-extension Test.Test.Runner {
+extension Test::Test.Runner {
     @Suite
     struct Test {
         @Suite struct Expectations {}
@@ -11,18 +11,18 @@ extension Test.Test.Runner {
 
 // MARK: - Expectations
 
-extension Test.Test.Runner.Test.Expectations {
+extension Test::Test.Runner.Test.Expectations {
 
     @Test
     func `failing expect causes test failure`() async {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("failingExpect")) {
             expect(false)
         }
         let plan = registry.finalize()
 
         let (reporter, _) = SpyReporter.make()
-        let runner = Test.Test.Runner(reporter: reporter)
+        let runner = Test::Test.Runner(reporter: reporter)
         let result = await runner.run(plan)
 
         #expect(result.hasFailures, "expect(false) should cause test failure")
@@ -31,14 +31,14 @@ extension Test.Test.Runner.Test.Expectations {
 
     @Test
     func `passing expect keeps test passing`() async {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("passingExpect")) {
             expect(true)
         }
         let plan = registry.finalize()
 
         let (reporter, _) = SpyReporter.make()
-        let runner = Test.Test.Runner(reporter: reporter)
+        let runner = Test::Test.Runner(reporter: reporter)
         let result = await runner.run(plan)
 
         #expect(result.allPassed)
@@ -47,7 +47,7 @@ extension Test.Test.Runner.Test.Expectations {
 
     @Test
     func `multiple failing expects all recorded`() async {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("multipleFailures")) {
             expect(false, "first")
             expect(false, "second")
@@ -56,7 +56,7 @@ extension Test.Test.Runner.Test.Expectations {
         let plan = registry.finalize()
 
         let (reporter, spy) = SpyReporter.make()
-        let runner = Test.Test.Runner(reporter: reporter)
+        let runner = Test::Test.Runner(reporter: reporter)
         let result = await runner.run(plan)
 
         #expect(result.hasFailures)
@@ -69,13 +69,13 @@ extension Test.Test.Runner.Test.Expectations {
 
     @Test
     func `mix of passing and failing tests`() async {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("pass")) { expect(true) }
         registry.add(id: .stub("fail")) { expect(false) }
         let plan = registry.finalize()
 
         let (reporter, _) = SpyReporter.make()
-        let runner = Test.Test.Runner(reporter: reporter)
+        let runner = Test::Test.Runner(reporter: reporter)
         let result = await runner.run(plan)
 
         #expect(result.passed == 1)
@@ -85,18 +85,18 @@ extension Test.Test.Runner.Test.Expectations {
 
 // MARK: - Events
 
-extension Test.Test.Runner.Test.Events {
+extension Test::Test.Runner.Test.Events {
 
     @Test
     func `expectationChecked events are emitted`() async {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("eventsTest")) {
             expect(true)
         }
         let plan = registry.finalize()
 
         let (reporter, spy) = SpyReporter.make()
-        let runner = Test.Test.Runner(reporter: reporter)
+        let runner = Test::Test.Runner(reporter: reporter)
         _ = await runner.run(plan)
 
         let expectationEvents = spy.events.filter {
@@ -107,14 +107,14 @@ extension Test.Test.Runner.Test.Events {
 
     @Test
     func `issueRecorded emitted for failing expectations`() async {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("issueTest")) {
             expect(false)
         }
         let plan = registry.finalize()
 
         let (reporter, spy) = SpyReporter.make()
-        let runner = Test.Test.Runner(reporter: reporter)
+        let runner = Test::Test.Runner(reporter: reporter)
         _ = await runner.run(plan)
 
         let issueEvents = spy.events.filter {

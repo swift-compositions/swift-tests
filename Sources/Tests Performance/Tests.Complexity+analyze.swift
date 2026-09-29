@@ -160,9 +160,9 @@ extension Tests.Complexity {
             var durations: [Duration] = []
             durations.reserveCapacity(iterations)
             for _ in 0..<iterations {
-                let start = Clock.Clock.Continuous.now
+                let start = Clock::Clock.Continuous.now
                 try operation(size)
-                durations.append(Clock.Clock.Continuous.now - start)
+                durations.append(Clock::Clock.Continuous.now - start)
             }
 
             let measurement = Test.Benchmark.Measurement(durations: durations)
@@ -191,9 +191,9 @@ extension Tests.Complexity {
             var durations: [Duration] = []
             durations.reserveCapacity(iterations)
             for _ in 0..<iterations {
-                let start = Clock.Clock.Continuous.now
+                let start = Clock::Clock.Continuous.now
                 try await operation(size)
-                durations.append(Clock.Clock.Continuous.now - start)
+                durations.append(Clock::Clock.Continuous.now - start)
             }
 
             let measurement = Test.Benchmark.Measurement(durations: durations)

@@ -18,8 +18,8 @@ private func _makeRecord(
     module: Swift.String = "M"
 ) -> Tests.History.Record {
     let id = Tests_Core.Test.ID.stub(name, module: module)
-    let measurement = Test.Test.Benchmark.Measurement(durations: [metricValue])
-    let environment = Test.Test.Environment.capture()
+    let measurement = Test::Test.Benchmark.Measurement(durations: [metricValue])
+    let environment = Test::Test.Environment.capture()
 
     return Tests.History.Record(
         timestamp: Instant(secondsSinceUnixEpoch: secondsSinceUnixEpoch),
@@ -36,7 +36,7 @@ private func _makeRecord(
 /// The `none` interpretation for stable trends.
 ///
 /// Avoids ambiguity with `Optional.none`.
-private let _noTrend = Test.Test.Benchmark.Trend.Interpretation.none
+private let _noTrend = Test::Test.Benchmark.Trend.Interpretation.none
 
 // MARK: - Unit
 

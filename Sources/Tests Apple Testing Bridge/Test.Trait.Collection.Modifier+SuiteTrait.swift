@@ -14,7 +14,7 @@
     public import Testing
     public import Test
 
-    extension Test.Test.Trait.Collection.Modifier:
+    extension Test::Test.Trait.Collection.Modifier:
         Testing.SuiteTrait, Testing.TestScoping
     {
         public var isRecursive: Bool { true }

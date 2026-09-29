@@ -10,7 +10,7 @@ import Numeric
 import Testing
 import Tests_Test_Support
 
-private typealias SUT = Test.Test
+private typealias SUT = Test::Test
 
 // NOTE: Tests.Complexity already carries a Test suite (see "Tests.Complexity
 // Tests.swift"). Per [SWIFT-TEST-002] collision rule, "Calibration" is the

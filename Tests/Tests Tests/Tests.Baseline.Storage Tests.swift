@@ -67,7 +67,7 @@ extension Tests.Baseline.Storage.Test.Unit {
 
     @Test
     func `save and load roundtrip preserves durations`() throws {
-        let measurement = Test.Test.Benchmark.Measurement(durations: [
+        let measurement = Test::Test.Benchmark.Measurement(durations: [
             .seconds(1), .seconds(2), .seconds(3),
         ])
 
@@ -90,7 +90,7 @@ extension Tests.Baseline.Storage.Test.Unit {
 
     @Test
     func `save creates parent directories`() throws {
-        let measurement = Test.Test.Benchmark.Measurement(durations: [.seconds(1)])
+        let measurement = Test::Test.Benchmark.Measurement(durations: [.seconds(1)])
 
         try File.Directory.temporary { dir in
             let path = dir.path / "deep" / "nested" / "dir" / "fp.json"

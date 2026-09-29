@@ -14,7 +14,7 @@
     import Tests_Core
     import Testing
 
-    extension Test.Test.Expectation {
+    extension Test::Test.Expectation {
         /// Bridges test expectation failures to Apple's Swift Testing framework.
         ///
         /// Call ``install()`` once before tests run to enable failure reporting
@@ -25,13 +25,13 @@
         public enum Bridge {}
     }
 
-    extension Test.Test.Expectation.Bridge {
+    extension Test::Test.Expectation.Bridge {
         /// Installs the failure handler that forwards to `Testing.Issue.record`.
         ///
         /// Safe to call multiple times — subsequent calls overwrite with the
         /// same handler. Must be called before test execution begins.
         public static func install() {
-            typealias Expectation = Test.Test.Expectation
+            typealias Expectation = Test::Test.Expectation
             unsafe (Expectation.externalFailureHandler) = { message, location in
                 Testing.Issue.record(
                     Testing.Comment(rawValue: message),
@@ -53,6 +53,6 @@
     /// installs automatically on first failure — no manual `Bridge.install()` needed.
     @c(_swift_tests_bridge_install)
     func _installBridge() {
-        Test.Test.Expectation.Bridge.install()
+        Test::Test.Expectation.Bridge.install()
     }
 #endif

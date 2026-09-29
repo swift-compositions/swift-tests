@@ -1,7 +1,7 @@
 import Testing
 import Tests_Test_Support
 
-extension Test.Test.Plan {
+extension Test::Test.Plan {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -11,10 +11,10 @@ extension Test.Test.Plan {
 
 // MARK: - Unit
 
-extension Test.Test.Plan.Test.Unit {
+extension Test::Test.Plan.Test.Unit {
     @Test
     func `empty plan has isEmpty true and count zero`() {
-        let registry = Test.Test.Plan.Registry()
+        let registry = Test::Test.Plan.Registry()
         let plan = registry.finalize()
         #expect(plan.isEmpty)
         #expect(plan.count == 0)
@@ -22,7 +22,7 @@ extension Test.Test.Plan.Test.Unit {
 
     @Test
     func `plan count matches added entries`() {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("test1"), body: .sync {})
         registry.add(id: .stub("test2"), body: .sync {})
         registry.add(id: .stub("test3"), body: .sync {})
@@ -32,7 +32,7 @@ extension Test.Test.Plan.Test.Unit {
 
     @Test
     func `filter by predicate returns matching entries`() {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("a", module: "ModuleA"), body: .sync {})
         registry.add(id: .stub("b", module: "ModuleB"), body: .sync {})
         registry.add(id: .stub("c", module: "ModuleA"), body: .sync {})
@@ -44,7 +44,7 @@ extension Test.Test.Plan.Test.Unit {
 
     @Test
     func `filter by module returns correct entries`() {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("a", module: "Alpha"), body: .sync {})
         registry.add(id: .stub("b", module: "Beta"), body: .sync {})
         let plan = registry.finalize()
@@ -56,7 +56,7 @@ extension Test.Test.Plan.Test.Unit {
 
     @Test
     func `filter by tags returns tagged entries`() {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(
             id: .stub("tagged"),
             modifiers: [.tag("smoke")],
@@ -72,7 +72,7 @@ extension Test.Test.Plan.Test.Unit {
         // `Test` here names this suite's enclosing Suite (declared above),
         // which shadows the top-level `Test.Test` namespace, so
         // the source type must be qualified from the module root.
-        var tagFilter = Test.Test.Trait.Tag.liveValue
+        var tagFilter = Test::Test.Trait.Tag.liveValue
         tagFilter.insert("smoke")
         let filtered = plan.filter(tags: tagFilter)
         #expect(filtered.count == 1)
@@ -80,7 +80,7 @@ extension Test.Test.Plan.Test.Unit {
 
     @Test
     func `sorted orders entries by ID`() {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("c"), body: .sync {})
         registry.add(id: .stub("a"), body: .sync {})
         registry.add(id: .stub("b"), body: .sync {})
@@ -95,10 +95,10 @@ extension Test.Test.Plan.Test.Unit {
 
 // MARK: - Edge Case
 
-extension Test.Test.Plan.Test.`Edge Case` {
+extension Test::Test.Plan.Test.`Edge Case` {
     @Test
     func `filter returns empty when nothing matches`() {
-        var registry = Test.Test.Plan.Registry()
+        var registry = Test::Test.Plan.Registry()
         registry.add(id: .stub("test", module: "A"), body: .sync {})
         let plan = registry.finalize()
 

@@ -66,9 +66,9 @@ extension Test.Benchmark {
         durations.reserveCapacity(iterations)
 
         for _ in 0..<iterations {
-            let start = Clock.Clock.Continuous.now
+            let start = Clock::Clock.Continuous.now
             try body()
-            durations.append(Clock.Clock.Continuous.now - start)
+            durations.append(Clock::Clock.Continuous.now - start)
         }
 
         let measurement = Measurement(durations: durations)
@@ -114,9 +114,9 @@ extension Test.Benchmark {
         durations.reserveCapacity(iterations)
 
         for _ in 0..<iterations {
-            let start = Clock.Clock.Continuous.now
+            let start = Clock::Clock.Continuous.now
             try await body()
-            durations.append(Clock.Clock.Continuous.now - start)
+            durations.append(Clock::Clock.Continuous.now - start)
         }
 
         let measurement = Measurement(durations: durations)

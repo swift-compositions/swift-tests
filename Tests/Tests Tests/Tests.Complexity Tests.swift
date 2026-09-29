@@ -8,7 +8,7 @@
 import Testing
 import Tests_Test_Support
 
-private typealias SUT = Test.Test
+private typealias SUT = Test::Test
 
 extension Tests.Complexity {
     @Suite

@@ -7,7 +7,7 @@
 
 public import Test
 
-extension Test.Test.Snapshot.Inline.State {
+extension Test::Test.Snapshot.Inline.State {
     /// A pending inline snapshot entry awaiting source file write-back.
     ///
     /// Captures all information needed to locate the call site in source

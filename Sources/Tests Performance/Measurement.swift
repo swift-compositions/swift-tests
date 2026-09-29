@@ -39,9 +39,9 @@ extension Tests {
         var lastResult: T?
 
         for _ in 0..<iterations {
-            let start = Clock.Clock.Continuous.now
+            let start = Clock::Clock.Continuous.now
             lastResult = operation()
-            durations.append(Clock.Clock.Continuous.now - start)
+            durations.append(Clock::Clock.Continuous.now - start)
         }
 
         return (lastResult!, Test.Benchmark.Measurement(durations: durations))
@@ -65,9 +65,9 @@ extension Tests {
         var lastResult: T?
 
         for _ in 0..<iterations {
-            let start = Clock.Clock.Continuous.now
+            let start = Clock::Clock.Continuous.now
             lastResult = try await operation()
-            durations.append(Clock.Clock.Continuous.now - start)
+            durations.append(Clock::Clock.Continuous.now - start)
         }
 
         return (lastResult!, Test.Benchmark.Measurement(durations: durations))
@@ -80,9 +80,9 @@ extension Tests {
     /// literal and falls through to the async one only when the body needs it.
     @discardableResult
     public static func time<T>(operation: () -> T) -> (result: T, duration: Duration) {
-        let start = Clock.Clock.Continuous.now
+        let start = Clock::Clock.Continuous.now
         let result = operation()
-        return (result, Clock.Clock.Continuous.now - start)
+        return (result, Clock::Clock.Continuous.now - start)
     }
 
     /// Single-shot timing measurement for async operations
@@ -90,8 +90,8 @@ extension Tests {
     public static func time<T, E: Swift.Error>(
         operation: () async throws(E) -> T
     ) async throws(E) -> (result: T, duration: Duration) {
-        let start = Clock.Clock.Continuous.now
+        let start = Clock::Clock.Continuous.now
         let result = try await operation()
-        return (result, Clock.Clock.Continuous.now - start)
+        return (result, Clock::Clock.Continuous.now - start)
     }
 }

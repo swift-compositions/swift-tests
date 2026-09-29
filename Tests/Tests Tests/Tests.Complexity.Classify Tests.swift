@@ -10,7 +10,7 @@ import Numeric
 import Testing
 import Tests_Test_Support
 
-private typealias SUT = Test.Test
+private typealias SUT = Test::Test
 
 @Suite
 struct `Complexity Classify Tests` {

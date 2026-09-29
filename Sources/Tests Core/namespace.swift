@@ -12,4 +12,4 @@ public import Test
 ///
 /// This typealias ensures unambiguous reference to our Test types
 /// even when Apple's Testing module is transitively visible.
-public typealias Test = Test.Test
+public typealias Test = Test::Test

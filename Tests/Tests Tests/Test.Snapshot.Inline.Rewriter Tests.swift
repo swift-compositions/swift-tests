@@ -2,7 +2,7 @@ import Testing
 
 @testable import Tests_Inline_Snapshot
 
-extension Test.Test.Snapshot.Inline.Rewriter {
+extension Test::Test.Snapshot.Inline.Rewriter {
     @Suite
     struct Test {
         @Suite struct HashCount {}
@@ -11,7 +11,7 @@ extension Test.Test.Snapshot.Inline.Rewriter {
 
 // MARK: - Plain text (no hashes needed)
 
-extension Test.Test.Snapshot.Inline.Rewriter.Test.HashCount {
+extension Test::Test.Snapshot.Inline.Rewriter.Test.HashCount {
 
     @Test
     func `plain Text`() {
@@ -36,7 +36,7 @@ extension Test.Test.Snapshot.Inline.Rewriter.Test.HashCount {
 
 // MARK: - Triple quotes
 
-extension Test.Test.Snapshot.Inline.Rewriter.Test.HashCount {
+extension Test::Test.Snapshot.Inline.Rewriter.Test.HashCount {
 
     @Test
     func `triple Quotes Need One Hash`() {
@@ -57,7 +57,7 @@ extension Test.Test.Snapshot.Inline.Rewriter.Test.HashCount {
 
 // MARK: - Backslash (basic escape prevention)
 
-extension Test.Test.Snapshot.Inline.Rewriter.Test.HashCount {
+extension Test::Test.Snapshot.Inline.Rewriter.Test.HashCount {
 
     @Test
     func `backslash Needs One Hash`() {
@@ -73,7 +73,7 @@ extension Test.Test.Snapshot.Inline.Rewriter.Test.HashCount {
 
 // MARK: - Backslash-hash sequences (the bug)
 
-extension Test.Test.Snapshot.Inline.Rewriter.Test.HashCount {
+extension Test::Test.Snapshot.Inline.Rewriter.Test.HashCount {
 
     @Test
     func `backslash Hash Paren Needs Two Hashes`() {
@@ -108,7 +108,7 @@ extension Test.Test.Snapshot.Inline.Rewriter.Test.HashCount {
 
 // MARK: - Combined
 
-extension Test.Test.Snapshot.Inline.Rewriter.Test.HashCount {
+extension Test::Test.Snapshot.Inline.Rewriter.Test.HashCount {
 
     @Test
     func `triple Quote And Backslash Hash Take Maximum`() {
