@@ -262,6 +262,7 @@ let package = Package(
                 "Tests",
                 "Tests Inline Snapshot",
                 "Tests Test Support",
+                .product(name: "HTML Rendering Core", package: "swift-html-render"),
             ],
             // Explicit path: the nested test manifest at Tests/Package.swift makes
             // SwiftPM skip automatic target discovery under Tests/.
