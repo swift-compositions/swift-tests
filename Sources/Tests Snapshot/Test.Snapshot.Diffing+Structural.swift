@@ -55,9 +55,9 @@ extension Test.Snapshot.Diffing where Format == Swift.String {
                     return Self.lines.diff(old, new)
                 }
 
-                let oldTree: Tree<RFC_8259.Value>.Keyed<Swift.String>
-                let newTree: Tree<RFC_8259.Value>.Keyed<Swift.String>
-                do throws(Tree<RFC_8259.Value>.Keyed<Swift.String>.Error) {
+                let oldTree: __Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>
+                let newTree: __Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>
+                do throws(__Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>.Error) {
                     oldTree = try _jsonToKeyedTree(oldValue)
                     newTree = try _jsonToKeyedTree(newValue)
                 } catch {
@@ -65,7 +65,7 @@ extension Test.Snapshot.Diffing where Format == Swift.String {
                     // ill-defined — fall back to line diff, like invalid JSON.
                     return Self.lines.diff(old, new)
                 }
-                let treeDiff = Tree<RFC_8259.Value>.Keyed<Swift.String>.diff(
+                let treeDiff = __Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>.diff(
                     from: oldTree,
                     to: newTree
                 )

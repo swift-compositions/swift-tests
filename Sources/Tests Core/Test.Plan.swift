@@ -25,7 +25,7 @@ public import Tree_Keyed
 extension Test {
     /// An execution plan for running tests.
     ///
-    /// A `Plan` organizes tests into a hierarchy using `Tree<Node?>.Keyed<String>`.
+    /// A `Plan` organizes tests into a hierarchy using `__Tree<TreeStorage.Keyed<Node?, String>>`.
     /// Suites group tests and provide trait inheritance. The ``Test/Runner``
     /// walks this tree to execute tests with correct concurrency and trait
     /// propagation.
@@ -49,12 +49,12 @@ extension Test {
         /// Values are `Node?` where `nil` represents structural intermediates
         /// (module boundaries or implicit suite nesting levels not explicitly
         /// registered as suites).
-        public let tree: Tree<Node?>.Keyed<String>
+        public let tree: __Tree<TreeStorage.Keyed<Node?, String>>
 
         /// Creates a plan from a hierarchical tree.
         ///
         /// - Parameter tree: The test tree with propagated traits.
-        internal init(tree: Tree<Node?>.Keyed<String>) {
+        internal init(tree: __Tree<TreeStorage.Keyed<Node?, String>>) {
             self.tree = tree
         }
 
@@ -66,7 +66,7 @@ extension Test {
         ///
         /// - Parameter entries: The test entries to include.
         internal init(entries: [Entry]) {
-            var tree = Tree<Node?>.Keyed<String>()
+            var tree = __Tree<TreeStorage.Keyed<Node?, String>>()
             for entry in entries {
                 tree[Self.components(for: entry.id)] = Node(
                     id: entry.id,
@@ -88,7 +88,7 @@ extension Test.Plan {
     public var entries: [Entry] {
         guard let root = tree.root else { return [] }
         var result: [Entry] = []
-        var stack: [Tree<Node?>.Keyed<String>.Position] = [root]
+        var stack: [__Tree<TreeStorage.Keyed<Node?, String>>.Position] = [root]
         while let pos = stack.popLast() {
             if let nodeOpt: Node? = tree.peek(at: pos),
                 let node = nodeOpt,

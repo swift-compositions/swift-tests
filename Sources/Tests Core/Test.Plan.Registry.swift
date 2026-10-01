@@ -123,7 +123,7 @@ extension Test.Plan.Registry {
     ///
     /// - Returns: The finalized test plan.
     public consuming func finalize() -> Test.Plan {
-        var tree = Tree<Test.Plan.Node?>.Keyed<String>()
+        var tree = __Tree<TreeStorage.Keyed<Test.Plan.Node?, String>>()
 
         // 1. Insert suites
         for suite in suites {
@@ -179,8 +179,8 @@ extension Test.Plan.Registry {
     ///   - position: The current position.
     ///   - inherited: Modifiers accumulated from ancestor nodes.
     private static func propagate(
-        through tree: inout Tree<Test.Plan.Node?>.Keyed<String>,
-        from position: Tree<Test.Plan.Node?>.Keyed<String>.Position,
+        through tree: inout __Tree<TreeStorage.Keyed<Test.Plan.Node?, String>>,
+        from position: __Tree<TreeStorage.Keyed<Test.Plan.Node?, String>>.Position,
         inherited: [Test.Trait.Collection.Modifier]
     ) {
         let passDown: [Test.Trait.Collection.Modifier]
@@ -194,7 +194,7 @@ extension Test.Plan.Registry {
 
         case .some(.some(var node)):
             node.traits = Test.Trait.Collection(modifiers: inherited + node.modifiers)
-            do throws(Tree<Test.Plan.Node?>.Keyed<String>.Error) {
+            do throws(__Tree<TreeStorage.Keyed<Test.Plan.Node?, String>>.Error) {
                 try tree.update(at: position, node)
             } catch {
                 // best-effort: position validated by peek above; update failure is non-fatal

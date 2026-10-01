@@ -8,7 +8,7 @@
 import JSON
 internal import Tree_Keyed
 
-// MARK: - JSON → Tree<RFC_8259.Value>.Keyed<String>
+// MARK: - JSON → __Tree<TreeStorage.Keyed<RFC_8259.Value, String>>
 
 /// Converts an RFC 8259 value to a keyed tree for structural comparison.
 ///
@@ -24,18 +24,18 @@ internal import Tree_Keyed
 ///   member, so a duplicate key maps to `.keyOccupied` at its parent node.
 func _jsonToKeyedTree(
     _ value: RFC_8259.Value
-) throws(Tree<RFC_8259.Value>.Keyed<Swift.String>.Error) -> Tree<RFC_8259.Value>.Keyed<Swift.String>
+) throws(__Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>.Error) -> __Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>
 {
-    var tree = Tree<RFC_8259.Value>.Keyed<Swift.String>()
+    var tree = __Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>()
 
     let rootPos = try tree.insert(
         _jsonLocalValue(value),
-        at: Tree<RFC_8259.Value>.Keyed<Swift.String>.Insert.Position.root
+        at: __Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>.Insert.Position.root
     )
 
     var pending:
         [(
-            parent: Tree<RFC_8259.Value>.Keyed<Swift.String>.Position, key: Swift.String,
+            parent: __Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>.Position, key: Swift.String,
             value: RFC_8259.Value
         )] = []
     _jsonAppendChildren(of: value, parent: rootPos, to: &pending)
@@ -65,10 +65,10 @@ private func _jsonLocalValue(_ value: RFC_8259.Value) -> RFC_8259.Value {
 /// Appends child entries for containers onto the pending stack.
 private func _jsonAppendChildren(
     of value: RFC_8259.Value,
-    parent: Tree<RFC_8259.Value>.Keyed<Swift.String>.Position,
+    parent: __Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>.Position,
     to pending:
         inout [(
-            parent: Tree<RFC_8259.Value>.Keyed<Swift.String>.Position, key: Swift.String,
+            parent: __Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>.Position, key: Swift.String,
             value: RFC_8259.Value
         )]
 ) {
