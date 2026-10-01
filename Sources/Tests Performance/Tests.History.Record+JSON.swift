@@ -60,7 +60,7 @@ extension Tests.History.Record: JSON.Serializable {
             throw .missingKey("ts")
         }
         let tsWhole = tsSeconds.rounded(.down)
-        let ts = Instant(
+        let ts = Time::Time.Instant(
             _unchecked: (),
             secondsSinceUnixEpoch: Int64(tsWhole),
             nanosecondFraction: Int32((tsSeconds - tsWhole) * 1_000_000_000)

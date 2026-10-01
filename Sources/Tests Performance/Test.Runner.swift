@@ -479,7 +479,7 @@ extension Test.Runner {
 
     /// Computes elapsed duration since start.
     private func elapsed(since start: Clock::Clock.Continuous.Instant) -> Duration {
-        Clock::Clock.Continuous.now - start
+        Clock::Clock.Continuous.now.offset - start.offset
     }
 
     /// Checks if a test is enabled based on its trait collection.

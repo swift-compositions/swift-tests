@@ -16,7 +16,7 @@ extension Tests.History {
     /// for cross-run trend analysis.
     public struct Record: Sendable {
         /// Wall-clock instant when this measurement was taken.
-        public let timestamp: Instant
+        public let timestamp: Time::Time.Instant
 
         /// The test identifier.
         public let testID: Test.ID
@@ -40,7 +40,7 @@ extension Tests.History {
         public let outlierCount: Int?
 
         public init(
-            timestamp: Instant,
+            timestamp: Time::Time.Instant,
             testID: Test.ID,
             metric: Test.Benchmark.Metric,
             metricValue: Duration,

@@ -1,3 +1,4 @@
+public import Text
 //
 //  Test.Expectation.Bridge.swift
 //  swift-tests

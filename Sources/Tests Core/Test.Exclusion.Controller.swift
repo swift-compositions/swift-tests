@@ -1,3 +1,4 @@
+public import Hash_Table_Primitive
 //
 //  Test.Exclusion.Controller.swift
 //  swift-tests

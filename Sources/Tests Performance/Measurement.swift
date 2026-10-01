@@ -41,7 +41,7 @@ extension Tests {
         for _ in 0..<iterations {
             let start = Clock::Clock.Continuous.now
             lastResult = operation()
-            durations.append(Clock::Clock.Continuous.now - start)
+            durations.append(Clock::Clock.Continuous.now.offset - start.offset)
         }
 
         return (lastResult!, Test.Benchmark.Measurement(durations: durations))
@@ -67,7 +67,7 @@ extension Tests {
         for _ in 0..<iterations {
             let start = Clock::Clock.Continuous.now
             lastResult = try await operation()
-            durations.append(Clock::Clock.Continuous.now - start)
+            durations.append(Clock::Clock.Continuous.now.offset - start.offset)
         }
 
         return (lastResult!, Test.Benchmark.Measurement(durations: durations))
@@ -82,7 +82,7 @@ extension Tests {
     public static func time<T>(operation: () -> T) -> (result: T, duration: Duration) {
         let start = Clock::Clock.Continuous.now
         let result = operation()
-        return (result, Clock::Clock.Continuous.now - start)
+        return (result, Clock::Clock.Continuous.now.offset - start.offset)
     }
 
     /// Single-shot timing measurement for async operations
@@ -92,6 +92,6 @@ extension Tests {
     ) async throws(E) -> (result: T, duration: Duration) {
         let start = Clock::Clock.Continuous.now
         let result = try await operation()
-        return (result, Clock::Clock.Continuous.now - start)
+        return (result, Clock::Clock.Continuous.now.offset - start.offset)
     }
 }

@@ -63,7 +63,7 @@ extension Test.Trait {
 
 extension Test.Trait.Collection {
     /// Type-safe subscript for any witness key.
-    public subscript<K: Witness.Key>(key: K.Type) -> K.Value where K.Value: Copyable {
+    public subscript<K: Witness.Key>(key: K.Type) -> K.Value where K.Value: Copyable, K.Value: Escapable {
         get { storage[key] }
         set { storage[key] = newValue }
     }

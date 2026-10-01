@@ -42,8 +42,8 @@ extension Test.Snapshot.Diffing where Format == Swift.String {
         pretty: Bool = true
     ) -> Self {
         Self(
-            toBytes: { $0.utf8.map(Byte.init) },
-            fromBytes: { Swift.String(decoding: $0.underlying, as: UTF8.self) },
+            toBytes: { $0.utf8.map(Byte.init(bitPattern:)) },
+            fromBytes: { Swift.String(decoding: $0.map(\.bitPattern), as: UTF8.self) },
             diff: { old, new in
                 let oldValue: RFC_8259.Value
                 let newValue: RFC_8259.Value

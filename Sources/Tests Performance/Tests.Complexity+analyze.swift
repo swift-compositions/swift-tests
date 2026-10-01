@@ -162,7 +162,7 @@ extension Tests.Complexity {
             for _ in 0..<iterations {
                 let start = Clock::Clock.Continuous.now
                 try operation(size)
-                durations.append(Clock::Clock.Continuous.now - start)
+                durations.append(Clock::Clock.Continuous.now.offset - start.offset)
             }
 
             let measurement = Test.Benchmark.Measurement(durations: durations)
@@ -193,7 +193,7 @@ extension Tests.Complexity {
             for _ in 0..<iterations {
                 let start = Clock::Clock.Continuous.now
                 try await operation(size)
-                durations.append(Clock::Clock.Continuous.now - start)
+                durations.append(Clock::Clock.Continuous.now.offset - start.offset)
             }
 
             let measurement = Test.Benchmark.Measurement(durations: durations)

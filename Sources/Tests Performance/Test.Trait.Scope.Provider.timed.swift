@@ -49,7 +49,7 @@ extension Test.Trait.Scope.Provider {
                 : nil
             let start = Clock::Clock.Continuous.now
             try await operation()
-            durations.append(Clock::Clock.Continuous.now - start)
+            durations.append(Clock::Clock.Continuous.now.offset - start.offset)
             if let before {
                 let after = Memory.Allocation.Statistics.capture()
                 allocationStats?.append(Memory.Allocation.Statistics.delta(from: before, to: after))

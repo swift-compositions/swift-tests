@@ -68,7 +68,7 @@ extension Test.Benchmark {
         for _ in 0..<iterations {
             let start = Clock::Clock.Continuous.now
             try body()
-            durations.append(Clock::Clock.Continuous.now - start)
+            durations.append(Clock::Clock.Continuous.now.offset - start.offset)
         }
 
         let measurement = Measurement(durations: durations)
@@ -116,7 +116,7 @@ extension Test.Benchmark {
         for _ in 0..<iterations {
             let start = Clock::Clock.Continuous.now
             try await body()
-            durations.append(Clock::Clock.Continuous.now - start)
+            durations.append(Clock::Clock.Continuous.now.offset - start.offset)
         }
 
         let measurement = Measurement(durations: durations)
