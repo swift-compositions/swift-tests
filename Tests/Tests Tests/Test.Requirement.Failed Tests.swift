@@ -1,3 +1,4 @@
+public import Text
 import Testing
 import Tests_Test_Support
 

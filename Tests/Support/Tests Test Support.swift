@@ -1,3 +1,4 @@
+public import Source
 import Synchronization
 public import Test
 public import Tests
@@ -72,5 +73,26 @@ extension SpyReporter {
             Tests_Core.Test.Reporter.Sink(spy)
         }
         return (reporter, spy)
+    }
+}
+
+extension Tests_Core.Test.ID {
+    public static func stub(
+        _ name: Swift.String,
+        module: Swift.String = "TestModule",
+        suite: Swift.String? = nil
+    ) -> Self {
+        .init(
+            module: module,
+            suite: suite,
+            name: name,
+            sourceLocation: Source.Location(fileID: "\(module)/Stub.swift", line: 1, column: 1)
+        )
+    }
+}
+
+extension Source.Location {
+    public static func stub(line: Int = 1, column: Int = 1) -> Self {
+        .init(fileID: "TestModule/Stub.swift", line: line, column: column)
     }
 }
