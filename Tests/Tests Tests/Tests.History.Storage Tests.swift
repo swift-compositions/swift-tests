@@ -1,5 +1,6 @@
 import Testing
 import Tests_Test_Support
+import Time
 
 extension Tests.History.Storage {
     @Suite
@@ -60,7 +61,7 @@ extension Tests.History.Storage.Test.Unit {
         let environment = Test::Test.Environment.capture()
 
         let record = Tests.History.Record(
-            timestamp: Instant(secondsSinceUnixEpoch: 1_710_100_000),
+            timestamp: Time::Time.Instant(secondsSinceUnixEpoch: 1_710_100_000),
             testID: id,
             metric: .median,
             metricValue: .milliseconds(11),
@@ -83,7 +84,7 @@ extension Tests.History.Storage.Test.Unit {
 
             #expect(records.count == 1)
             #expect(records.first?.testID.name == "benchTest")
-            #expect(records.first?.timestamp == Instant(secondsSinceUnixEpoch: 1_710_100_000))
+            #expect(records.first?.timestamp == Time::Time.Instant(secondsSinceUnixEpoch: 1_710_100_000))
         }
     }
 
@@ -100,7 +101,7 @@ extension Tests.History.Storage.Test.Unit {
                     .milliseconds(10 + i)
                 ])
                 let record = Tests.History.Record(
-                    timestamp: Instant(secondsSinceUnixEpoch: Int64(1_710_100_000 + i)),
+                    timestamp: Time::Time.Instant(secondsSinceUnixEpoch: Int64(1_710_100_000 + i)),
                     testID: id,
                     metric: .median,
                     metricValue: .milliseconds(10 + i),
@@ -129,7 +130,7 @@ extension Tests.History.Storage.Test.Unit {
         let measurement = Test::Test.Benchmark.Measurement(durations: [.seconds(1)])
 
         let record = Tests.History.Record(
-            timestamp: Instant(secondsSinceUnixEpoch: 1),
+            timestamp: Time::Time.Instant(secondsSinceUnixEpoch: 1),
             testID: id,
             metric: .median,
             metricValue: .seconds(1),

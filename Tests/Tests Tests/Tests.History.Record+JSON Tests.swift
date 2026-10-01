@@ -1,5 +1,6 @@
 import Testing
 import Tests_Test_Support
+import Time
 
 extension Tests.History.Record {
     @Suite
@@ -22,7 +23,7 @@ extension Tests.History.Record.Test.Unit {
 
         let original = Tests.History.Record(
             // swiftlint:disable:next force_try
-            timestamp: try! Instant(
+            timestamp: try! Time::Time.Instant(
                 secondsSinceUnixEpoch: 1_710_100_000,
                 nanosecondFraction: 500_000_000
             ),
@@ -41,7 +42,7 @@ extension Tests.History.Record.Test.Unit {
         #expect(
             roundtripped.timestamp
                 // swiftlint:disable:next force_try
-                == (try! Instant(
+                == (try! Time::Time.Instant(
                     secondsSinceUnixEpoch: 1_710_100_000,
                     nanosecondFraction: 500_000_000
                 ))
@@ -63,7 +64,7 @@ extension Tests.History.Record.Test.Unit {
         let environment = Test::Test.Environment.capture()
 
         let original = Tests.History.Record(
-            timestamp: Instant(secondsSinceUnixEpoch: 1_710_100_000),
+            timestamp: Time::Time.Instant(secondsSinceUnixEpoch: 1_710_100_000),
             testID: id,
             metric: .p95,
             metricValue: .milliseconds(50),
@@ -92,7 +93,7 @@ extension Tests.History.Record.Test.Unit {
 
         for metric in metrics {
             let record = Tests.History.Record(
-                timestamp: Instant(secondsSinceUnixEpoch: 1),
+                timestamp: Time::Time.Instant(secondsSinceUnixEpoch: 1),
                 testID: id,
                 metric: metric,
                 metricValue: .seconds(1),
@@ -123,7 +124,7 @@ extension Tests.History.Record.Test.`Edge Case` {
         let environment = Test::Test.Environment.capture()
 
         let record = Tests.History.Record(
-            timestamp: Instant(secondsSinceUnixEpoch: 1),
+            timestamp: Time::Time.Instant(secondsSinceUnixEpoch: 1),
             testID: id,
             metric: .median,
             metricValue: .seconds(1),
@@ -146,7 +147,7 @@ extension Tests.History.Record.Test.`Edge Case` {
         let environment = Test::Test.Environment.capture()
 
         let record = Tests.History.Record(
-            timestamp: Instant(secondsSinceUnixEpoch: 1),
+            timestamp: Time::Time.Instant(secondsSinceUnixEpoch: 1),
             testID: id,
             metric: .median,
             metricValue: .seconds(1),

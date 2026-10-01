@@ -1,5 +1,6 @@
 import Testing
 import Tests_Test_Support
+import Time
 
 extension Tests.History.Analysis {
     @Suite
@@ -22,7 +23,7 @@ private func _makeRecord(
     let environment = Test::Test.Environment.capture()
 
     return Tests.History.Record(
-        timestamp: Instant(secondsSinceUnixEpoch: secondsSinceUnixEpoch),
+        timestamp: Time::Time.Instant(secondsSinceUnixEpoch: secondsSinceUnixEpoch),
         testID: id,
         metric: .median,
         metricValue: metricValue,
