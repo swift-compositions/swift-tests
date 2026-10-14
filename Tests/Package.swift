@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "testing",
     platforms: [
-        .macOS(.v26)
+        .macOS(.v27)
     ],
     dependencies: [
         .package(path: ".."),
