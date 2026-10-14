@@ -9,14 +9,12 @@ let package = Package(
     ],
     dependencies: [
         .package(path: ".."),
-        .package(url: "https://github.com/swift-compositions/swift-test-application.git", branch: "main"),
     ],
     targets: [
         .testTarget(
             name: "Tests Complexity Smoke Tests",
             dependencies: [
                 .product(name: "Tests", package: "swift-tests"),
-                .product(name: "Test Application", package: "swift-test-application"),
             ],
             path: "Tests Complexity Smoke Tests"
         )
