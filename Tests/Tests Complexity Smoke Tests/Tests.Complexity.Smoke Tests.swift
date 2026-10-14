@@ -36,6 +36,9 @@ struct ComplexitySmokeTests {
 
     @Test
     func `linear scan is no worse than quadratic`() throws {
+        let scan = Scan(count: 30_000_000)
+        defer { scan.report() }
+
         let diagnostic = try Tests.Complexity.analyze(
             sizes: [
                 1_000, 3_000, 10_000, 30_000, 100_000,
@@ -45,11 +48,7 @@ struct ComplexitySmokeTests {
             iterations: 3,
             printDiagnostic: false
         ) { n in
-            var sum = 0
-            for i in 0..<n {
-                sum &+= i
-            }
-            _ = sum
+            scan(n)
         }
 
         let result = diagnostic.result
@@ -61,6 +60,9 @@ struct ComplexitySmokeTests {
 
     @Test
     func `async linear scan is no worse than quadratic`() async throws {
+        let scan = Scan(count: 30_000_000)
+        defer { scan.report() }
+
         let diagnostic = try await Tests.Complexity.analyze(
             sizes: [
                 1_000, 3_000, 10_000, 30_000, 100_000,
@@ -70,11 +72,7 @@ struct ComplexitySmokeTests {
             iterations: 3,
             printDiagnostic: false
         ) { (n: Int) async in
-            var sum = 0
-            for i in 0..<n {
-                sum &+= i
-            }
-            _ = sum
+            scan(n)
         }
 
         let result = diagnostic.result
