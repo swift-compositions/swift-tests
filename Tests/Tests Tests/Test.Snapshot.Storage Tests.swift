@@ -23,7 +23,7 @@ extension Test::Test.Snapshot.Storage.Test.Unit {
             pathExtension: "json"
         )
         let pathString = Swift.String(path)
-        #expect(pathString == "/path/to/.snapshots/my-snapshot.json")
+        #expect(pathString == Swift.String(File.Path("/path/to/.snapshots/my-snapshot.json")))
     }
 
     @Test
@@ -37,7 +37,7 @@ extension Test::Test.Snapshot.Storage.Test.Unit {
             pathExtension: "json",
             snapshotDirectory: customDir
         )
-        #expect(Swift.String(path) == "/custom/snapshots/my-snapshot.json")
+        #expect(Swift.String(path) == Swift.String(File.Path("/custom/snapshots/my-snapshot.json")))
     }
 
     @Test
@@ -52,7 +52,9 @@ extension Test::Test.Snapshot.Storage.Test.Unit {
             subdirectory: sub
         )
         let pathString = Swift.String(path)
-        #expect(pathString == "/path/to/.snapshots/PDF.Test.Snapshot/my-snapshot.pdf")
+        #expect(
+            pathString == Swift.String(File.Path("/path/to/.snapshots/PDF.Test.Snapshot/my-snapshot.pdf"))
+        )
     }
 
     @Test
@@ -65,7 +67,7 @@ extension Test::Test.Snapshot.Storage.Test.Unit {
             pathExtension: "txt"
         )
         let pathString = Swift.String(path)
-        #expect(pathString == "/path/to/.snapshots/testFoo.3.txt")
+        #expect(pathString == Swift.String(File.Path("/path/to/.snapshots/testFoo.3.txt")))
     }
 
     @Test
@@ -78,7 +80,7 @@ extension Test::Test.Snapshot.Storage.Test.Unit {
             pathExtension: "json"
         )
         let pathString = Swift.String(path)
-        #expect(pathString == "/path/to/.snapshots/user-profile.json")
+        #expect(pathString == Swift.String(File.Path("/path/to/.snapshots/user-profile.json")))
     }
 }
 
@@ -97,6 +99,6 @@ extension Test::Test.Snapshot.Storage.Test.`Edge Case` {
             snapshotDirectory: File.Path("/custom"),
             subdirectory: sub
         )
-        #expect(Swift.String(path) == "/custom/MyType/output.txt")
+        #expect(Swift.String(path) == Swift.String(File.Path("/custom/MyType/output.txt")))
     }
 }
