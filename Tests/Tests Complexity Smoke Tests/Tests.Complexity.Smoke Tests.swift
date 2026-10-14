@@ -46,7 +46,7 @@ struct ComplexitySmokeTests {
             ],
             warmup: 1,
             iterations: 3,
-            printDiagnostic: false
+            printDiagnostic: true
         ) { n in
             scan(n)
         }
@@ -70,7 +70,7 @@ struct ComplexitySmokeTests {
             ],
             warmup: 1,
             iterations: 3,
-            printDiagnostic: false
+            printDiagnostic: true
         ) { (n: Int) async in
             scan(n)
         }
