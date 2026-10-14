@@ -5,11 +5,7 @@
 //  Best-effort git metadata capture.
 //
 
-#if canImport(Darwin)
-    import Darwin
-#elseif canImport(Glibc)
-    import Glibc
-#endif
+import File_System
 
 extension Test {
     /// Git repository state at test run time.
@@ -62,16 +58,18 @@ extension Test.Git {
 
 /// Reads the trimmed contents of a file, or nil if unavailable.
 private func _read(_ path: Swift.String) -> Swift.String? {
-    guard let file = unsafe fopen(path, "r") else { return nil }
-    defer { unsafe fclose(file) }
-
-    var buffer = [CChar](repeating: 0, count: 256)
-    guard unsafe fgets(&buffer, Int32(buffer.count), file) != nil else { return nil }
-
-    var result = Swift.String(
-        decoding: buffer.prefix(while: { $0 != 0 }).map({ UInt8(bitPattern: $0) }),
-        as: UTF8.self
-    )
+    let file = File(File.Path(stringLiteral: path))
+    guard file.stat.exists else { return nil }
+    var result: Swift.String
+    do throws(Either<File.System.Read.Full.Error, Never>) {
+        result = try file.read.full { span in
+            unsafe span.withUnsafeBufferPointer { buffer in
+                unsafe Swift.String(decoding: buffer, as: UTF8.self)
+            }
+        }
+    } catch {
+        return nil
+    }
 
     // Trim trailing whitespace/newlines
     while let last = result.unicodeScalars.last,
