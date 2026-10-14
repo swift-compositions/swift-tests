@@ -16,7 +16,7 @@ let package = Package(
             name: "Tests Complexity Smoke Tests",
             dependencies: [
                 .product(name: "Tests", package: "swift-tests"),
-                .product(name: "Testing", package: "swift-test-application"),
+                .product(name: "Test Application", package: "swift-test-application"),
             ],
             path: "Tests Complexity Smoke Tests"
         )
