@@ -9,7 +9,7 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Clocks
+import Kernel_Clock
 public import Time
 
 // MARK: - Measurement API

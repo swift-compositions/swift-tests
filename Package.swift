@@ -85,7 +85,6 @@ let package = Package(
             url: "https://github.com/swift-atoms/swift-sample.git",
             branch: "main"
         ),
-        .package(url: "https://github.com/swift-compositions/swift-clocks.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-environment.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-witnesses.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-html-render.git", branch: "main"),
@@ -183,7 +182,7 @@ let package = Package(
                 .product(name: "Memory Mapping", package: "swift-memory-mapping"),
                 .product(name: "Binary", package: "swift-binary"),
                 .product(name: "Dependency", package: "swift-dependency"),
-                .product(name: "Clocks", package: "swift-clocks"),
+                .product(name: "Kernel Clock", package: "swift-kernel"),
                 .product(name: "File System", package: "swift-file-system"),
                 .product(name: "JSON", package: "swift-json"),
                 .product(name: "Environment", package: "swift-environment"),

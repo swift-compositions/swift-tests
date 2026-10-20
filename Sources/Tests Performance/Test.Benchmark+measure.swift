@@ -9,7 +9,7 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Clocks
+import Kernel_Clock
 public import Test
 public import Time
 import Formatter

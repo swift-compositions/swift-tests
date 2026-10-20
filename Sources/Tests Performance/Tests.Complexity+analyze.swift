@@ -5,7 +5,7 @@
 //  Full complexity analysis orchestrator.
 //
 
-import Clocks
+import Kernel_Clock
 public import Test
 
 extension Tests.Complexity {

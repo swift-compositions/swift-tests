@@ -5,7 +5,7 @@
 //  Test plan executor.
 //
 
-import Clocks
+import Kernel_Clock
 import Dependency
 import JSON
 import Standard_Library_Extensions
