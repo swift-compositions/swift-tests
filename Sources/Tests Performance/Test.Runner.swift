@@ -5,9 +5,9 @@
 //  Test plan executor.
 //
 
-import Kernel_Clock
 import Dependency
 import JSON
+import Kernel_Clock
 import Standard_Library_Extensions
 public import Tests_Core
 import Tree_Keyed

@@ -5,10 +5,10 @@
 //  Scope provider for timed benchmark execution.
 //
 
-import Kernel_Clock
 import File_System
 import IO_Kernel
 import Kernel
+import Kernel_Clock
 import Memory_Mapping
 import Thread_Pool
 
