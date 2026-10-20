@@ -61,7 +61,8 @@ extension Tests.Comparison {
         let nameColored = (isRegression ? Console.Style.error : .success)
             .apply(to: name, capability: Tests.consoleCapability)
 
-        let changeText = "\(changeSymbol) \(abs(change).formatted(Formatter::Formatter.Number(fractionDigits: 1, scale: .percent)))"
+        let changeText =
+            "\(changeSymbol) \(abs(change).formatted(Formatter::Formatter.Number(fractionDigits: 1, scale: .percent)))"
         let changeColored = (isRegression ? Console.Style.error : .success)
             .apply(to: changeText, capability: Tests.consoleCapability)
 

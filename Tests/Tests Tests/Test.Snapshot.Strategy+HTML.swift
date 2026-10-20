@@ -2,7 +2,8 @@ import HTML_Rendering_Core
 import Testing
 import Tests_Test_Support
 
-extension Test::Test.Snapshot.Strategy where Value: HTML.Document.`Protocol`, Format == Swift.String {
+extension Test::Test.Snapshot.Strategy
+where Value: HTML.Document.`Protocol`, Format == Swift.String {
     static var html: Self {
         .html()
     }

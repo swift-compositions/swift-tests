@@ -1,4 +1,5 @@
 public import Sample
+
 //
 //  Test.Trait.Collection.Modifier.builtins.swift
 //  swift-tests

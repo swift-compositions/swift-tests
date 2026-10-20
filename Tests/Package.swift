@@ -8,13 +8,13 @@ let package = Package(
         .macOS(.v27)
     ],
     dependencies: [
-        .package(path: ".."),
+        .package(path: "..")
     ],
     targets: [
         .testTarget(
             name: "Tests Complexity Smoke Tests",
             dependencies: [
-                .product(name: "Tests", package: "swift-tests"),
+                .product(name: "Tests", package: "swift-tests")
             ],
             path: "Tests Complexity Smoke Tests"
         )

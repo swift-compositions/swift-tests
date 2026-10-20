@@ -1,6 +1,6 @@
-public import Text
 import Testing
 import Tests_Test_Support
+public import Text
 
 extension Test::Test.Requirement.Failed {
     @Suite

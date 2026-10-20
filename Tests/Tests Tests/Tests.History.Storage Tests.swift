@@ -84,7 +84,9 @@ extension Tests.History.Storage.Test.Unit {
 
             #expect(records.count == 1)
             #expect(records.first?.testID.name == "benchTest")
-            #expect(records.first?.timestamp == Time::Time.Instant(secondsSinceUnixEpoch: 1_710_100_000))
+            #expect(
+                records.first?.timestamp == Time::Time.Instant(secondsSinceUnixEpoch: 1_710_100_000)
+            )
         }
     }
 

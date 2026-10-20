@@ -5,8 +5,8 @@
 //  Performance benchmark suite for running and reporting multiple benchmarks.
 //
 
-import Time
 import Formatter
+import Time
 
 extension Tests {
     /// Performance benchmark suite for running and reporting multiple benchmarks.
@@ -69,7 +69,9 @@ extension Tests.Suite {
         for (name, measurement) in benchmarks {
             let value = metric.extract(from: measurement)
             let paddedName = pad(name, to: maxNameLength)
-            print("  \(paddedName)  \(value.formatted(Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number())))")
+            print(
+                "  \(paddedName)  \(value.formatted(Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number())))"
+            )
         }
 
         print("\n╚══════════════════════════════════════════════════════════╝\n")

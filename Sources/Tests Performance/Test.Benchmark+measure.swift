@@ -9,10 +9,10 @@
 //
 // ===----------------------------------------------------------------------===//
 
+import Formatter
 import Kernel_Clock
 public import Test
 public import Time
-import Formatter
 
 private let durationFormat = Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number())
 

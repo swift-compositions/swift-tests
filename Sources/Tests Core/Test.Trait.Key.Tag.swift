@@ -5,17 +5,16 @@
 //  Witness key for tag traits.
 //
 
-public import Buffer_Linear_Primitive
-public import Memory
-public import Memory_Allocator
-public import Storage
 public import Buffer
-
+public import Buffer_Linear_Primitive
 public import Hash_Indexed_Primitive
 public import Hash_Table_Primitive
+public import Memory
+public import Memory_Allocator
 public import Ownership_Shared_Primitive
-public import Set_Ordered
 public import Set
+public import Set_Ordered
+public import Storage
 
 extension Test.Trait {
     /// Witness key for tag collection.
@@ -24,7 +23,12 @@ extension Test.Trait {
 
 extension Test.Trait.Tag: Witness.Key {
     public typealias Value = __SetOrdered<
-        Ownership.Shared<Swift.String, Hash.Indexed<Buffer<Storage<Memory.Allocator<Memory.Heap>>.Contiguous<Swift.String>>.Linear>>
+        Ownership.Shared<
+            Swift.String,
+            Hash.Indexed<
+                Buffer<Storage<Memory.Allocator<Memory.Heap>>.Contiguous<Swift.String>>.Linear
+            >
+        >
     >
 
     @inlinable

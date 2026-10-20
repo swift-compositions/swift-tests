@@ -20,8 +20,10 @@ extension Test.Environment: JSON.Serializable {
         guard let memoryBytes = Int(exactly: value.memoryBytes.rawValue) else {
             preconditionFailure("Memory capacity is not representable as a JSON Int")
         }
-        precondition(value.physicalCPUCount >= 0 && value.logicalCPUCount >= 0,
-                     "CPU counts must be nonnegative")
+        precondition(
+            value.physicalCPUCount >= 0 && value.logicalCPUCount >= 0,
+            "CPU counts must be nonnegative"
+        )
         let features: JSON = .object([
             (
                 "NonisolatedNonsendingByDefault",
@@ -108,7 +110,8 @@ extension Test.Environment: JSON.Serializable {
         }
 
         guard physicalCores >= 0, logicalCores >= 0,
-              let unsignedMemoryBytes = UInt(exactly: memoryBytes) else {
+            let unsignedMemoryBytes = UInt(exactly: memoryBytes)
+        else {
             throw .typeMismatch(expected: "nonnegative hardware counts", got: "negative value")
         }
 

@@ -1,22 +1,21 @@
+public import Buffer
+public import Buffer_Linear_Primitive
+public import Hash_Indexed_Primitive
 public import Hash_Table_Primitive
+public import Memory
+public import Memory_Allocator
+public import Ownership_Shared_Primitive
+public import Set
+public import Set_Ordered
+public import Storage
+public import Test
+
 //
 //  Test.Exclusion.Controller.swift
 //  swift-tests
 //
 //  Actor that provides mutual exclusion for test execution.
 //
-
-public import Buffer_Linear_Primitive
-public import Memory
-public import Memory_Allocator
-public import Storage
-public import Buffer
-
-public import Hash_Indexed_Primitive
-public import Ownership_Shared_Primitive
-public import Set_Ordered
-public import Set
-public import Test
 
 extension Test.Exclusion {
     /// Actor that provides mutual exclusion for test execution.
@@ -26,7 +25,15 @@ extension Test.Exclusion {
     public actor Controller {
         /// Tracks which groups are currently running.
         private var runningGroups:
-            __SetOrdered<Ownership.Shared<Swift.String, Hash.Indexed<Buffer<Storage<Memory.Allocator<Memory.Heap>>.Contiguous<Swift.String>>.Linear>>> =
+            __SetOrdered<
+                Ownership.Shared<
+                    Swift.String,
+                    Hash.Indexed<
+                        Buffer<Storage<Memory.Allocator<Memory.Heap>>.Contiguous<Swift.String>>
+                            .Linear
+                    >
+                >
+            > =
                 .init()
 
         /// Continuations waiting for access, keyed by group.

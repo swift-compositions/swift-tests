@@ -53,7 +53,8 @@ extension Test::Test.Snapshot.Storage.Test.Unit {
         )
         let pathString = Swift.String(path)
         #expect(
-            pathString == Swift.String(File.Path("/path/to/.snapshots/PDF.Test.Snapshot/my-snapshot.pdf"))
+            pathString
+                == Swift.String(File.Path("/path/to/.snapshots/PDF.Test.Snapshot/my-snapshot.pdf"))
         )
     }
 

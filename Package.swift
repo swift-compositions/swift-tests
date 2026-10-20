@@ -75,9 +75,15 @@ let package = Package(
             branch: "main"
         ),
         .package(url: "https://github.com/swift-compositions/swift-kernel.git", branch: "main"),
-        .package(url: "https://github.com/swift-compositions/swift-memory-mapping.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-compositions/swift-memory-mapping.git",
+            branch: "main"
+        ),
         .package(url: "https://github.com/swift-compositions/swift-console.git", branch: "main"),
-        .package(url: "https://github.com/swift-compositions/swift-file-system.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-compositions/swift-file-system.git",
+            branch: "main"
+        ),
         .package(url: "https://github.com/swift-compositions/swift-io-kernel.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-json.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-loader.git", branch: "main"),
@@ -85,18 +91,35 @@ let package = Package(
             url: "https://github.com/swift-atoms/swift-sample.git",
             branch: "main"
         ),
-        .package(url: "https://github.com/swift-compositions/swift-environment.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-compositions/swift-environment.git",
+            branch: "main"
+        ),
         .package(url: "https://github.com/swift-compositions/swift-witnesses.git", branch: "main"),
-        .package(url: "https://github.com/swift-compositions/swift-html-render.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-compositions/swift-html-render.git",
+            branch: "main"
+        ),
         .package(url: "https://github.com/swift-iec/swift-iec-80000-13.git", branch: "main"),
         .package(url: "https://github.com/swiftlang/swift-syntax.git", "603.0.2"..<"604.0.0"),
         .package(url: "https://github.com/swift-atoms/swift-buffer.git", branch: "main"),
         .package(url: "https://github.com/swift-molecules/swift-buffer-ring.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-cardinal.git", branch: "main"),
-        .package(url: "https://github.com/swift-atoms/swift-formatter.git", branch: "main", traits: ["Number", "Time", "Conversions"]),
+        .package(
+            url: "https://github.com/swift-atoms/swift-formatter.git",
+            branch: "main",
+            traits: ["Number", "Time", "Conversions"]
+        ),
         .package(url: "https://github.com/swift-atoms/swift-memory.git", branch: "main"),
-        .package(url: "https://github.com/swift-molecules/swift-memory-allocation.git", branch: "main"),
-        .package(url: "https://github.com/swift-atoms/swift-storage.git", branch: "main", traits: ["Generational", "Memory"]),
+        .package(
+            url: "https://github.com/swift-molecules/swift-memory-allocation.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-storage.git",
+            branch: "main",
+            traits: ["Generational", "Memory"]
+        ),
         .package(url: "https://github.com/swift-atoms/swift-store.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-system.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),

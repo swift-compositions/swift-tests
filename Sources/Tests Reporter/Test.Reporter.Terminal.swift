@@ -92,7 +92,9 @@ extension Test.Reporter {
 
                     var message = "  \(style.apply(to: symbol, capability: capability)) \(id.name)"
                     if let elapsed = event.elapsed {
-                        message += dimmed(" (\(elapsed.formatted(Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number()))))")
+                        message += dimmed(
+                            " (\(elapsed.formatted(Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number()))))"
+                        )
                     }
                     print(message)
                 }
