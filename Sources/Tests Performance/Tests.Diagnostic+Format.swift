@@ -23,7 +23,10 @@ extension Tests.Diagnostic {
             lines.append(header)
             lines.append("  Test:     \(qualifiedName)")
             lines.append("  Metric:   \(metric)")
-            lines.append("  Expected: < \(threshold!.formatted(durationFormat))")
+            guard let threshold else {
+                preconditionFailure("an exceedance factor implies a configured threshold")
+            }
+            lines.append("  Expected: < \(threshold.formatted(durationFormat))")
             lines.append("  Actual:   \(metric.extract(from: m).formatted(durationFormat))")
             let factorStr =
                 "\(factor.formatted(Formatter::Formatter.Number(fractionDigits: 2)))x threshold"

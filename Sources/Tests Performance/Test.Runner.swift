@@ -213,15 +213,7 @@ extension Test.Runner {
                 return Counters(passed: 0, failed: 0, skipped: 1)
             }
 
-            if node.body != nil {
-                // Test node — execute with scope providers
-                return await execute(
-                    node,
-                    traits: traits,
-                    sender: sender,
-                    startTime: startTime
-                )
-            } else {
+            guard node.body != nil else {
                 // Suite node — bracket children with suite events
                 await sender.send(
                     Test.Event(
@@ -251,6 +243,13 @@ extension Test.Runner {
 
                 return counters
             }
+            // Test node — execute with scope providers
+            return await execute(
+                node,
+                traits: traits,
+                sender: sender,
+                startTime: startTime
+            )
         }
     }
 
@@ -383,10 +382,13 @@ extension Test.Runner {
             )
         )
 
+        guard let body = node.body else {
+            preconditionFailure("only test nodes are executed")
+        }
         let entry = Test.Plan.Entry(
             id: node.id,
             modifiers: node.modifiers,
-            body: node.body!
+            body: body
         )
 
         let collector = Test.Expectation.Collector()

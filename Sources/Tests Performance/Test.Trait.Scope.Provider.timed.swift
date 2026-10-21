@@ -29,7 +29,9 @@ extension Test.Trait.Scope.Provider {
         _ traits: Test.Trait.Collection,
         _ operation: @Sendable () async throws(Error) -> Void
     ) async throws(Error) {
-        let config = traits[Test.Trait.Timed.self]!
+        guard let config = traits[Test.Trait.Timed.self] else {
+            preconditionFailure("the timed scope runs only for entries carrying the trait")
+        }
 
         // Warmup iterations
         for _ in 0..<config.iteration.warmup {
@@ -196,12 +198,12 @@ extension Test.Trait.Scope.Provider {
         Tests.Diagnostic.Collector.shared.append(diagnostic)
 
         // Throw if threshold exceeded
-        if exceeded {
+        if exceeded, let threshold = config.evaluation.threshold {
             throw .benchmarkFailed(
                 .thresholdExceeded(
                     test: entry.id.name,
                     metric: config.evaluation.metric,
-                    expected: config.evaluation.threshold!,
+                    expected: threshold,
                     actual: metricValue
                 )
             )

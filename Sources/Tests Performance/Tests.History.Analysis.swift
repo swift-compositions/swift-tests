@@ -67,8 +67,9 @@ extension Tests.History.Analysis {
         let values = sorted.map { $0.metricValue }
         let trend = Test.Benchmark.Trend.mannKendall(values)
 
-        let earliest = sorted.first!.metricValue
-        let latest = sorted.last!.metricValue
+        guard let earliest = sorted.first?.metricValue, let latest = sorted.last?.metricValue else {
+            return nil
+        }
 
         let overallChange: Double
         if earliest > .zero {

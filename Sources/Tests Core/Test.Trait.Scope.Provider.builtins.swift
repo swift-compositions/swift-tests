@@ -36,7 +36,9 @@ extension Test.Trait.Scope.Provider {
         _ traits: Test.Trait.Collection,
         _ operation: @Sendable () async throws(Error) -> Void
     ) async throws(Error) {
-        let limit = traits[Test.Trait.TimeLimit.self]!
+        guard let limit = traits[Test.Trait.TimeLimit.self] else {
+            preconditionFailure("the time-limit scope runs only for entries carrying the trait")
+        }
         // WORKAROUND: withoutActuallyEscaping uses rethrows which doesn't
         // narrow to typed throws. Catch boundary converts untyped rethrow
         // back to our typed Error.
@@ -66,7 +68,10 @@ extension Test.Trait.Scope.Provider {
         _ traits: Test.Trait.Collection,
         _ operation: @Sendable () async throws(Error) -> Void
     ) async throws(Error) {
-        let group = traits[Test.Trait.Exclusive.self]!.group
+        guard let exclusive = traits[Test.Trait.Exclusive.self] else {
+            preconditionFailure("the exclusive scope runs only for entries carrying the trait")
+        }
+        let group = exclusive.group
         try await Test.Exclusion.Controller.shared.withExclusiveAccess(
             group: group,
             operation

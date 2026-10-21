@@ -24,7 +24,9 @@ extension Test.Trait.Scope.Provider {
         _ traits: Test.Trait.Collection,
         _ operation: @Sendable () async throws(Error) -> Void
     ) async throws(Error) {
-        let snapshot = traits[Test.Trait.Snapshot.self]!
+        guard let snapshot = traits[Test.Trait.Snapshot.self] else {
+            preconditionFailure("the snapshot scope runs only for entries carrying the trait")
+        }
         let config = Test.Snapshot.Configuration(recording: snapshot.recording)
         try await Dependency.Scope.with(
             { $0[Test.Snapshot.Configuration.Key.self] = config },

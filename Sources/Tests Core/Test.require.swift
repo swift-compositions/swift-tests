@@ -59,14 +59,7 @@ public func require(
     )
     let expectationID = _nextExpectationID()
 
-    if condition {
-        let expectation = Test.Expectation(
-            id: expectationID,
-            expression: expression,
-            isPassing: true
-        )
-        Test.Expectation.Collector.current?.record(expectation)
-    } else {
+    guard condition else {
         let failure = Test.Expectation.Failure(
             message: "Requirement failed",
             comment: comment
@@ -87,6 +80,12 @@ public func require(
             sourceLocation: location
         )
     }
+    let expectation = Test.Expectation(
+        id: expectationID,
+        expression: expression,
+        isPassing: true
+    )
+    Test.Expectation.Collector.current?.record(expectation)
 }
 
 /// Unwraps an optional value, throwing if nil.
@@ -191,14 +190,7 @@ public func require<T: Equatable>(
     )
     let expectationID = _nextExpectationID()
 
-    if lhs == rhs {
-        let expectation = Test.Expectation(
-            id: expectationID,
-            expression: expression,
-            isPassing: true
-        )
-        Test.Expectation.Collector.current?.record(expectation)
-    } else {
+    guard lhs == rhs else {
         let message =
             comment
             ?? Test.Text([
@@ -231,6 +223,12 @@ public func require<T: Equatable>(
             sourceLocation: location
         )
     }
+    let expectation = Test.Expectation(
+        id: expectationID,
+        expression: expression,
+        isPassing: true
+    )
+    Test.Expectation.Collector.current?.record(expectation)
 }
 
 // MARK: - Deprecated Alias

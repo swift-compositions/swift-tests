@@ -44,7 +44,10 @@ extension Tests {
             durations.append(Clock::Clock.Continuous.now.offset - start.offset)
         }
 
-        return (lastResult!, Test.Benchmark.Measurement(durations: durations))
+        guard let result = lastResult else {
+            preconditionFailure("measure requires at least one iteration")
+        }
+        return (result, Test.Benchmark.Measurement(durations: durations))
     }
 
     /// Measure performance of an async operation
@@ -70,7 +73,10 @@ extension Tests {
             durations.append(Clock::Clock.Continuous.now.offset - start.offset)
         }
 
-        return (lastResult!, Test.Benchmark.Measurement(durations: durations))
+        guard let result = lastResult else {
+            preconditionFailure("measure requires at least one iteration")
+        }
+        return (result, Test.Benchmark.Measurement(durations: durations))
     }
 
     /// Single-shot timing measurement

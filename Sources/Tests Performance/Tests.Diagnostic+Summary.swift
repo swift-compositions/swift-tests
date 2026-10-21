@@ -78,11 +78,10 @@ extension Tests.Diagnostic {
         for i in 0..<parts.count {
             let prefix = parts[0...i].joined(separator: ".")
             let dotPrefix = prefix + "."
-            if names.allSatisfy({ $0.hasPrefix(dotPrefix) }) {
-                shared = i + 1
-            } else {
+            guard names.allSatisfy({ $0.hasPrefix(dotPrefix) }) else {
                 break
             }
+            shared = i + 1
         }
         guard shared > 0 else { return names }
         let dropLength = parts[0..<shared].joined(separator: ".").count + 1  // +1 for trailing dot

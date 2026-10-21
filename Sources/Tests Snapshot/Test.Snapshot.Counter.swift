@@ -57,8 +57,9 @@ extension Test.Snapshot.Counter {
     /// - Returns: The next sequential number (1, 2, 3, ...).
     public func next(for key: Swift.String) -> Int {
         lock.withLock { _ in
-            counts[key, default: 0] += 1
-            return counts[key]!
+            let next = (counts[key] ?? 0) + 1
+            counts[key] = next
+            return next
         }
     }
 
