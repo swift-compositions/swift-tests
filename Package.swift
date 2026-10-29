@@ -82,8 +82,10 @@ let package = Package(
         .package(url: "https://github.com/swift-compositions/swift-console.git", branch: "main"),
         .package(
             url: "https://github.com/swift-compositions/swift-file-system.git",
-            branch: "main"
+            branch: "main",
+            traits: ["Threads"]
         ),
+        .package(url: "https://github.com/swift-compositions/swift-threads.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-io-kernel.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-json.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-loader.git", branch: "main"),
@@ -207,6 +209,7 @@ let package = Package(
                 .product(name: "Dependency", package: "swift-dependency"),
                 .product(name: "Kernel Clock", package: "swift-kernel"),
                 .product(name: "File System", package: "swift-file-system"),
+                .product(name: "Thread Pool", package: "swift-threads"),
                 .product(name: "JSON", package: "swift-json"),
                 .product(name: "Environment", package: "swift-environment"),
                 .product(name: "IO Kernel", package: "swift-io-kernel"),
