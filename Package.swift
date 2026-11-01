@@ -123,7 +123,6 @@ let package = Package(
             traits: ["Generational", "Memory"]
         ),
         .package(url: "https://github.com/swift-atoms/swift-store.git", branch: "main"),
-        .package(url: "https://github.com/swift-atoms/swift-system.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
     ],
     targets: [
@@ -214,7 +213,6 @@ let package = Package(
                 .product(name: "Environment", package: "swift-environment"),
                 .product(name: "IO Kernel", package: "swift-io-kernel"),
                 .product(name: "IEC 80000-13 Formatting", package: "swift-iec-80000-13"),
-                .product(name: "System Primitives", package: "swift-system"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Formatter", package: "swift-formatter"),
                 .product(name: "Tagged", package: "swift-tagged"),
