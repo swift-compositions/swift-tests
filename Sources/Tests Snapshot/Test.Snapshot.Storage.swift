@@ -71,9 +71,9 @@ extension Test.Snapshot.Storage {
 
         guard let name else {
             let cleanFunction = functionName(function)
-            return snapshotDir / "\(cleanFunction).\(counter).\(pathExtension)"
+            return snapshotDir / File.Path.Component(stringLiteral: "\(cleanFunction).\(counter).\(pathExtension)")
         }
-        return snapshotDir / "\(name).\(pathExtension)"
+        return snapshotDir / File.Path.Component(stringLiteral: "\(name).\(pathExtension)")
     }
 
     /// Extracts the function name without parentheses and parameters.

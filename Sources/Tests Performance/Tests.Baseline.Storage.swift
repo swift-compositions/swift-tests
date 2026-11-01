@@ -61,17 +61,17 @@ extension Tests.Baseline.Storage {
         testID: Test.ID,
         fingerprint: Swift.String
     ) -> File.Path {
-        var result = root / "\(testID.module)"
+        var result = root / File.Path.Component(stringLiteral: "\(testID.module)")
 
         if let suite = testID.suite {
             for component in suite.split(separator: ".") {
                 // No `/=` overload for File.Path; `/` is a heterogeneous path-append (Path / Path.Component).
                 // swiftlint:disable:next shorthand_operator
-                result = result / "\(component)"
+                result = result / File.Path.Component(stringLiteral: "\(component)")
             }
         }
 
-        return result / "\(testID.name)" / "\(fingerprint).json"
+        return result / File.Path.Component(stringLiteral: "\(testID.name)") / File.Path.Component(stringLiteral: "\(fingerprint).json")
     }
 
 }

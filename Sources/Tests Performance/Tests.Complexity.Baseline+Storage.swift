@@ -94,7 +94,7 @@ extension Tests.Complexity.Baseline {
         key: Swift.String
     ) -> File.Path {
         let baseRoot = root ?? Tests.Baseline.Storage.root()
-        return baseRoot / "complexity" / "\(key).json"
+        return baseRoot / "complexity" / File.Path.Component(stringLiteral: "\(key).json")
     }
 
     /// Loads a stored complexity baseline, or `nil` if none exists.
