@@ -1,163 +1,23 @@
 # swift-tests
 
-![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
+Use this package when your tests need more than plain assertions: snapshots kept in files or inline in the test source, timed benchmarks checked against stored baselines, or a check that an algorithm grows no faster than a given complexity class. Import the `Tests` product for expectations, the runner, reporters, snapshot strategies and performance. The snapshot assertion itself, `snapshot(as:named:record:redacting:_:matches:fileID:filePath:line:column:function:)`, file-backed or inline, is in `Tests Inline Snapshot`. Add `Tests Apple Testing Bridge` to run under Apple's Swift Testing. For complexity, start from `Tests.Complexity.analyze(sizes:warmup:iterations:metric:policy:baselineKey:printDiagnostic:operation:)`. If you only need the test model types, use swift-test.
 
-Test infrastructure for Swift: expectations, file-backed and inline snapshots, timed benchmarks with baseline regression detection, and algorithmic-complexity assertions — usable with Apple's Swift Testing runner.
+## Laws
 
----
-
-## Key Features
-
-- **Inline snapshots** — `snapshot(as:) { value } matches: { ... }` records the produced value on first run by rewriting the `matches:` block in your test source
-- **File-backed snapshots** — named reference snapshots with JSON strategies, structural diffing, and redaction rules for volatile fields
-- **Timed benchmarks** — a `.timed(iterations:warmup:threshold:)` trait with optional allocation tracking, automatic baseline comparison, and JSONL run history
-- **Complexity assertions** — `Tests.Complexity.analyze` measures a workload across input sizes, fits a growth curve, and classifies the asymptotic behavior
-- **Deterministic async** — `withSerialExecutor` routes spawned tasks through the main executor so async tests execute in a predictable order
-- **Typed throws end-to-end** — every throwing surface declares its error type; complexity analysis is generic over the workload's own error
-- **Swift Testing bridge** — a `.snapshots(record:)` suite trait applies snapshot recording modes natively under Apple's Swift Testing runner
-
----
-
-## Quick Start
-
-### Inline snapshots
-
-An inline snapshot asserts against an expected value embedded in the test source. On first run (or when re-recording), the library rewrites the `matches:` block with the actual output — no hand-transcription of expected strings:
-
-```swift
-import Testing
-import Tests_Inline_Snapshot
-
-@Test
-func receiptRendering() {
-    snapshot(as: .lines) {
-        Receipt(subtotal: 40, tax: 2).rendered
-    } matches: {
-        """
-        Subtotal: 40
-        Tax:       2
-        Total:    42
-        """
-    }
-}
-```
-
-Passing `named:` instead of `matches:` stores the reference in a snapshot file next to the test instead of inline.
-
-### Complexity assertions
-
-Assert the asymptotic behavior of an algorithm, not just a single timing. The analyzer runs the workload across the given sizes, fits a growth exponent, and reports a classification with confidence:
-
-```swift
-import Testing
-import Tests
-
-@Test
-func `array sort is no worse than quadratic`() throws {
-    let diagnostic = try Tests.Complexity.analyze(
-        sizes: [500, 1_000, 2_000, 5_000, 10_000, 20_000, 50_000],
-        warmup: 1,
-        iterations: 3
-    ) { n in
-        var array = (0..<n).map { _ in Int.random(in: 0..<n) }
-        array.sort()
-    }
-
-    let result = diagnostic.result
-    #expect(result.confidence != .inconclusive)
-    #expect(result.isNoWorseThan(.quadratic))
-}
-```
-
-### Deterministic async tests
-
-Async tests are normally subject to the runtime's scheduling. `withSerialExecutor` redirects global task enqueues to the main actor for the duration of the operation, making task interleaving deterministic:
-
-```swift
-import Tests
-
-@MainActor
-@Test
-func ordersProcessInSubmissionOrder() async {
-    await withSerialExecutor {
-        // All tasks spawned here run serially, in a predictable order.
-    }
-}
-```
-
-On platforms where the runtime hook is unavailable, the operation runs normally without serial enforcement.
-
----
-
-## Installation
-
-Add swift-tests to your Package.swift:
-
-```swift
-dependencies: [
-    .package(url: "https://github.com/swift-compositions/swift-tests.git", branch: "main")
-]
-```
-
-Add the umbrella product to your test target:
-
-```swift
-.testTarget(
-    name: "YourTests",
-    dependencies: [
-        .product(name: "Tests", package: "swift-tests")
-    ]
-)
-```
-
-### Requirements
-
-- Swift 6.3+
-- macOS 26.0+, iOS 26.0+, tvOS 26.0+, watchOS 26.0+, visionOS 26.0+
-
----
-
-## Architecture
-
-The package splits into focused products so consumers pay only for what they use:
-
-| Product | When to import |
-|---------|----------------|
-| `Tests` | Umbrella — expectations, snapshots, benchmarks, and reporters in one import; the default for test targets |
-| `Tests Core` | Expectations (`expect`, `require`), traits, test plans, and discovery without snapshot or benchmark machinery |
-| `Tests Snapshot` | File-backed snapshot strategies (JSON, structural diffing, redaction) |
-| `Tests Inline Snapshot` | Inline `matches:` snapshots with source rewriting (adds a swift-syntax dependency) |
-| `Tests Performance` | `.timed()` benchmarks, baselines, run history, and complexity analysis |
-| `Tests Reporter` | Console, JSON, structured, and tee reporters for test results |
-| `Tests Apple Testing Bridge` | The `.snapshots(record:)` trait for suites running under Apple's Swift Testing |
-| `Tests Test Support` | Helpers for packages that test infrastructure built on swift-tests |
-
----
-
-## Error Handling
-
-All throwing surfaces use typed throws. The benchmark pipeline's error shape:
-
-```
-Tests.Error
-├── .benchmarkFailed(Test.Benchmark.Error)   // Measurement or threshold failure
-├── .allocationLimitExceeded(test:limit:actual:)
-├── .memoryLeakDetected(test:netAllocations:netBytes:)
-└── .peakMemoryExceeded(test:limit:actual:)
-```
-
-Snapshot storage, baseline storage, and inline-snapshot rewriting each declare their own flat error enums (`Tests.Baseline.Storage.Error`, `Tests.History.Storage.Error`, `Test.Snapshot.Inline.Rewriter.Error`), documented inline. Workload errors are never erased: `Tests.Complexity.analyze` rethrows the operation's own error type.
-
----
-
-## Community
-
-<!-- BEGIN: discussion -->
-*Discussion thread will be created at the first public release.*
-<!-- END: discussion -->
-
----
-
-## License
-
-Apache 2.0. See [LICENSE](LICENSE.md).
+- The snapshot recording mode is, in order: the `record:` argument, the mode of the enclosing `Test.Snapshot.Configuration`, the `SWIFT_SNAPSHOT_RECORD` environment variable, and otherwise `.missing`.
+- A file-backed snapshot lives in a `.snapshots` folder next to the test file, as its name plus the strategy's extension. With `.missing` a reference is written when there is none and compared otherwise. With `.never` a missing reference fails. With `.all` the reference is always rewritten and the check passes. With `.failed` a mismatch rewrites the reference and still fails.
+- References match when their bytes are equal. Otherwise the strategy's diff decides. On a mismatch the actual value and the diff are attached to the test.
+- Recording an inline snapshot always fails the check, asking you to run again. The source file is rewritten when the process exits: the `matches:` closure of the `snapshot` call on that line is replaced, using a raw string with as many `#` as the value needs to stay literal. Passing both `named:` and `matches:` fails.
+- JSON snapshots are pretty printed with sorted keys. The structural JSON diff reports each changed leaf with its path, such as `user.tags[0]`. If either side isn't valid JSON or repeats a member name, it falls back to a line diff.
+- A JSON redaction path is dot separated, with array indices as numbers. `*` matches one level and `**` any depth. A path that isn't there, or input that isn't valid JSON, is left unchanged. A redacted document is re-serialized pretty with sorted keys, and a dynamic replacement always produces a string.
+- Within this package's runner, `expect` and `require` record into the running test. Outside it, a failure is reported to Swift Testing when the bridge module is linked. A failing `require` throws, and the test counts it once, as a failed expectation.
+- A test fails when its body throws or any expectation fails. A disabled test is skipped with its comment. Traits on a suite apply to everything inside it. Children of a `.serialized` suite run one at a time in source order; otherwise they run concurrently.
+- Tests in the same exclusive group never overlap, and waiting tests start in the order they arrived. `.exclusive` without a group uses one global group.
+- On a timed test, each warmup and measured iteration runs the body inside its own time limit and exclusive access, so a time limit bounds one iteration, not the whole measurement. A time limit cancels the body when it runs out.
+- `.timed` measures 10 iterations with no warmup and compares the median by default. It fails only when the metric is strictly above the threshold.
+- Baselines are used only when a tolerance is given. They live under `.benchmarks`, or `SWIFT_BENCHMARK_DIR`, per test and per machine fingerprint: architecture, physical core count, debug or release, and enabled feature flags. With `SWIFT_BENCHMARK_RECORD` unset a baseline is written only when missing, `all` rewrites it after comparing, and `never` fails when it's missing. A regression is a relative slowdown of the metric beyond the tolerance.
+- Every timed run appends a line to a JSON Lines history next to the baseline, unless `SWIFT_BENCHMARK_HISTORY` is `false`. `SWIFT_BENCHMARK_HISTORY_MAX` keeps only the newest records. A trend is reported from three records on. Failures to write baselines or history are ignored.
+- A measurement with no durations reports zero for every metric.
+- Complexity analysis measures sizes from small to large. The default policy needs at least 5 sizes spanning a factor of 100, or the result is inconclusive. Timings that vary less than 10% with no monotone trend are classified as constant. Close candidates are kept as ambiguous, and `Tests.Complexity.Result.isNoWorseThan(_:)` holds only if every one of them is within the bound. An inconclusive result never passes it.
+- A complexity baseline key saves the result on the first run, and on every run with `SWIFT_BENCHMARK_RECORD=all`. A later result is a regression when its class is worse or its exponent grew by more than 0.3.
+- `withSerialExecutor(operation:)` sends every task started while it runs to the main actor, so they run in a fixed order. Where the runtime hook isn't available it has no effect.
