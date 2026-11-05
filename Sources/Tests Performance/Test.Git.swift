@@ -63,7 +63,7 @@ private func _read(_ path: Swift.String) -> Swift.String? {
     var result: Swift.String
     do throws(Either<File.System.Read.Full.Error, Never>) {
         result = try file.read.full { span in
-            unsafe span.withUnsafeBufferPointer { buffer in
+            span.withUnsafeBufferPointer { buffer in
                 unsafe Swift.String(decoding: buffer, as: UTF8.self)
             }
         }

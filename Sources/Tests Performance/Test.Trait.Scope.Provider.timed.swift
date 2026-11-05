@@ -58,7 +58,6 @@ extension Test.Trait.Scope.Provider {
             }
         }
 
-        let testName = entry.id.fullyQualifiedName
         let measurement = Test.Benchmark.Measurement(durations: durations)
 
         // Capture environment (needed for both diagnostics and baseline keying)

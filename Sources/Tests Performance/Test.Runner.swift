@@ -524,12 +524,7 @@ extension Test.Runner {
             do throws(Test.Body.Error) {
                 try await entry.body.run()
             } catch {
-                let bodyError =
-                    error as? Test.Body.Error
-                    ?? .caught(
-                        type: Swift.String(describing: type(of: error)),
-                        description: Swift.String(describing: error)
-                    )
+                let bodyError = error
                 throw Error.bodyFailed(bodyError)
             }
         }

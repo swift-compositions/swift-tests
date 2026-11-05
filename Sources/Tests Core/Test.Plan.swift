@@ -5,20 +5,20 @@
 //  Test execution plan.
 //
 
-public import Buffer
-public import Buffer_Linear_Bounded_Primitive
-public import Buffer_Linear_Primitive
-public import Buffer_Ring_Primitive
-public import Hash_Indexed_Primitive
-public import Memory
-public import Memory_Allocator
-public import Memory_Allocator_Pool
-public import Memory_Pool
-public import Ownership_Shared_Primitive
-public import Set
+import Buffer
+import Buffer_Linear_Bounded_Primitive
+import Buffer_Linear_Primitive
+import Buffer_Ring_Primitive
+import Hash_Indexed_Primitive
+import Memory
+import Memory_Allocator
+import Memory_Allocator_Pool
+import Memory_Pool
+import Ownership_Shared_Primitive
+import Set
 public import Set_Ordered
-public import Storage
-public import Store
+import Storage
+import Store
 public import Test
 public import Tree_Keyed
 

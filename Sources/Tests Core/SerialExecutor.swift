@@ -81,7 +81,7 @@ nonisolated(unsafe)
     private let _taskEnqueueHookPointer: UnsafeMutablePointer<TaskEnqueueHook?>? = {
         let symbol: UnsafeRawPointer
         do throws(Loader.Error) {
-            symbol = try unsafe Loader.Symbol.lookup(
+            unsafe symbol = try Loader.Symbol.lookup(
                 name: "swift_task_enqueueGlobal_hook",
                 in: .default
             )

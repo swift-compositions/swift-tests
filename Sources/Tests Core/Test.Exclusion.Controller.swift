@@ -1,13 +1,13 @@
-public import Buffer
-public import Buffer_Linear_Primitive
-public import Hash_Indexed_Primitive
-public import Hash_Table_Primitive
-public import Memory
-public import Memory_Allocator
-public import Ownership_Shared_Primitive
-public import Set
-public import Set_Ordered
-public import Storage
+import Buffer
+import Buffer_Linear_Primitive
+import Hash_Indexed_Primitive
+import Hash_Table_Primitive
+import Memory
+import Memory_Allocator
+import Ownership_Shared_Primitive
+import Set
+import Set_Ordered
+import Storage
 public import Test
 
 //
@@ -84,7 +84,7 @@ extension Test.Exclusion.Controller {
 
     /// Releases the lock for a group and resumes one waiter.
     private func release(group: Swift.String) {
-        runningGroups.remove(group)
+        _ = runningGroups.remove(group)
 
         // Resume one waiter for this group
         if var groupWaiters = waiters[group], !groupWaiters.isEmpty {

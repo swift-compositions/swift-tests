@@ -6,7 +6,7 @@
 //
 
 import Kernel_Clock
-public import Test
+import Test
 
 extension Tests.Complexity {
     /// Analyzes the empirical complexity of an operation.

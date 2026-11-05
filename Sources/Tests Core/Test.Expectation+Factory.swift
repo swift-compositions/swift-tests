@@ -56,7 +56,7 @@ extension Test.Expectation {
         guard unsafe externalFailureHandler == nil else { return }
         let symbol: UnsafeRawPointer
         do throws(Loader.Error) {
-            symbol = try unsafe Loader.Symbol.lookup(
+            unsafe symbol = try Loader.Symbol.lookup(
                 name: "_swift_tests_bridge_install",
                 in: .default
             )

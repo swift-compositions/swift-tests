@@ -7,7 +7,7 @@
 
 import Cardinal
 public import JSON
-public import Kernel
+import Kernel
 import Tagged
 import Time
 

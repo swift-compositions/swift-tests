@@ -53,7 +53,7 @@ extension Test::Test.Snapshot.Inline.Rewriter {
         let source: Swift.String
         do throws(Either<File.System.Read.Full.Error, Never>) {
             source = try File(File.Path(stringLiteral: filePath)).read.full { span in
-                unsafe span.withUnsafeBufferPointer { buffer in
+                span.withUnsafeBufferPointer { buffer in
                     unsafe Swift.String(decoding: buffer, as: UTF8.self)
                 }
             }
@@ -175,9 +175,7 @@ private func applySnapshotFunction(
     // Append to additional trailing closures.
     updated = updated.with(
         \.additionalTrailingClosures,
-        MultipleTrailingClosureElementListSyntax(
-            updated.additionalTrailingClosures + [matchesElement]
-        )
+        updated.additionalTrailingClosures + [matchesElement]
     )
 
     return updated

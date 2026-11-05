@@ -206,7 +206,7 @@ extension Tests.History.Storage {
 
         do throws(Either<File.System.Read.Full.Error, Never>) {
             return try file.read.full { span in
-                let content = unsafe span.withUnsafeBufferPointer {
+                let content = span.withUnsafeBufferPointer {
                     unsafe Swift.String(decoding: $0, as: UTF8.self)
                 }
                 return _parseJSONL(content)

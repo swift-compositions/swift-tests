@@ -12,7 +12,7 @@ public import Hash_Table_Primitive
 public import Memory
 public import Memory_Allocator
 public import Ownership_Shared_Primitive
-public import Set
+import Set
 public import Set_Ordered
 public import Storage
 

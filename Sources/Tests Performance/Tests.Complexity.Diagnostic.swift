@@ -5,7 +5,7 @@
 //  Structured complexity diagnostic for console and AI-agent output.
 //
 
-public import Test
+import Test
 
 extension Tests.Complexity {
     /// Structured complexity diagnostic aggregating classification results.

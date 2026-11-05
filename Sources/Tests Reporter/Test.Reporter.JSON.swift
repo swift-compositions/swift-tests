@@ -127,7 +127,7 @@ extension Test.Reporter {
                 }
                 var remaining = bytes[...]
                 while !remaining.isEmpty {
-                    let written = try unsafe remaining.withUnsafeBytes { buffer in
+                    let written = try remaining.withUnsafeBytes { buffer in
                         try unsafe Kernel.IO.Write.write(descriptor, from: buffer)
                     }
                     remaining = remaining.dropFirst(written)

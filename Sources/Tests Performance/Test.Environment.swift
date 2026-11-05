@@ -1,5 +1,5 @@
 public import Cardinal
-public import Kernel
+import Kernel
 import Tagged
 import Time
 
