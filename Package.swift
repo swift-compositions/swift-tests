@@ -168,7 +168,7 @@ let package = Package(
         .target(
             name: "Tests Snapshot",
             dependencies: [
-                "Tests Core",
+                .target(name: "Tests Core"),
                 .product(name: "File System", package: "swift-file-system"),
                 .product(name: "JSON", package: "swift-json"),
                 .product(name: "Dependency", package: "swift-dependency"),
@@ -185,8 +185,8 @@ let package = Package(
         .target(
             name: "Tests Inline Snapshot",
             dependencies: [
-                "Tests Snapshot",
-                "Tests Apple Testing Bridge",
+                .target(name: "Tests Snapshot"),
+                .target(name: "Tests Apple Testing Bridge"),
                 .product(name: "HTML Rendering Core Test Support", package: "swift-html-render"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
@@ -199,7 +199,7 @@ let package = Package(
         .target(
             name: "Tests Performance",
             dependencies: [
-                "Tests Core",
+                .target(name: "Tests Core"),
                 .product(name: "Sample", package: "swift-sample"),
                 .product(name: "Time", package: "swift-time"),
                 .product(name: "Console", package: "swift-console"),
@@ -225,7 +225,7 @@ let package = Package(
         .target(
             name: "Tests Reporter",
             dependencies: [
-                "Tests Core",
+                .target(name: "Tests Core"),
                 .product(name: "Path", package: "swift-path"),
                 .product(name: "Console", package: "swift-console"),
                 .product(name: "Kernel", package: "swift-kernel"),
@@ -240,10 +240,10 @@ let package = Package(
         .target(
             name: "Tests",
             dependencies: [
-                "Tests Core",
-                "Tests Reporter",
-                "Tests Snapshot",
-                "Tests Performance",
+                .target(name: "Tests Core"),
+                .target(name: "Tests Reporter"),
+                .target(name: "Tests Snapshot"),
+                .target(name: "Tests Performance"),
             ]
         ),
 
@@ -252,7 +252,7 @@ let package = Package(
         .target(
             name: "Tests Apple Testing Bridge",
             dependencies: [
-                "Tests Snapshot",
+                .target(name: "Tests Snapshot"),
                 .product(name: "Dependency", package: "swift-dependency"),
             ]
         ),
@@ -262,7 +262,7 @@ let package = Package(
         .target(
             name: "Tests Test Support",
             dependencies: [
-                "Tests",
+                .target(name: "Tests"),
                 .product(
                     name: "Test",
                     package: "swift-test"
@@ -284,9 +284,9 @@ let package = Package(
         .testTarget(
             name: "Tests Tests",
             dependencies: [
-                "Tests",
-                "Tests Inline Snapshot",
-                "Tests Test Support",
+                .target(name: "Tests"),
+                .target(name: "Tests Inline Snapshot"),
+                .target(name: "Tests Test Support"),
                 .product(name: "HTML Rendering Core", package: "swift-html-render"),
             ],
             // Explicit path: the nested test manifest at Tests/Package.swift makes
