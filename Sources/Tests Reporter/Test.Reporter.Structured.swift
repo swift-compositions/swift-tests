@@ -7,6 +7,7 @@
 
 import JSON
 import Kernel
+public import Path
 import Synchronization
 import Test
 
@@ -18,9 +19,9 @@ extension Test.Reporter {
     ///
     /// - Parameter path: File path for JSONL output.
     /// - Returns: A reporter that writes structured JSONL.
-    public static func structured(to path: Swift.String) -> Test.Reporter {
+    public static func structured(to path: Path::Path) -> Test.Reporter {
         Test.Reporter {
-            Sink(StructuredSink(path: path))
+            Sink(StructuredSink(path: path.string))
         }
     }
 }

@@ -107,6 +107,8 @@ extension Test.Snapshot.Counter {
     ///   - filePath: The test file path.
     ///   - function: The test function name.
     /// - Returns: A unique key for this test.
+    // swift-linter:disable:next raw concept
+    // REASON: the #filePath text of the test's call site, only ever part of a counter key; a leaf as Source.Location.filePath is, and File.Path refuses what a #filePath remapping or an empty location may hold.
     public static func key(filePath: Swift.String, function: Swift.String) -> Swift.String {
         "\(filePath)/\(function)"
     }

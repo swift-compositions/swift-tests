@@ -36,6 +36,8 @@ extension Test.Snapshot.Redaction where Format == Swift.String {
     ///   - replacement: Static string to insert at the matched location.
     /// - Returns: A redaction that replaces the value at the given path.
     public static func json(
+        // swift-linter:disable:next raw concept
+        // REASON: a dot-separated JSON key path such as users.0.id, not a file path, so File.Path does not own it; RFC 6901 pointers have another grammar and no type here holds this one.
         path: Swift.String,
         replacement: Swift.String
     ) -> Self {
@@ -63,6 +65,8 @@ extension Test.Snapshot.Redaction where Format == Swift.String {
     ///   - replacement: Closure producing a replacement from the current value.
     /// - Returns: A redaction that applies the dynamic replacement at the path.
     public static func json(
+        // swift-linter:disable:next raw concept
+        // REASON: a dot-separated JSON key path such as users.0.id, not a file path, so File.Path does not own it; RFC 6901 pointers have another grammar and no type here holds this one.
         path: Swift.String,
         replacement: @escaping @Sendable (Swift.String) -> Swift.String
     ) -> Self {

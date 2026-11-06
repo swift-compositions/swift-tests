@@ -23,6 +23,8 @@ extension Test::Test.Snapshot.Inline.State {
         public let wasRecording: Bool
 
         /// Path to the source file containing the call site.
+        // swift-linter:disable:next raw concept
+        // REASON: the #filePath text of the snapshot's call site, kept for the source rewriter; a leaf as Source.Location.filePath is, and File.Path refuses what a #filePath remapping or an empty location may hold.
         public let filePath: Swift.String
 
         /// The enclosing function name.
@@ -38,6 +40,8 @@ extension Test::Test.Snapshot.Inline.State {
             expected: Swift.String?,
             actual: Swift.String,
             wasRecording: Bool,
+            // swift-linter:disable:next raw concept
+            // REASON: the #filePath text of the snapshot's call site, kept for the source rewriter; a leaf as Source.Location.filePath is, and File.Path refuses what a #filePath remapping or an empty location may hold.
             filePath: Swift.String,
             function: Swift.String,
             line: Int,

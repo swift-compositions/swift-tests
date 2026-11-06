@@ -17,6 +17,7 @@
  */
 
 import Kernel
+public import Path
 import Synchronization
 import Test
 
@@ -25,9 +26,9 @@ extension Test.Reporter {
     ///
     /// - Parameter path: File path for output, or nil for stdout.
     /// - Returns: A reporter that outputs JSON.
-    public static func json(to path: Swift.String? = nil) -> Test.Reporter {
+    public static func json(to path: Path::Path? = nil) -> Test.Reporter {
         Test.Reporter {
-            Sink(JSONSink(outputPath: path))
+            Sink(JSONSink(outputPath: path?.string))
         }
     }
 }

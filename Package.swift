@@ -80,6 +80,7 @@ let package = Package(
             branch: "main"
         ),
         .package(url: "https://github.com/swift-compositions/swift-console.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-path.git", branch: "main"),
         .package(
             url: "https://github.com/swift-compositions/swift-file-system.git",
             branch: "main",
@@ -225,6 +226,7 @@ let package = Package(
             name: "Tests Reporter",
             dependencies: [
                 "Tests Core",
+                .product(name: "Path", package: "swift-path"),
                 .product(name: "Console", package: "swift-console"),
                 .product(name: "Kernel", package: "swift-kernel"),
                 .product(name: "JSON", package: "swift-json"),
