@@ -2,7 +2,9 @@ import Testing
 import Tests_Test_Support
 import Time
 
-extension Tests.History.Record {
+enum `Tests.History.Record Tests` {}
+
+extension `Tests.History.Record Tests` {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -12,7 +14,7 @@ extension Tests.History.Record {
 
 // MARK: - Unit
 
-extension Tests.History.Record.Test.Unit {
+extension `Tests.History.Record Tests`.Test.Unit {
     @Test
     func `serialize roundtrip preserves all fields`() throws {
         let id = Tests_Core.Test.ID.stub("benchTest", module: "MyModule", suite: "MySuite")
@@ -116,7 +118,7 @@ extension Tests.History.Record.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Tests.History.Record.Test.`Edge Case` {
+extension `Tests.History.Record Tests`.Test.`Edge Case` {
     @Test
     func `roundtrip with nil suite`() throws {
         let id = Tests_Core.Test.ID.stub("t", module: "M")

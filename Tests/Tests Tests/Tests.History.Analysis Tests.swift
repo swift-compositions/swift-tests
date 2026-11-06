@@ -2,7 +2,9 @@ import Testing
 import Tests_Test_Support
 import Time
 
-extension Tests.History.Analysis {
+enum `Tests.History.Analysis Tests` {}
+
+extension `Tests.History.Analysis Tests` {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -41,7 +43,7 @@ private let _noTrend = Test::Test.Benchmark.Trend.Interpretation.none
 
 // MARK: - Unit
 
-extension Tests.History.Analysis.Test.Unit {
+extension `Tests.History.Analysis Tests`.Test.Unit {
     @Test
     func `detects increasing trend from degrading records`() {
         // Mann-Kendall needs ~8 monotonic points for Z > 1.96
@@ -111,7 +113,7 @@ extension Tests.History.Analysis.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Tests.History.Analysis.Test.`Edge Case` {
+extension `Tests.History.Analysis Tests`.Test.`Edge Case` {
     @Test
     func `returns nil with fewer than 3 records`() {
         let records = [

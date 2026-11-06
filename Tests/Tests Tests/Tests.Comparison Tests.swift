@@ -1,7 +1,9 @@
 import Testing
 import Tests_Test_Support
 
-extension Tests.Comparison {
+enum `Tests.Comparison Tests` {}
+
+extension `Tests.Comparison Tests` {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -11,7 +13,7 @@ extension Tests.Comparison {
 
 // MARK: - Unit
 
-extension Tests.Comparison.Test.Unit {
+extension `Tests.Comparison Tests`.Test.Unit {
     @Test
     func `change is positive for regression`() {
         let baseline = Test::Test.Benchmark.Measurement(durations: [.milliseconds(100)])
@@ -68,7 +70,7 @@ extension Tests.Comparison.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Tests.Comparison.Test.`Edge Case` {
+extension `Tests.Comparison Tests`.Test.`Edge Case` {
     @Test
     func `identical measurements produce zero change`() {
         let measurement = Test::Test.Benchmark.Measurement(durations: [.milliseconds(100)]

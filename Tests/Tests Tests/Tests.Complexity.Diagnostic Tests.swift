@@ -10,7 +10,9 @@ import Tests_Test_Support
 
 private typealias SUT = Test::Test
 
-extension Tests.Complexity.Diagnostic {
+enum `Tests.Complexity.Diagnostic Tests` {}
+
+extension `Tests.Complexity.Diagnostic Tests` {
     @Suite
     struct Test {
         @Suite struct Formatted {}
@@ -20,7 +22,7 @@ extension Tests.Complexity.Diagnostic {
 
 // MARK: - Helpers
 
-extension Tests.Complexity.Diagnostic.Test {
+extension `Tests.Complexity.Diagnostic Tests`.Test {
     static let defaultSizes = [
         100, 300, 1_000, 3_000, 10_000,
         30_000, 100_000, 300_000, 1_000_000, 3_000_000,
@@ -66,11 +68,11 @@ extension Tests.Complexity.Diagnostic.Test {
 
 // MARK: - Formatted Output
 
-extension Tests.Complexity.Diagnostic.Test.Formatted {
+extension `Tests.Complexity.Diagnostic Tests`.Test.Formatted {
 
     @Test
     func `linear diagnostic contains expected sections`() {
-        let diagnostic = Tests.Complexity.Diagnostic.Test.linearDiagnostic()
+        let diagnostic = `Tests.Complexity.Diagnostic Tests`.Test.linearDiagnostic()
         let output = diagnostic.formatted()
 
         #expect(output.contains("COMPLEXITY ANALYSIS"))
@@ -83,7 +85,7 @@ extension Tests.Complexity.Diagnostic.Test.Formatted {
 
     @Test
     func `inconclusive diagnostic shows inconclusive header`() {
-        let diagnostic = Tests.Complexity.Diagnostic.Test.inconclusiveDiagnostic()
+        let diagnostic = `Tests.Complexity.Diagnostic Tests`.Test.inconclusiveDiagnostic()
         let output = diagnostic.formatted()
 
         #expect(output.contains("INCONCLUSIVE"))
@@ -93,7 +95,7 @@ extension Tests.Complexity.Diagnostic.Test.Formatted {
 
     @Test
     func `baseline comparison appears in formatted output`() {
-        var diagnostic = Tests.Complexity.Diagnostic.Test.linearDiagnostic()
+        var diagnostic = `Tests.Complexity.Diagnostic Tests`.Test.linearDiagnostic()
         diagnostic.baselineComparison = Tests.Complexity.Baseline.Comparison(
             previous: Tests.Complexity.Baseline(
                 bestClass: .quadratic,
@@ -118,7 +120,7 @@ extension Tests.Complexity.Diagnostic.Test.Formatted {
 
     @Test
     func `regression baseline shows regression label`() {
-        var diagnostic = Tests.Complexity.Diagnostic.Test.linearDiagnostic()
+        var diagnostic = `Tests.Complexity.Diagnostic Tests`.Test.linearDiagnostic()
         diagnostic.baselineComparison = Tests.Complexity.Baseline.Comparison(
             previous: Tests.Complexity.Baseline(
                 bestClass: .linear,
@@ -140,7 +142,7 @@ extension Tests.Complexity.Diagnostic.Test.Formatted {
 
     @Test
     func `reasons section appears when reasons exist`() {
-        let diagnostic = Tests.Complexity.Diagnostic.Test.inconclusiveDiagnostic()
+        let diagnostic = `Tests.Complexity.Diagnostic Tests`.Test.inconclusiveDiagnostic()
         let output = diagnostic.formatted()
 
         #expect(output.contains("Reasons"))
@@ -149,11 +151,11 @@ extension Tests.Complexity.Diagnostic.Test.Formatted {
 
 // MARK: - JSON Output
 
-extension Tests.Complexity.Diagnostic.Test.JSON {
+extension `Tests.Complexity.Diagnostic Tests`.Test.JSON {
 
     @Test
     func `JSON block contains delimiters`() {
-        let diagnostic = Tests.Complexity.Diagnostic.Test.linearDiagnostic()
+        let diagnostic = `Tests.Complexity.Diagnostic Tests`.Test.linearDiagnostic()
         let json = diagnostic.jsonBlock()
 
         #expect(json.contains("<!-- COMPLEXITY_DIAGNOSTIC_BEGIN -->"))
@@ -162,7 +164,7 @@ extension Tests.Complexity.Diagnostic.Test.JSON {
 
     @Test
     func `JSON block contains required fields`() {
-        let diagnostic = Tests.Complexity.Diagnostic.Test.linearDiagnostic()
+        let diagnostic = `Tests.Complexity.Diagnostic Tests`.Test.linearDiagnostic()
         let json = diagnostic.jsonBlock()
 
         #expect(json.contains("\"exponent\""))
@@ -175,7 +177,7 @@ extension Tests.Complexity.Diagnostic.Test.JSON {
 
     @Test
     func `JSON block includes baseline when present`() {
-        var diagnostic = Tests.Complexity.Diagnostic.Test.linearDiagnostic()
+        var diagnostic = `Tests.Complexity.Diagnostic Tests`.Test.linearDiagnostic()
         diagnostic.baselineComparison = Tests.Complexity.Baseline.Comparison(
             previous: Tests.Complexity.Baseline(
                 bestClass: .linear,
@@ -199,7 +201,7 @@ extension Tests.Complexity.Diagnostic.Test.JSON {
 
     @Test
     func `JSON block has null baseline when absent`() {
-        let diagnostic = Tests.Complexity.Diagnostic.Test.linearDiagnostic()
+        let diagnostic = `Tests.Complexity.Diagnostic Tests`.Test.linearDiagnostic()
         let json = diagnostic.jsonBlock()
 
         #expect(json.contains("\"baseline\": null"))

@@ -1,7 +1,9 @@
 import Testing
 import Tests_Test_Support
 
-extension Tests.Diagnostic {
+enum `Tests.Diagnostic Tests` {}
+
+extension `Tests.Diagnostic Tests` {
     @Suite
     struct Test {
         @Suite struct Format {}
@@ -10,7 +12,7 @@ extension Tests.Diagnostic {
 
 // MARK: - Format
 
-extension Tests.Diagnostic.Test.Format {
+extension `Tests.Diagnostic Tests`.Test.Format {
 
     private static func makeDiagnostic(
         exceeded: Bool = true

@@ -1,7 +1,9 @@
 import Testing
 import Tests_Test_Support
 
-extension Tests.Error {
+enum `Tests.Error Tests` {}
+
+extension `Tests.Error Tests` {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -10,7 +12,7 @@ extension Tests.Error {
 
 // MARK: - Unit
 
-extension Tests.Error.Test.Unit {
+extension `Tests.Error Tests`.Test.Unit {
     @Test
     func `benchmarkFailed thresholdExceeded description contains test name`() {
         let error = Tests.Error.benchmarkFailed(

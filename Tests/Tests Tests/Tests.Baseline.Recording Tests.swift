@@ -1,7 +1,9 @@
 import Testing
 import Tests_Test_Support
 
-extension Tests.Baseline.Recording {
+enum `Tests.Baseline.Recording Tests` {}
+
+extension `Tests.Baseline.Recording Tests` {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -10,7 +12,7 @@ extension Tests.Baseline.Recording {
 
 // MARK: - Unit
 
-extension Tests.Baseline.Recording.Test.Unit {
+extension `Tests.Baseline.Recording Tests`.Test.Unit {
     @Test
     func `raw values match expected strings`() {
         #expect(Tests.Baseline.Recording.normal.rawValue == "normal")

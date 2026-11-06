@@ -1,7 +1,9 @@
 import Testing
 import Tests_Test_Support
 
-extension Tests.Baseline.Storage {
+enum `Tests.Baseline.Storage Tests` {}
+
+extension `Tests.Baseline.Storage Tests` {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -11,7 +13,7 @@ extension Tests.Baseline.Storage {
 
 // MARK: - Unit
 
-extension Tests.Baseline.Storage.Test.Unit {
+extension `Tests.Baseline.Storage Tests`.Test.Unit {
     @Test
     func `path includes module and name`() {
         let root = File.Path(stringLiteral: "/baselines")
@@ -102,7 +104,7 @@ extension Tests.Baseline.Storage.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Tests.Baseline.Storage.Test.`Edge Case` {
+extension `Tests.Baseline.Storage Tests`.Test.`Edge Case` {
     @Test
     func `path omits suite directory when nil`() {
         let root = File.Path(stringLiteral: "/baselines")

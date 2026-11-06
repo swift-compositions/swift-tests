@@ -2,7 +2,9 @@ import Testing
 import Tests_Test_Support
 import Time
 
-extension Tests.History.Storage {
+enum `Tests.History.Storage Tests` {}
+
+extension `Tests.History.Storage Tests` {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -12,7 +14,7 @@ extension Tests.History.Storage {
 
 // MARK: - Unit
 
-extension Tests.History.Storage.Test.Unit {
+extension `Tests.History.Storage Tests`.Test.Unit {
     @Test
     func `path includes module and name with jsonl extension`() {
         let root = File.Path(stringLiteral: "/history")
@@ -158,7 +160,7 @@ extension Tests.History.Storage.Test.Unit {
 
 // MARK: - EdgeCase
 
-extension Tests.History.Storage.Test.`Edge Case` {
+extension `Tests.History.Storage Tests`.Test.`Edge Case` {
     @Test
     func `load returns empty for nonexistent path`() {
         let path = File.Path(stringLiteral: "/tmp/swift-tests-nonexistent-history-e7f2c4a1.jsonl")
