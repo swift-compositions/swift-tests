@@ -51,6 +51,8 @@ extension Test.Snapshot.Storage {
     ///   - subdirectory: Optional subdirectory within the snapshot directory.
     /// - Returns: The computed snapshot file path.
     public static func path(
+        // swift-linter:disable:next raw concept
+        // REASON: the #filePath text of the test's call site, forwarded by callers that captured it; a leaf as Source.Location.filePath is, and File.Path refuses what a #filePath remapping or an empty location may hold.
         testFilePath: Swift.String,
         function: Swift.String,
         name: Swift.String?,

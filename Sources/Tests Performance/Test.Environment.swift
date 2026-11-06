@@ -23,9 +23,13 @@ extension Test {
         public var memoryBytes: Cardinal
 
         /// OS version string (e.g., "Darwin 24.3.0").
+        // swift-linter:disable:next raw concept
+        // REASON: the host's description for a benchmark report, such as Darwin 24.3.0; looked at Version.Semantic and Version.Tools, which refuse the system's name in front.
         public var osVersion: Swift.String
 
         /// Swift compiler version (compile-time detected range).
+        // swift-linter:disable:next raw concept
+        // REASON: the compile-time detected range of the Swift compiler as report text, not one version; looked at Version.Semantic and Version.Tools, which hold a single version.
         public var swiftVersion: Swift.String
 
         /// Build optimization level.
@@ -43,7 +47,11 @@ extension Test {
             physicalCPUCount: Int,
             logicalCPUCount: Int,
             memoryBytes: Cardinal,
+            // swift-linter:disable:next raw concept
+            // REASON: the host's description for a benchmark report, such as Darwin 24.3.0; looked at Version.Semantic and Version.Tools, which refuse the system's name in front.
             osVersion: Swift.String,
+            // swift-linter:disable:next raw concept
+            // REASON: the compile-time detected range of the Swift compiler as report text, not one version; looked at Version.Semantic and Version.Tools, which hold a single version.
             swiftVersion: Swift.String,
             optimization: Optimization,
             features: Features
