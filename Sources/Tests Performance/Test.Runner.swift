@@ -565,7 +565,7 @@ extension Test.Runner {
     /// Each `walk` call returns a `Counters` value. These are aggregated
     /// functionally — no shared mutable state needed, even across concurrent
     /// task groups.
-    private struct Counters: Sendable {
+    fileprivate struct Counters: Sendable {
         var passed: Int = 0
         var failed: Int = 0
         var skipped: Int = 0
