@@ -569,18 +569,6 @@ extension Test.Runner {
         var passed: Int = 0
         var failed: Int = 0
         var skipped: Int = 0
-
-        static func + (lhs: Self, rhs: Self) -> Self {
-            Self(
-                passed: lhs.passed + rhs.passed,
-                failed: lhs.failed + rhs.failed,
-                skipped: lhs.skipped + rhs.skipped
-            )
-        }
-
-        static func += (lhs: inout Self, rhs: Self) {
-            lhs = lhs + rhs
-        }
     }
 }
 
@@ -639,4 +627,19 @@ extension Test.Runner.Result {
 extension Test.Runner {
     /// Errors thrown during test execution.
     public typealias Error = Test.Trait.Scope.Provider.Error
+}
+
+extension Test.Runner.Counters {
+
+    static func + (lhs: Self, rhs: Self) -> Self {
+        Self(
+            passed: lhs.passed + rhs.passed,
+            failed: lhs.failed + rhs.failed,
+            skipped: lhs.skipped + rhs.skipped
+        )
+    }
+
+    static func += (lhs: inout Self, rhs: Self) {
+        lhs = lhs + rhs
+    }
 }
