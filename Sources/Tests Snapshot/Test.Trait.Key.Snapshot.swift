@@ -1,12 +1,3 @@
-//
-//  Test.Trait.Key.Snapshot.swift
-//  swift-tests
-//
-//  Witness key for snapshot recording mode.
-//
-
-// MARK: - Witness Key
-
 extension Test.Trait {
     /// Witness key for snapshot recording mode.
     public struct Snapshot: Sendable {
@@ -26,8 +17,6 @@ extension Test.Trait.Snapshot: Witness.Key {
     @inlinable
     public static var liveValue: Test.Trait.Snapshot? { nil }
 }
-
-// MARK: - Collection Access
 
 extension Test.Trait.Collection {
     /// The snapshot recording mode, if set.

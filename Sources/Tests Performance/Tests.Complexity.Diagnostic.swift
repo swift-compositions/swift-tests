@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity.Diagnostic.swift
-//  swift-tests
-//
-//  Structured complexity diagnostic for console and AI-agent output.
-//
-
 import Test
 
 extension Tests.Complexity {

@@ -1,10 +1,3 @@
-//
-//  Test.Git.swift
-//  swift-tests
-//
-//  Best-effort git metadata capture.
-//
-
 import File_System
 
 extension Test {
@@ -49,12 +42,9 @@ extension Test.Git {
             return Self(sha: sha, branch: branch, dirty: nil)
         }
 
-        // Detached HEAD — head content is the SHA
         return Self(sha: head, branch: nil, dirty: nil)
     }
 }
-
-// MARK: - File Reading
 
 /// Reads the trimmed contents of a file, or nil if unavailable.
 private func _read(_ path: Swift.String) -> Swift.String? {
@@ -71,7 +61,6 @@ private func _read(_ path: Swift.String) -> Swift.String? {
         return nil
     }
 
-    // Trim trailing whitespace/newlines
     while let last = result.unicodeScalars.last,
         last == "\n" || last == "\r" || last == " " || last == "\t"
     {

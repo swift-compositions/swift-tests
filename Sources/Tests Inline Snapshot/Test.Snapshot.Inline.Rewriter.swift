@@ -1,10 +1,3 @@
-//
-//  Test.Snapshot.Inline.Rewriter.swift
-//  swift-tests
-//
-//  SwiftSyntax-based source file rewriter for inline snapshots.
-//
-
 import File_System
 import SwiftParser
 import SwiftSyntax
@@ -41,15 +34,12 @@ extension Test::Test.Snapshot.Inline.Rewriter {
     }
 }
 
-// MARK: - File Rewriting
-
 extension Test::Test.Snapshot.Inline.Rewriter {
     /// Rewrites a single source file with the given entries.
     private static func rewriteFile(
         at filePath: Swift.String,
         entries: [Test::Test.Snapshot.Inline.State.Entry]
     ) throws(Error) {
-        // Read source
         let source: Swift.String
         do throws(Either<File.System.Read.Full.Error, Never>) {
             source = try File(File.Path(stringLiteral: filePath)).read.full { span in
@@ -61,25 +51,20 @@ extension Test::Test.Snapshot.Inline.Rewriter {
             throw .readFailed(path: filePath, underlying: Swift.String(describing: error))
         }
 
-        // Parse
         let sourceFile = Parser.parse(source: source)
         let locationConverter = SourceLocationConverter(
             fileName: filePath,
             tree: sourceFile
         )
 
-        // Sort entries by line ascending to match SyntaxRewriter's
-        // top-to-bottom traversal order.
         let sorted = entries.sorted { $0.line < $1.line }
 
-        // Apply rewrites
         let rewriter = Syntax(
             entries: sorted,
             locationConverter: locationConverter
         )
         let rewritten = rewriter.visit(sourceFile)
 
-        // Write result
         let output = rewritten.description
         do throws(File.System.Write.Atomic.Error) {
             try File(File.Path(stringLiteral: filePath)).write.atomic(output)
@@ -88,8 +73,6 @@ extension Test::Test.Snapshot.Inline.Rewriter {
         }
     }
 }
-
-// MARK: - Syntax Rewriter
 
 extension Test::Test.Snapshot.Inline.Rewriter {
     /// Visits call sites and rewrites matching snapshot calls with the
@@ -132,14 +115,10 @@ extension Test::Test.Snapshot.Inline.Rewriter {
     }
 }
 
-// MARK: - Call Site Detection
-
 /// Checks whether a function call is a `snapshot(as:)` call.
 private func isSnapshotCall(_ node: FunctionCallExprSyntax) -> Bool {
     node.calledExpression.trimmedDescription == "snapshot"
 }
-
-// MARK: - Snapshot Application
 
 /// Applies the inline snapshot value to a `snapshot(as:)` function call site.
 ///
@@ -155,7 +134,6 @@ private func applySnapshotFunction(
 
     var updated = node
 
-    // Remove existing `matches:` additional trailing closure if present.
     let filtered = updated.additionalTrailingClosures.filter {
         $0.label.text != "matches"
     }
@@ -164,7 +142,6 @@ private func applySnapshotFunction(
         filtered
     )
 
-    // Build the `matches:` additional trailing closure element.
     let matchesElement = MultipleTrailingClosureElementSyntax(
         leadingTrivia: .space,
         label: .identifier("matches"),
@@ -172,7 +149,6 @@ private func applySnapshotFunction(
         closure: closureExpr.with(\.leadingTrivia, [])
     )
 
-    // Append to additional trailing closures.
     updated = updated.with(
         \.additionalTrailingClosures,
         updated.additionalTrailingClosures + [matchesElement]
@@ -180,8 +156,6 @@ private func applySnapshotFunction(
 
     return updated
 }
-
-// MARK: - Closure Builder
 
 /// Builds a `ClosureExprSyntax` containing a multiline string literal
 /// with the snapshot value.
@@ -231,8 +205,6 @@ private func buildSnapshotClosure(
     )
 }
 
-// MARK: - Indentation
-
 /// Extracts the leading indentation from a syntax node.
 private func extractIndentation(from node: some SyntaxProtocol) -> Swift.String {
     var indent = ""
@@ -251,8 +223,6 @@ private func extractIndentation(from node: some SyntaxProtocol) -> Swift.String 
     return indent
 }
 
-// MARK: - Hash Count
-
 /// Computes the minimum number of `#` delimiters needed for a multiline
 /// extended string literal that contains the given value.
 ///
@@ -268,30 +238,22 @@ private func extractIndentation(from node: some SyntaxProtocol) -> Swift.String 
 func hashCount(for value: Swift.String) -> Int {
     var needed = 0
 
-    // Track consecutive quotes to detect """ sequences
     var consecutiveQuotes = 0
-    // Track consecutive hashes after a """ sequence
     var hashesAfterTripleQuote = 0
-    // Whether we've seen 3+ consecutive quotes in current run
     var inTripleQuote = false
 
-    // Track \#...# sequences for escape/interpolation prevention.
-    // -1 means not after a backslash; >= 0 counts consecutive #'s.
     var hashesAfterBackslash = -1
 
     for character in value {
-        // When tracking a \#...# sequence, accumulate hashes.
         if hashesAfterBackslash >= 0 {
             if character == "#" {
                 hashesAfterBackslash += 1
-                // \#^N in an N-hash literal is an escape prefix → need N+1
                 needed = max(needed, hashesAfterBackslash + 1)
                 consecutiveQuotes = 0
                 inTripleQuote = false
                 hashesAfterTripleQuote = 0
                 continue
             } else {
-                // Sequence ended; fall through to normal processing.
                 hashesAfterBackslash = -1
             }
         }
@@ -302,18 +264,14 @@ func hashCount(for value: Swift.String) -> Int {
             if consecutiveQuotes >= 3 {
                 inTripleQuote = true
                 hashesAfterTripleQuote = 0
-                // At minimum we need 1 hash to distinguish from closing """
                 needed = max(needed, 1)
             }
 
         case "#" where inTripleQuote:
             hashesAfterTripleQuote += 1
-            // """#...# with N hashes means we need N+1 hashes in our delimiter
             needed = max(needed, hashesAfterTripleQuote + 1)
 
         case "\\":
-            // Any backslash needs at least 1 hash so \n, \t, \(, etc.
-            // are not interpreted as escape sequences.
             hashesAfterBackslash = 0
             needed = max(needed, 1)
             consecutiveQuotes = 0

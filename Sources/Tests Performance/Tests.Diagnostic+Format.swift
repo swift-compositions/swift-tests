@@ -14,7 +14,6 @@ extension Tests.Diagnostic {
 
         var lines: [Swift.String] = []
 
-        // Header
         if let factor = exceedanceFactor {
             let header = Console.Style.error.apply(
                 to: "PERFORMANCE THRESHOLD EXCEEDED",
@@ -42,7 +41,6 @@ extension Tests.Diagnostic {
             lines.append("  Value:    \(metric.extract(from: m).formatted(durationFormat))")
         }
 
-        // Distribution
         lines.append("")
         lines.append("  Distribution:")
         lines.append(
@@ -83,7 +81,6 @@ extension Tests.Diagnostic {
             lines.append("    MAD:    \(mad.formatted(durationFormat))   Outliers: \(outlierStr)")
         }
 
-        // Trend
         lines.append("")
         lines.append("  Trend:")
         let zStr = trend.z.formatted(Formatter::Formatter.Number(fractionDigits: 2))
@@ -103,7 +100,6 @@ extension Tests.Diagnostic {
         }
         lines.append("    Mann-Kendall Z: \(zStr) (\(trendLabel))")
 
-        // Baseline comparison
         if let comparison {
             lines.append("")
             lines.append("  Baseline Comparison:")
@@ -128,10 +124,8 @@ extension Tests.Diagnostic {
                 lines.append("    Change:   NO CHANGE")
             }
         } else if baseline == nil, comparison == nil {
-            // No baseline section needed
         }
 
-        // History (cross-run trend)
         if let history = historyAnalysis {
             lines.append("")
             lines.append("  History (\(history.recordCount) runs):")
@@ -161,7 +155,6 @@ extension Tests.Diagnostic {
             lines.append("    Overall:      \(changePercent)%")
         }
 
-        // Environment
         lines.append("")
         lines.append("  Environment:")
         lines.append("    Architecture:  \(environment.architecture)")
@@ -222,7 +215,6 @@ extension Tests.Diagnostic {
             )
         }
 
-        // Distribution
         json.append("  \"distribution\": {")
         json.append("    \"count\": \(m.durations.count),")
         json.append("    \"min\": \(m.min.inSeconds),")
@@ -247,7 +239,6 @@ extension Tests.Diagnostic {
         }
         json.append("  },")
 
-        // Trend
         json.append("  \"trend\": {")
         json.append(
             "    \"mann_kendall_z\": \(trend.z.formatted(Formatter::Formatter.Number(fractionDigits: 2))),"
@@ -255,7 +246,6 @@ extension Tests.Diagnostic {
         json.append("    \"interpretation\": \(_jsonString(trend.interpretation.rawValue))")
         json.append("  },")
 
-        // Environment
         json.append("  \"environment\": {")
         json.append("    \"arch\": \(_jsonString(environment.architecture)),")
         json.append("    \"physical_cores\": \(environment.physicalCPUCount),")
@@ -272,7 +262,6 @@ extension Tests.Diagnostic {
         json.append("    \"os\": \(_jsonString(environment.osVersion))")
         json.append("  },")
 
-        // Baseline
         if let comparison {
             json.append("  \"baseline\": {")
             json.append("    \"value\": \(comparison.baselineValue.inSeconds),")
@@ -283,7 +272,6 @@ extension Tests.Diagnostic {
             json.append("  },")
         }
 
-        // History
         if let history = historyAnalysis {
             json.append("  \"history\": {")
             json.append("    \"record_count\": \(history.recordCount),")
@@ -301,7 +289,6 @@ extension Tests.Diagnostic {
             json.append("  },")
         }
 
-        // Raw durations
         let durationsStr = m.durations.map {
             "\($0.inSeconds.formatted(Formatter::Formatter.Number(fractionDigits: 6)))"
         }

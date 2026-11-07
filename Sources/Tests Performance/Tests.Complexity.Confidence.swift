@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity.Confidence.swift
-//  swift-tests
-//
-//  Confidence level for complexity classification.
-//
-
 extension Tests.Complexity {
     /// Confidence level for a complexity classification.
     ///

@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity.Policy.swift
-//  swift-tests
-//
-//  Configurable thresholds for complexity classification.
-//
-
 public import Test
 
 extension Tests.Complexity {

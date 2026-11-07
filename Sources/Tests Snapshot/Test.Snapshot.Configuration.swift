@@ -1,10 +1,3 @@
-//
-//  Test.Snapshot.Configuration.swift
-//  swift-tests
-//
-//  Task-local snapshot testing configuration.
-//
-
 public import Dependency
 public import File_System
 internal import Kernel
@@ -97,8 +90,6 @@ extension Test.Snapshot.Configuration.Key {
     public static var testValue: Test.Snapshot.Configuration? { nil }
 }
 
-// MARK: - Configuration Resolution
-
 extension Test.Snapshot.Configuration {
     /// Resolves the effective recording mode.
     ///
@@ -113,27 +104,21 @@ extension Test.Snapshot.Configuration {
     public static func resolve(
         recording: Test.Snapshot.Recording?
     ) -> Test.Snapshot.Recording {
-        // 1. Explicit parameter takes precedence
         if let recording { return recording }
 
-        // 2. Task-local configuration
         if let current = Self.current {
             return current.recording
         }
 
-        // 3. Environment variable
         if let env = unsafe Kernel.Environment.get("SWIFT_SNAPSHOT_RECORD"),
             let mode = Test.Snapshot.Recording(rawValue: Swift.String(env.view))
         {
             return mode
         }
 
-        // 4. Default
         return .missing
     }
 }
-
-// MARK: - Scoped Configuration
 
 extension Test.Snapshot {
     /// Runs an operation with the given configuration.

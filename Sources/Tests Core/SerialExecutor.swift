@@ -1,11 +1,3 @@
-//
-//  SerialExecutor.swift
-//  swift-tests
-//
-//  Provides deterministic async testing by routing tasks through a serial executor.
-//  Based on the approach from pointfreeco/swift-concurrency-extras.
-//
-
 internal import Loader
 
 /// Performs an operation with all spawned tasks running serially on the main executor.
@@ -71,8 +63,6 @@ public var _useSerialExecutor: Bool {
             : nil
     }
 }
-
-// MARK: - Private Implementation
 
 private typealias OriginalHook = @convention(thin) (UnownedJob) -> Void
 private typealias TaskEnqueueHook = @convention(thin) (UnownedJob, OriginalHook) -> Void

@@ -1,17 +1,7 @@
-//
-//  Tests.Complexity.Baseline+Storage.swift
-//  swift-tests
-//
-//  File-backed storage for complexity baselines using the existing
-//  Tests.Baseline.Storage directory convention.
-//
-
 public import File_System
 public import IO_Kernel
 public import JSON
 public import Thread_Pool
-
-// MARK: - JSON Serializable
 
 extension Tests.Complexity.Baseline: JSON.Serializable {
     public static func serialize(_ value: Self) -> JSON {
@@ -36,7 +26,6 @@ extension Tests.Complexity.Baseline: JSON.Serializable {
     }
 
     public static func deserialize(_ json: JSON) throws(JSON.Error) -> Self {
-        // bestClass: optional string
         let bestClass: Test.Benchmark.Complexity.Class?
         if json.bestClass.isNull || !json.bestClass.isString {
             bestClass = nil
@@ -46,12 +35,10 @@ extension Tests.Complexity.Baseline: JSON.Serializable {
             )
         }
 
-        // exponent: required number
         guard let exponent = Double(json.exponent) else {
             throw .missingKey("exponent")
         }
 
-        // confidence: required string
         let confidence: Tests.Complexity.Confidence
         if json.confidence.isString {
             let str = try Swift.String.deserialize(json.confidence)
@@ -60,7 +47,6 @@ extension Tests.Complexity.Baseline: JSON.Serializable {
             confidence = .inconclusive
         }
 
-        // bestRSquared: optional number
         let bestRSquared: Double?
         if json.bestRSquared.isNull || !json.bestRSquared.isNumber {
             bestRSquared = nil
@@ -76,8 +62,6 @@ extension Tests.Complexity.Baseline: JSON.Serializable {
         )
     }
 }
-
-// MARK: - File I/O
 
 extension Tests.Complexity.Baseline {
 
@@ -143,8 +127,6 @@ extension Tests.Complexity.Baseline {
 
 }
 
-// MARK: - File I/O (Async)
-
 extension Tests.Complexity.Baseline {
     /// Loads a stored complexity baseline, or `nil` if none exists.
     ///
@@ -153,11 +135,6 @@ extension Tests.Complexity.Baseline {
         at path: File.Path
     ) async throws(Kernel.Thread.Pool.Error) -> Tests.Complexity.Baseline? {
         let path = path
-        // See the disambiguation note in Tests.Baseline.Storage.swift: a
-        // plain closure literal is ambiguous between Thread_Pool's two
-        // `run(timeout:_:)` overloads, and explicit specialization is not
-        // permitted on this instance method. Binding the member to its
-        // exact, non-generic function type selects the matching overload.
         let run:
             (
                 Duration?, sending @escaping () -> Tests.Complexity.Baseline?

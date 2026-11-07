@@ -1,14 +1,5 @@
-//
-//  RFC_8259.Value+Tree.Keyed.swift
-//  swift-tests
-//
-//  Bidirectional conversion between JSON values and keyed trees.
-//
-
 import JSON
 internal import Tree_Keyed
-
-// MARK: - JSON → __Tree<TreeStorage.Keyed<RFC_8259.Value, String>>
 
 /// Converts an RFC 8259 value to a keyed tree for structural comparison.
 ///
@@ -53,8 +44,6 @@ func _jsonToKeyedTree(
     return tree
 }
 
-// MARK: - Helpers
-
 /// Returns the local value for a JSON node — containers become empty markers.
 private func _jsonLocalValue(_ value: RFC_8259.Value) -> RFC_8259.Value {
     switch value {
@@ -91,8 +80,6 @@ private func _jsonAppendChildren(
     }
 }
 
-// MARK: - Value Formatting
-
 /// Formats an RFC 8259 value as a display string for diff output.
 func _jsonDisplayValue(_ value: RFC_8259.Value) -> Swift.String {
     switch value {
@@ -112,8 +99,6 @@ func _jsonIsContainer(_ value: RFC_8259.Value) -> Bool {
     default: false
     }
 }
-
-// MARK: - Path Formatting
 
 /// Formats a key path as a dot-separated string with array index notation.
 ///

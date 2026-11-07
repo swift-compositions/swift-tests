@@ -1,10 +1,3 @@
-//
-//  Test.Snapshot.Inline.State.swift
-//  swift-tests
-//
-//  Thread-safe accumulator for pending inline snapshot writes.
-//
-
 import Synchronization
 public import Test
 
@@ -58,9 +51,6 @@ extension Test::Test.Snapshot.Inline.State {
             do throws(Test::Test.Snapshot.Inline.Rewriter.Error) {
                 try Test::Test.Snapshot.Inline.Rewriter.writeAll(from: state.drain())
             } catch {
-                // Non-fatal: match the existing behavior in Testing.Main
-                // where write failures print a warning but do not change
-                // test results.
                 print(
                     "Warning: Failed to write inline snapshots from atexit: \(error)"
                 )

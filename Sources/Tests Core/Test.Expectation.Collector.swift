@@ -1,10 +1,3 @@
-//
-//  Test.Expectation.Collector.swift
-//  swift-tests
-//
-//  Collects expectations during test body execution.
-//
-
 public import Dependency
 import Synchronization
 public import Test
@@ -88,8 +81,6 @@ extension Test.Expectation.Collector.Key {
     public static var liveValue: Test.Expectation.Collector? { nil }
     public static var testValue: Test.Expectation.Collector? { nil }
 }
-
-// MARK: - Scoped Collector
 
 extension Test.Expectation.Collector {
     /// Runs an operation with the given collector.

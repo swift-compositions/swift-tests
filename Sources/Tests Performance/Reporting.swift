@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-tests open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-tests project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Binary
 import Console
 import Formatter
@@ -65,8 +54,6 @@ extension Tests {
     }
 
 }
-
-// MARK: - Console Styling Support
 
 extension Tests {
     /// Console capability detection (cached).

@@ -1,10 +1,3 @@
-//
-//  Test.Snapshot.Inline.Configuration.swift
-//  swift-tests
-//
-//  Global state for inline snapshot collection.
-//
-
 public import Test
 
 extension Test::Test.Snapshot.Inline {

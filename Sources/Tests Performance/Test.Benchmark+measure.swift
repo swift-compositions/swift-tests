@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-tests open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-tests project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Formatter
 import Kernel_Clock
 public import Test
@@ -56,12 +45,10 @@ extension Test.Benchmark {
         metric: Metric = .median,
         _ body: () throws(E) -> Void
     ) throws(E) -> Measurement {
-        // Warmup
         for _ in 0..<warmup {
             try body()
         }
 
-        // Measure
         var durations: [Duration] = []
         durations.reserveCapacity(iterations)
 
@@ -73,11 +60,9 @@ extension Test.Benchmark {
 
         let measurement = Measurement(durations: durations)
 
-        // Print results
         let displayName = name ?? "Benchmark"
         printPerformance(displayName, measurement)
 
-        // Check threshold
         if let threshold {
             let actualMetric = metric.extract(from: measurement)
             if actualMetric > threshold {
@@ -104,12 +89,10 @@ extension Test.Benchmark {
         metric: Metric = .median,
         _ body: () async throws(E) -> Void
     ) async throws(E) -> Measurement {
-        // Warmup
         for _ in 0..<warmup {
             try await body()
         }
 
-        // Measure
         var durations: [Duration] = []
         durations.reserveCapacity(iterations)
 
@@ -121,11 +104,9 @@ extension Test.Benchmark {
 
         let measurement = Measurement(durations: durations)
 
-        // Print results
         let displayName = name ?? "Benchmark"
         printPerformance(displayName, measurement)
 
-        // Check threshold
         if let threshold {
             let actualMetric = metric.extract(from: measurement)
             if actualMetric > threshold {

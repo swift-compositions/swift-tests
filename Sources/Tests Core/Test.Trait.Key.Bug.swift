@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Key.Bug.swift
-//  swift-tests
-//
-//  Witness key for bug reference traits.
-//
-
 extension Test.Trait {
     /// Witness key for bug reference.
     public struct Bug: Sendable {

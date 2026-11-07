@@ -1,10 +1,3 @@
-//
-//  Test.Teardown.swift
-//  swift-tests
-//
-//  Global teardown registry for static test fixtures.
-//
-
 public import Test
 
 extension Test {

@@ -1,13 +1,3 @@
-//
-//  Test.Snapshot.Recording.Trait.swift
-//  swift-tests
-//
-//  Swift Testing SuiteTrait/TestTrait bridge for snapshot recording mode.
-//
-//  Allows `@Suite(.snapshots(record: .all))` to work natively with
-//  Apple's Swift Testing runner, without requiring the custom Test.Runner.
-//
-
 #if canImport(Testing)
     public import Test
     public import Testing
@@ -37,8 +27,6 @@
         public var isRecursive: Bool { true }
     }
 
-    // MARK: - Test Scoping
-
     extension Test::Test.Snapshot.Recording.Trait: Testing.TestScoping {
         @concurrent
         public func provideScope(
@@ -53,8 +41,6 @@
             )
         }
     }
-
-    // MARK: - Trait Factory
 
     extension Testing.Trait where Self == Test::Test.Snapshot.Recording.Trait {
         /// Sets the snapshot recording mode for a suite or test.

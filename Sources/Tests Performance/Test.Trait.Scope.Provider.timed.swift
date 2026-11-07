@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Scope.Provider.timed.swift
-//  swift-tests
-//
-//  Scope provider for timed benchmark execution.
-//
-
 import File_System
 import IO_Kernel
 import Kernel
@@ -33,12 +26,10 @@ extension Test.Trait.Scope.Provider {
             preconditionFailure("the timed scope runs only for entries carrying the trait")
         }
 
-        // Warmup iterations
         for _ in 0..<config.iteration.warmup {
             try await operation()
         }
 
-        // Measured iterations
         var durations: [Duration] = []
         durations.reserveCapacity(config.iteration.count)
         var allocationStats: [Memory.Allocation.Statistics]? =
@@ -60,13 +51,10 @@ extension Test.Trait.Scope.Provider {
 
         let measurement = Test.Benchmark.Measurement(durations: durations)
 
-        // Capture environment (needed for both diagnostics and baseline keying)
         let environment = Test.Environment.capture()
 
-        // Shared root for baselines and history
         let root = Tests.Baseline.Storage.root()
 
-        // Baseline comparison (if configured)
         var storedBaseline: Test.Benchmark.Measurement? = nil
         var comparison: Tests.Comparison? = nil
 
@@ -78,13 +66,11 @@ extension Test.Trait.Scope.Provider {
             )
             let recording = Tests.Baseline.Recording.current
 
-            // Try to load existing baseline
             do throws(Kernel.Thread.Pool.Error) {
                 storedBaseline = try await Tests.Baseline.Storage.load(at: baselinePath)
             } catch {}
 
             if let baseline = storedBaseline {
-                // Build comparison
                 comparison = Tests.Comparison(
                     name: entry.id.name,
                     current: measurement,
@@ -92,23 +78,18 @@ extension Test.Trait.Scope.Provider {
                     metric: config.evaluation.metric
                 )
 
-                // Overwrite baseline if recording mode is .all
                 if recording == .all {
                     do throws(Either<Kernel.Thread.Pool.Error, Tests.Baseline.Storage.Error>) {
                         try await Tests.Baseline.Storage.save(measurement, to: baselinePath)
                     } catch {
-                        // best-effort: baseline overwrite failure is non-fatal
                     }
                 }
             } else {
-                // No baseline exists
                 switch recording {
                 case .normal, .all:
-                    // Save current measurement as the new baseline
                     do throws(Either<Kernel.Thread.Pool.Error, Tests.Baseline.Storage.Error>) {
                         try await Tests.Baseline.Storage.save(measurement, to: baselinePath)
                     } catch {
-                        // best-effort: baseline save failure is non-fatal
                     }
 
                 case .never:
@@ -120,7 +101,6 @@ extension Test.Trait.Scope.Provider {
             }
         }
 
-        // Build diagnostic
         let cv = measurement.coefficientOfVariation
         let mad = measurement.medianAbsoluteDeviation
         let outliers = measurement.outlierCount()
@@ -135,7 +115,6 @@ extension Test.Trait.Scope.Provider {
                 nil
             }
 
-        // Run history: append record and analyze cross-run trend
         var historyAnalysis: Tests.History.Analysis? = nil
 
         if Tests.History.Storage.isEnabled {
@@ -150,14 +129,11 @@ extension Test.Trait.Scope.Provider {
                 outlierCount: outliers
             )
 
-            // Append current record
             do throws(Either<Kernel.Thread.Pool.Error, Tests.History.Storage.Error>) {
                 try await Tests.History.Storage.append(record, root: root)
             } catch {
-                // best-effort: history append failure is non-fatal
             }
 
-            // Load full history (including the record we just appended)
             let records: [Tests.History.Record]
             do throws(Kernel.Thread.Pool.Error) {
                 records = try await Tests.History.Storage.load(
@@ -166,7 +142,6 @@ extension Test.Trait.Scope.Provider {
                     fingerprint: environment.fingerprint
                 )
             } catch {
-                // best-effort: history load failure yields empty history
                 records = []
             }
             historyAnalysis = Tests.History.Analysis.analyze(records)
@@ -191,12 +166,8 @@ extension Test.Trait.Scope.Provider {
             historyAnalysis: historyAnalysis
         )
 
-        // Register with global collector for event emission and summary table.
-        // The runner drains the collector after all tests complete and emits
-        // events + console output from a single coordination point.
         Tests.Diagnostic.Collector.shared.append(diagnostic)
 
-        // Throw if threshold exceeded
         if exceeded, let threshold = config.evaluation.threshold {
             throw .benchmarkFailed(
                 .thresholdExceeded(
@@ -208,7 +179,6 @@ extension Test.Trait.Scope.Provider {
             )
         }
 
-        // Throw if baseline regression exceeded
         if let comparison, let tolerance = config.evaluation.baselineTolerance,
             comparison.change > tolerance
         {

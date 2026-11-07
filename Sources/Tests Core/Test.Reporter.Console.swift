@@ -1,21 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-tests open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-tests project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
-//
-// Console and JSON reporters are in the Tests Reporter target.
-// Import "Tests Reporter" (or "Tests" umbrella) for .console and .json(to:).
-//
-// This file provides only the null reporter for minimal dependencies.
-//
-
 public import Test
 
 extension Test.Reporter {
@@ -30,8 +12,6 @@ extension Test.Reporter {
         }
     }
 }
-
-// MARK: - NullSink
 
 extension Test.Reporter {
     // WHY: Category D — structural Sendable workaround.

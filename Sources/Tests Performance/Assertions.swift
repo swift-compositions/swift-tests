@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-tests open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-tests project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 public import Time
 
 extension Tests {
@@ -86,7 +75,6 @@ extension Tests {
 }
 
 extension Tests {
-    // WORKAROUND: Compound method name expectNoRegression [API-NAME-002]
     // WHY: "no regression" is an indivisible semantic concept — splitting across
     //   Swift parameter labels produces awkward signatures that obscure intent.
     // WHEN TO REMOVE: When a Property-based nested accessor (e.g. expect.noRegression)

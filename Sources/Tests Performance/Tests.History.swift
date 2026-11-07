@@ -1,10 +1,3 @@
-//
-//  Tests.History.swift
-//  swift-tests
-//
-//  Namespace for run history tracking.
-//
-
 extension Tests {
     /// Namespace for append-only run history.
     ///

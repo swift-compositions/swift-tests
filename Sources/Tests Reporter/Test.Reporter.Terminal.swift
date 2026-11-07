@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-tests open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-tests project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 internal import Console
 import Formatter
 import Synchronization
@@ -29,8 +18,6 @@ extension Test.Reporter {
         }
     }
 }
-
-// MARK: - Terminal
 
 extension Test.Reporter {
     /// Console sink implementation with thread-safe counters.
@@ -126,15 +113,12 @@ extension Test.Reporter {
                         "    \(Console.Style.error.apply(to: "✗", capability: capability)) \(expectation.expression.sourceCode)"
                     )
 
-                    // Source location
                     let loc = expectation.expression.sourceLocation
                     print("      \(dimmed("at \(loc.fileID):\(loc.line):\(loc.column)"))")
 
                     if let failure = expectation.failure {
-                        // Failure message
                         indented(render(failure.message), indent: "      ")
 
-                        // Expected vs actual
                         if let expected = failure.expected, let actual = failure.actual {
                             let expectedLabel = Console.Style.success.apply(
                                 to: "expected",
@@ -148,13 +132,11 @@ extension Test.Reporter {
                             print("      \(actualLabel):   \(actual.stringValue)")
                         }
 
-                        // Structured diff
                         if let difference = failure.difference {
                             print("")
                             indented(render(difference), indent: "      ")
                         }
 
-                        // User comment
                         if let comment = failure.comment {
                             print("      \(dimmed("—")) \(render(comment))")
                         }
@@ -195,20 +177,13 @@ extension Test.Reporter {
                 break
 
             default:
-                // L3 performance kinds (.performanceDiagnostic, .performanceSummary)
-                // and any future extensible kinds are handled by the runner or
-                // higher-layer reporters.
                 break
             }
 
-            // Flush stdout so progress is visible immediately when piped
-            // (SwiftPM's test harness makes stdout fully buffered)
             Console.Output.flush()
         }
 
         func finish() async {}
-
-        // MARK: - Rendering Helpers
 
         private func render(_ text: Test.Text) -> Swift.String {
             text.segments.map { segment in

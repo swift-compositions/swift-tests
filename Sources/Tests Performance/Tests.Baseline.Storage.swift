@@ -1,10 +1,3 @@
-//
-//  Tests.Baseline.Storage.swift
-//  swift-tests
-//
-//  File-backed baseline storage using swift-file-system and swift-json.
-//
-
 import Environment
 public import File_System
 public import IO_Kernel
@@ -30,8 +23,6 @@ extension Tests.Baseline {
     public enum Storage {}
 }
 
-// MARK: - Root Directory
-
 extension Tests.Baseline.Storage {
     /// Resolves the baseline root directory.
     ///
@@ -45,8 +36,6 @@ extension Tests.Baseline.Storage {
         return File.Path(stringLiteral: ".benchmarks")
     }
 }
-
-// MARK: - Path Generation
 
 extension Tests.Baseline.Storage {
     /// Computes the baseline file path from test identity and fingerprint.
@@ -65,7 +54,6 @@ extension Tests.Baseline.Storage {
 
         if let suite = testID.suite {
             for component in suite.split(separator: ".") {
-                // No `/=` overload for File.Path; `/` is a heterogeneous path-append (Path / Path.Component).
                 // swiftlint:disable:next shorthand_operator
                 result = result / File.Path.Component(stringLiteral: "\(component)")
             }
@@ -75,8 +63,6 @@ extension Tests.Baseline.Storage {
     }
 
 }
-
-// MARK: - Read Operations
 
 extension Tests.Baseline.Storage {
     /// Loads a stored baseline measurement, or `nil` if no baseline exists.
@@ -99,8 +85,6 @@ extension Tests.Baseline.Storage {
     }
 }
 
-// MARK: - Read Operations (Async)
-
 extension Tests.Baseline.Storage {
     /// Loads a stored baseline measurement, or `nil` if no baseline exists.
     ///
@@ -112,13 +96,6 @@ extension Tests.Baseline.Storage {
         at path: File.Path
     ) async throws(Kernel.Thread.Pool.Error) -> Test.Benchmark.Measurement? {
         let path = path
-        // `run(timeout:_:)` is ambiguous between Thread_Pool's non-throwing
-        // `run<T>` and generically-throwing `run<T, E>` overloads for a
-        // plain closure literal (both accept it; explicit specialization is
-        // not permitted on this instance method). Binding the member to its
-        // exact, non-generic function type selects the matching overload:
-        // only `run<T>`'s instantiated type can equal a target throwing
-        // this function's own (unwrapped) error type.
         let run:
             (
                 Duration?, sending @escaping () -> Test.Benchmark.Measurement?
@@ -129,8 +106,6 @@ extension Tests.Baseline.Storage {
         }
     }
 }
-
-// MARK: - Write Operations
 
 extension Tests.Baseline.Storage {
     /// Saves a measurement as a baseline.
@@ -145,12 +120,10 @@ extension Tests.Baseline.Storage {
         _ measurement: Test.Benchmark.Measurement,
         to path: File.Path
     ) throws(Self.Error) {
-        // Ensure parent directory exists
         if let parent = path.parent {
             try ensureDirectory(at: parent)
         }
 
-        // Serialize and write atomically
         let content = measurement.jsonString(pretty: true)
         do throws(File.System.Write.Atomic.Error) {
             try File(path).write.atomic(content)

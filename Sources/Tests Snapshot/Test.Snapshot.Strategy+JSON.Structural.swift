@@ -1,14 +1,5 @@
-//
-//  Test.Snapshot.Strategy+JSON.Structural.swift
-//  swift-tests
-//
-//  JSON snapshot strategy with structural (tree-aware) diffing.
-//
-
 public import JSON
 public import Test
-
-// MARK: - Structural JSON Strategy (JSON.Serializable)
 
 extension Test.Snapshot.Strategy where Value: JSON.Serializable & Sendable, Format == Swift.String {
     /// JSON strategy with structural diffing.
@@ -55,8 +46,6 @@ extension Test.Snapshot.Strategy where Value: JSON.Serializable & Sendable, Form
         )
     }
 }
-
-// MARK: - Structural JSON Strategy (Raw JSON)
 
 extension Test.Snapshot.Strategy where Value == JSON, Format == Swift.String {
     /// JSON strategy with structural diffing for raw `JSON` values.

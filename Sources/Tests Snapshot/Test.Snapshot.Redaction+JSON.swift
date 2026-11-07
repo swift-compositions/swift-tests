@@ -1,14 +1,5 @@
-//
-//  Test.Snapshot.Redaction+JSON.swift
-//  swift-tests
-//
-//  JSON-aware redaction constructors for snapshot testing.
-//
-
 import JSON
 public import Test
-
-// MARK: - JSON Path Redaction
 
 extension Test.Snapshot.Redaction where Format == Swift.String {
     /// Redacts a JSON key path with a static replacement.
@@ -105,8 +96,6 @@ extension Test.Snapshot.Redaction where Format == Swift.String {
     }
 }
 
-// MARK: - Internal Helpers
-
 /// Parses a JSON string, applies a path-based replacement, and re-serializes.
 private func _redactJSON(
     _ jsonString: Swift.String,
@@ -155,8 +144,6 @@ private func _redactJSONGlob(
     return JSON(modified).serialize(pretty: true, sortKeys: true)
 }
 
-// MARK: - Object/Array Mutation Helpers
-
 /// Creates a new Object with one key's value replaced.
 private func _objectReplacing(
     _ obj: RFC_8259.Object,
@@ -178,8 +165,6 @@ private func _arrayReplacing(
     mutable[index] = value
     return mutable
 }
-
-// MARK: - Path-Based Replacement
 
 /// Recursively navigates an RFC_8259.Value and replaces the leaf at the path.
 private func _replaceAtPath(
@@ -253,8 +238,6 @@ private func _replaceAtPathDynamic(
     }
 }
 
-// MARK: - Glob-Based Replacement
-
 /// Recursively matches a glob pattern against the JSON tree structure.
 private func _replaceGlob(
     _ value: RFC_8259.Value,
@@ -268,8 +251,6 @@ private func _replaceGlob(
     let remaining = pattern.dropFirst()
 
     if segment == "**" {
-        // Recursive descent: try matching remaining pattern at this level,
-        // AND propagate the full pattern (including **) into children.
         var result = _replaceGlob(value, pattern: remaining, replacement: replacement)
 
         switch result {
@@ -302,7 +283,6 @@ private func _replaceGlob(
     }
 
     if segment == "*" {
-        // Single-level wildcard: match all keys/indices at this level.
         switch value {
         case .object(let obj):
             var newPairs: [(key: Swift.String, value: RFC_8259.Value)] = []
@@ -334,7 +314,6 @@ private func _replaceGlob(
         }
     }
 
-    // Literal key match
     switch value {
     case .object(let obj):
         guard let existing = obj[segment] else { return value }

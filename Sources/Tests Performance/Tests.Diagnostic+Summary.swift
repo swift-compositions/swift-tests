@@ -1,10 +1,3 @@
-//
-//  Tests.Diagnostic+Summary.swift
-//  swift-tests
-//
-//  Summary table formatter for collected performance diagnostics.
-//
-
 import Console
 import Formatter
 import Time
@@ -24,16 +17,13 @@ extension Tests.Diagnostic {
             numeric: Formatter::Formatter.Number(fractionDigits: 3)
         )
 
-        // Strip common module prefix for compact display
         let displayNames = _stripCommonPrefix(sorted.map(\.qualifiedName))
 
-        // Column widths
         let nameWidth = max(
             displayNames.map(\.count).max() ?? 0,
-            4  // "Test"
+            4
         )
 
-        // Header
         let header = Console.Style.bold.apply(to: "PERFORMANCE SUMMARY", capability: cap)
         print("\n\(header)")
         print("")
@@ -42,7 +32,6 @@ extension Tests.Diagnostic {
         print("| \(nameHeader) |     Median |        Min |")
         print("|\(_line(nameWidth))|------------|------------|")
 
-        // Rows
         for (diagnostic, displayName) in zip(sorted, displayNames) {
             let m = diagnostic.measurement
             let name = _pad(displayName, to: nameWidth)
@@ -84,7 +73,7 @@ extension Tests.Diagnostic {
             shared = i + 1
         }
         guard shared > 0 else { return names }
-        let dropLength = parts[0..<shared].joined(separator: ".").count + 1  // +1 for trailing dot
+        let dropLength = parts[0..<shared].joined(separator: ".").count + 1
         return names.map { Swift.String($0.dropFirst(dropLength)) }
     }
 }

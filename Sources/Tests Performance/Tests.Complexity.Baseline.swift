@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity.Baseline.swift
-//  swift-tests
-//
-//  Stored complexity baseline for cross-run regression detection.
-//
-
 public import Test
 
 extension Tests.Complexity {

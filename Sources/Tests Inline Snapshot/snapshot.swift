@@ -1,14 +1,5 @@
-//
-//  snapshot.swift
-//  swift-tests
-//
-//  Unified snapshot assertion function.
-//
-
 import File_System
 public import Test
-
-// MARK: - snapshot (String Format, Synchronous)
 
 /// Asserts that a value matches its snapshot.
 ///
@@ -128,8 +119,6 @@ public func snapshot<Value>(
     return .record(passing: "snapshot(as: ...)", at: location)
 }
 
-// MARK: - snapshot (String Format, Asynchronous)
-
 /// Asserts that a value matches its snapshot (async variant).
 @discardableResult
 public func snapshot<Value>(
@@ -196,8 +185,6 @@ public func snapshot<Value>(
     return .record(passing: "snapshot(as: ...)", at: location)
 }
 
-// MARK: - snapshot (Generic Format, Synchronous)
-
 /// Asserts that a value matches its file-backed snapshot.
 ///
 /// Use this overload for non-String formats (binary, image, etc.).
@@ -254,8 +241,6 @@ public func snapshot<Value, Format: Sendable>(
     return .record(passing: "snapshot(as: ..., named: ...)", at: location)
 }
 
-// MARK: - snapshot (Generic Format, Asynchronous)
-
 /// Asserts that a value matches its file-backed snapshot (async variant).
 @discardableResult
 public func snapshot<Value, Format: Sendable>(
@@ -301,8 +286,6 @@ public func snapshot<Value, Format: Sendable>(
     }
     return .record(passing: "snapshot(as: ..., named: ...)", at: location)
 }
-
-// MARK: - Inline Resolution
 
 extension Test::Test.Snapshot.Inline {
     // swiftlint:disable function_parameter_count
@@ -371,8 +354,6 @@ extension Test::Test.Snapshot.Inline {
     }
     // swiftlint:enable function_parameter_count
 }
-
-// MARK: - File Resolution
 
 extension Test::Test.Snapshot.Storage {
     /// Resolves a file-backed snapshot against the filesystem reference.
@@ -457,8 +438,6 @@ extension Test::Test.Snapshot.Storage {
         }
     }
 }
-
-// MARK: - Diff Formatting
 
 extension Test::Test.Snapshot.Diff.Result {
     /// Formats this diff result with a prefix message.

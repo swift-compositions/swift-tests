@@ -1,10 +1,3 @@
-//
-//  Test.Requirement.Failed.swift
-//  swift-tests
-//
-//  Error thrown when a test requirement fails.
-//
-
 public import Test
 
 extension Test.Requirement {

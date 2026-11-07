@@ -1,10 +1,3 @@
-//
-//  Tests.Baseline.swift
-//  swift-tests
-//
-//  Namespace for baseline storage and comparison.
-//
-
 extension Tests {
     /// Namespace for file-backed performance baseline storage.
     ///

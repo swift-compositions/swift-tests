@@ -1,13 +1,4 @@
-//
-//  Test.require.swift
-//  swift-tests
-//
-//  Requirement API for test assertions with typed throws.
-//
-
 public import Test
-
-// MARK: - Require Functions
 
 /// Evaluates a requirement and throws if it fails.
 ///
@@ -230,8 +221,6 @@ public func require<T: Equatable>(
     )
     Test.Expectation.Collector.current?.record(expectation)
 }
-
-// MARK: - Deprecated Alias
 
 @available(*, deprecated, renamed: "Test.Requirement.Failed")
 public typealias RequirementFailed = Test.Requirement.Failed

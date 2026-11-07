@@ -1,13 +1,4 @@
-//
-//  Test.expect.swift
-//  swift-tests
-//
-//  Expectation API for test assertions.
-//
-
 public import Test
-
-// MARK: - Expect Functions
 
 /// Evaluates an expectation and records the result.
 ///

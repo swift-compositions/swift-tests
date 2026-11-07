@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity+classify.swift
-//  swift-tests
-//
-//  Policy-based interpretation of complexity evidence.
-//
-
 import Sample
 public import Test
 
@@ -25,9 +18,6 @@ extension Tests.Complexity {
         _ evidence: Test.Benchmark.Complexity.Evidence,
         under policy: Policy = .default
     ) -> Result {
-        // Constant-time detection (before gates).
-        // If data has no monotonic trend and very low variation across
-        // sizes, classify as constant regardless of OLS results.
         if policy.constantCVThreshold > 0,
             evidence.monotonicity.interpretation == .none,
             evidence.metricCV < policy.constantCVThreshold,
@@ -66,29 +56,24 @@ extension Tests.Complexity {
 
         var reasons: [InconclusiveReason] = []
 
-        // Gate 1: Minimum size points.
         if evidence.points.count < policy.minimumSizePoints {
             reasons.append(.insufficientData)
         }
 
-        // Gate 2: Scale range.
         if !Self.hasScaleRange(evidence, policy: policy) {
             reasons.append(.insufficientScaleRange)
         }
 
-        // Gate 3: Monotonicity.
         if evidence.monotonicity.interpretation == .none
             || evidence.monotonicity.interpretation == .decreasing
         {
             reasons.append(.nonMonotone)
         }
 
-        // Gate 4: Continuous fit quality.
         if evidence.exponent.fit.rSquared < policy.logLogRSquaredFloor {
             reasons.append(.weakContinuousFit)
         }
 
-        // If any gate failed → inconclusive.
         if !reasons.isEmpty {
             return Result(
                 evidence: evidence,
@@ -99,7 +84,6 @@ extension Tests.Complexity {
             )
         }
 
-        // Filter viable candidates: positive slope and R² above floor.
         let viable = evidence.candidates.filter {
             $0.regression.slope > 0
                 && $0.regression.rSquared >= policy.candidateRSquaredFloor
@@ -115,7 +99,6 @@ extension Tests.Complexity {
             )
         }
 
-        // Separation analysis: best vs runner-up R² gap.
         let runnerUp = viable.dropFirst().first
         let separation =
             runnerUp.map {
@@ -128,7 +111,6 @@ extension Tests.Complexity {
                     < policy.mediumSeparationThreshold
         }.map(\.complexity)
 
-        // Initial confidence from separation.
         var confidence: Confidence
         if separation >= policy.highSeparationThreshold {
             confidence = .high
@@ -138,11 +120,6 @@ extension Tests.Complexity {
             confidence = .low
         }
 
-        // Cross-validation: observed exponent vs effective exponent of
-        // the discrete winner. Uses proportional tolerance so that
-        // sublinear classes (small effective exponent) have tight
-        // cross-validation, while superlinear classes accommodate
-        // proportionally more noise.
         let tolerance = Swift.max(
             policy.exponentConsistencyTolerance,
             0.3 * Swift.abs(best.effectiveExponent)
@@ -167,8 +144,6 @@ extension Tests.Complexity {
             reasons: reasons
         )
     }
-
-    // MARK: - Private
 
     private static func hasScaleRange(
         _ evidence: Test.Benchmark.Complexity.Evidence,

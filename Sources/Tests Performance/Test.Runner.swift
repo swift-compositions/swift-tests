@@ -1,10 +1,3 @@
-//
-//  Test.Runner.swift
-//  swift-tests
-//
-//  Test plan executor.
-//
-
 import Dependency
 import JSON
 import Kernel_Clock
@@ -88,11 +81,9 @@ extension Test.Runner {
 
         let startTime = Clock::Clock.Continuous.now
 
-        // Emit run started
         await sender.send(Test.Event(kind: .runStarted, elapsed: .zero))
         await sender.send(Test.Event(kind: .planCreated, elapsed: elapsed(since: startTime)))
 
-        // Emit structured plan record
         await sender.send(
             Test.Event(
                 kind: .planRecord,
@@ -101,7 +92,6 @@ extension Test.Runner {
             )
         )
 
-        // Walk the tree
         let counters: Counters
         if let root = plan.tree.root {
             counters = await walk(
@@ -115,16 +105,12 @@ extension Test.Runner {
             counters = Counters()
         }
 
-        // Emit run ended
         await sender.send(Test.Event(kind: .runEnded, elapsed: elapsed(since: startTime)))
 
-        // Emit performance diagnostics as events
         let diagnostics = Tests.Diagnostic.Collector.shared.drain()
         for diagnostic in diagnostics {
-            // Console output (runner coordinates all printing)
             print(diagnostic.formatted())
 
-            // Emit structured event with JSON payload
             await sender.send(
                 Test.Event(
                     kind: .performanceDiagnostic,
@@ -134,7 +120,6 @@ extension Test.Runner {
             )
         }
 
-        // Emit summary if any timed tests ran
         if !diagnostics.isEmpty {
             Tests.Diagnostic.summary(diagnostics)
 
@@ -146,7 +131,6 @@ extension Test.Runner {
             )
         }
 
-        // Emit structured summary record
         await sender.send(
             Test.Event(
                 kind: .summaryRecord,
@@ -155,7 +139,6 @@ extension Test.Runner {
             )
         )
 
-        // Execute post-run actions (e.g., inline snapshot write-back)
         for action in postRunActions {
             await action()
         }
@@ -164,8 +147,6 @@ extension Test.Runner {
 
         return Result(passed: counters.passed, failed: counters.failed, skipped: counters.skipped)
     }
-
-    // MARK: - Tree Walking
 
     /// Walks a single node in the test tree.
     ///
@@ -188,7 +169,6 @@ extension Test.Runner {
             return Counters()
 
         case .some(nil):
-            // Structural nil node — module boundary or implicit nesting.
             return await dispatch(
                 tree,
                 childrenOf: position,
@@ -214,7 +194,6 @@ extension Test.Runner {
             }
 
             guard node.body != nil else {
-                // Suite node — bracket children with suite events
                 await sender.send(
                     Test.Event(
                         id: node.id,
@@ -243,7 +222,6 @@ extension Test.Runner {
 
                 return counters
             }
-            // Test node — execute with scope providers
             return await execute(
                 node,
                 traits: traits,
@@ -272,7 +250,6 @@ extension Test.Runner {
             return Counters()
         }
 
-        // .serialized trait on this node forces serial for children
         let effective: Concurrency
         if let traits, traits[Test.Trait.Serialized.self] {
             effective = .serial
@@ -326,7 +303,6 @@ extension Test.Runner {
                 var inFlight = 0
                 var childIter = children.makeIterator()
 
-                // Seed initial batch
                 while inFlight < maxConcurrent, let (_, childPos) = childIter.next() {
                     group.addTask {
                         await walk(
@@ -340,7 +316,6 @@ extension Test.Runner {
                     inFlight += 1
                 }
 
-                // As tasks complete, spawn more
                 for await childCounters in group {
                     counters += childCounters
                     inFlight -= 1
@@ -362,8 +337,6 @@ extension Test.Runner {
             }
         }
     }
-
-    // MARK: - Test Execution
 
     /// Executes a single test node with scope providers.
     ///
@@ -477,8 +450,6 @@ extension Test.Runner {
             : Counters(passed: 0, failed: 1, skipped: 0)
     }
 
-    // MARK: - Helpers
-
     /// Computes elapsed duration since start.
     private func elapsed(since start: Clock::Clock.Continuous.Instant) -> Duration {
         Clock::Clock.Continuous.now.offset - start.offset
@@ -517,9 +488,6 @@ extension Test.Runner {
             .filter { $0.shouldActivate(traits) }
             .sorted { $0.priority < $1.priority }
 
-        // Base operation: run the test body
-        // Note: L1 isTestContext is propagated by Witness.Context.with(mode: .test)
-        // in Testing.Main.runReturningResult — no explicit L1 push needed here.
         var chain: @Sendable () async throws(Error) -> Void = { () async throws(Error) in
             do throws(Test.Body.Error) {
                 try await entry.body.run()
@@ -529,7 +497,6 @@ extension Test.Runner {
             }
         }
 
-        // Wrap with scope providers (reversed so lowest priority wraps outermost)
         for provider in providers.reversed() {
             let inner = chain
             chain = { () async throws(Error) in
@@ -540,8 +507,6 @@ extension Test.Runner {
         try await chain()
     }
 }
-
-// MARK: - Structured Records
 
 extension Test.Runner {
     /// Serializes the test plan as a JSON record.
@@ -594,8 +559,6 @@ extension Test.Runner {
     }
 }
 
-// MARK: - Counters
-
 extension Test.Runner {
     /// Aggregated test result counters.
     ///
@@ -621,8 +584,6 @@ extension Test.Runner {
     }
 }
 
-// MARK: - Concurrency
-
 extension Test.Runner {
     /// Concurrency mode for test execution.
     public enum Concurrency: Sendable {
@@ -643,8 +604,6 @@ extension Test.Runner {
         case limited(Int)
     }
 }
-
-// MARK: - Result
 
 extension Test.Runner {
     /// The result of a test run.
@@ -676,8 +635,6 @@ extension Test.Runner.Result {
         failed == 0
     }
 }
-
-// MARK: - Error
 
 extension Test.Runner {
     /// Errors thrown during test execution.

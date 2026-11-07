@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity.swift
-//  swift-tests
-//
-//  Namespace for empirical complexity analysis.
-//
-
 extension Tests {
     /// Namespace for empirical complexity analysis.
     ///

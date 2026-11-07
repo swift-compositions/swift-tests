@@ -1,14 +1,5 @@
-//
-//  Test.Snapshot.Strategy+JSON.swift
-//  swift-tests
-//
-//  JSON snapshot strategy using swift-json.
-//
-
 public import JSON
 public import Test
-
-// MARK: - JSON Strategy
 
 extension Test.Snapshot.Strategy where Value: JSON.Serializable & Sendable, Format == String {
     /// JSON snapshot strategy with sorted keys and pretty printing.
@@ -82,8 +73,6 @@ extension Test.Snapshot.Strategy where Value: JSON.Serializable & Sendable, Form
         )
     }
 }
-
-// MARK: - Raw JSON Strategy
 
 extension Test.Snapshot.Strategy where Value == JSON, Format == String {
     /// JSON snapshot strategy for raw JSON values.

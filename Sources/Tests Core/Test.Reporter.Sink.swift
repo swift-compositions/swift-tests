@@ -1,10 +1,3 @@
-//
-//  Test.Reporter.Sink.swift
-//  swift-tests
-//
-//  ~Copyable event sink with witness-based storage.
-//
-
 public import Test
 
 extension Test.Reporter {
@@ -79,8 +72,6 @@ extension Test.Reporter.Sink {
         await _finish()
     }
 
-    // MARK: - Composition
-
     /// Creates a compound sink that forwards to two sinks.
     ///
     /// Both input sinks are consumed. The returned sink sends events
@@ -109,8 +100,6 @@ extension Test.Reporter.Sink {
             }
         )
     }
-
-    // MARK: - Sender Projection
 
     /// Projects the send-only capability.
     ///

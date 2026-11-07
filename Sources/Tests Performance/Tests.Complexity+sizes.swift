@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity+sizes.swift
-//  swift-tests
-//
-//  Geometric size generation helper.
-//
-
 extension Tests.Complexity {
     /// Generates a geometric sequence of input sizes.
     ///
@@ -38,7 +31,6 @@ extension Tests.Complexity {
         var current = from
         while current <= through {
             result.append(current)
-            // Guard against overflow.
             let next = current.multipliedReportingOverflow(by: factor)
             if next.overflow { break }
             current = next.partialValue

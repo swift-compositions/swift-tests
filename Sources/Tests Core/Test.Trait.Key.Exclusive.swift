@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Key.Exclusive.swift
-//  swift-tests
-//
-//  Witness key for mutual exclusion traits.
-//
-
 extension Test.Trait {
     /// Witness key for mutual exclusion.
     public struct Exclusive: Sendable {

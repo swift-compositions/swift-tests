@@ -1,15 +1,6 @@
-//
-//  Test.Expectation+Factory.swift
-//  swift-tests
-//
-//  Convenience factories for creating and recording expectations.
-//
-
 import Loader
 import Synchronization
 public import Test
-
-// MARK: - ID Counters
 
 private let _expressionCounter = Atomic<UInt64>(0)
 private let _expectationCounter = Atomic<UInt64>(0)
@@ -26,8 +17,6 @@ func _nextExpectationID() -> Test.Expectation.ID {
     )
 }
 
-// MARK: - External Failure Handler
-
 extension Test.Expectation {
     /// External failure handler for bridging to test frameworks.
     ///
@@ -41,8 +30,6 @@ extension Test.Expectation {
     /// non-nil and this handler is never invoked.
     nonisolated(unsafe) public static var externalFailureHandler: (@Sendable (_ message: Swift.String, _ location: Source.Location) -> Void)?
 }
-
-// MARK: - External Bridge Resolution
 
 extension Test.Expectation {
     /// Lazily resolves and installs the external failure bridge.
@@ -85,8 +72,6 @@ extension Test.Expectation {
         unsafe externalFailureHandler?(message, location)
     }
 }
-
-// MARK: - Factories
 
 extension Test.Expectation {
     /// Creates a passing expectation.
@@ -135,8 +120,6 @@ extension Test.Expectation {
             failure: Failure(message: Test.Text(message))
         )
     }
-
-    // MARK: - Create + Record
 
     /// Creates a passing expectation and records it with the current collector.
     ///

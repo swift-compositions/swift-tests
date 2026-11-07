@@ -1,16 +1,7 @@
-//
-//  Test.Snapshot.Diffing+Structural.swift
-//  swift-tests
-//
-//  Structural JSON diffing — tree-aware comparison.
-//
-
 import Byte
 import JSON
 public import Test
 internal import Tree_Keyed
-
-// MARK: - Structural JSON Diffing
 
 extension Test.Snapshot.Diffing where Format == Swift.String {
     /// Structural JSON diff — parses to tree, compares by key, produces semantic output.
@@ -51,7 +42,6 @@ extension Test.Snapshot.Diffing where Format == Swift.String {
                     oldValue = try JSON.Decode.parse(old)
                     newValue = try JSON.Decode.parse(new)
                 } catch {
-                    // Not valid JSON — fall back to line diff
                     return Self.lines.diff(old, new)
                 }
 
@@ -61,8 +51,6 @@ extension Test.Snapshot.Diffing where Format == Swift.String {
                     oldTree = try _jsonToKeyedTree(oldValue)
                     newTree = try _jsonToKeyedTree(newValue)
                 } catch {
-                    // Duplicate object member names make the structural mapping
-                    // ill-defined — fall back to line diff, like invalid JSON.
                     return Self.lines.diff(old, new)
                 }
                 let treeDiff = __Tree<TreeStorage.Keyed<RFC_8259.Value, Swift.String>>.diff(
@@ -72,7 +60,6 @@ extension Test.Snapshot.Diffing where Format == Swift.String {
 
                 guard !treeDiff.isEmpty else { return nil }
 
-                // Build structural operations (format-agnostic)
                 let structuralOps: [Test.Snapshot.Diff.Result.Operation] =
                     treeDiff.operations.compactMap { op in
                         switch op {
@@ -99,7 +86,6 @@ extension Test.Snapshot.Diffing where Format == Swift.String {
                         }
                     }
 
-                // Build summary
                 let lines: [Swift.String] = structuralOps.map { op in
                     switch op {
                     case .added(let path, let value):

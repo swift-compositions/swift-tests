@@ -1,21 +1,6 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-tests open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-tests project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Kernel_Clock
 public import Time
 
-// MARK: - Measurement API
-
-// The two `time(operation:)` overloads are intentionally same-named; see the
-// note on the synchronous one. The compiler resolves them without ambiguity.
 // swift-format-ignore: AmbiguousTrailingClosureOverload
 extension Tests {
     /// Measure performance of an operation
@@ -28,12 +13,10 @@ extension Tests {
         iterations: Int = 10,
         operation: () -> T
     ) -> (result: T, measurement: Test.Benchmark.Measurement) {
-        // Warmup
         for _ in 0..<warmup {
             _ = operation()
         }
 
-        // Measure
         var durations: [Duration] = []
         durations.reserveCapacity(iterations)
         var lastResult: T?
@@ -57,12 +40,10 @@ extension Tests {
         iterations: Int = 10,
         operation: () async throws(E) -> T
     ) async throws(E) -> (result: T, measurement: Test.Benchmark.Measurement) {
-        // Warmup
         for _ in 0..<warmup {
             _ = try await operation()
         }
 
-        // Measure
         var durations: [Duration] = []
         durations.reserveCapacity(iterations)
         var lastResult: T?

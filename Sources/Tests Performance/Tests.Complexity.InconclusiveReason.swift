@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity.InconclusiveReason.swift
-//  swift-tests
-//
-//  Reasons why complexity classification may be uncertain.
-//
-
 extension Tests.Complexity {
     /// Reasons why complexity classification may be uncertain or inconclusive.
     ///

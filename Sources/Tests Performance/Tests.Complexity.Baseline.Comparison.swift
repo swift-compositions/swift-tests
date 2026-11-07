@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity.Baseline.Comparison.swift
-//  swift-tests
-//
-//  Comparison between current complexity result and stored baseline.
-//
-
 import Test
 
 extension Tests.Complexity.Baseline {

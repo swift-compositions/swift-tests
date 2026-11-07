@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Scope.Provider.builtins.swift
-//  swift-tests
-//
-//  Built-in scope providers for core traits.
-//
-
 extension Test.Trait.Scope.Provider {
     /// Scope provider for time limit enforcement.
     public static var timeLimit: Self {
@@ -27,8 +20,6 @@ extension Test.Trait.Scope.Provider {
     }
 }
 
-// MARK: - Scope Implementations
-
 extension Test.Trait.Scope.Provider {
     @Sendable
     private static func _timeLimitScope(
@@ -39,9 +30,6 @@ extension Test.Trait.Scope.Provider {
         guard let limit = traits[Test.Trait.TimeLimit.self] else {
             preconditionFailure("the time-limit scope runs only for entries carrying the trait")
         }
-        // WORKAROUND: withoutActuallyEscaping uses rethrows which doesn't
-        // narrow to typed throws. Catch boundary converts untyped rethrow
-        // back to our typed Error.
         // WHY: `rethrows` cannot be narrowed to `throws(Error)` by the
         //   compiler, so the untyped rethrow is re-narrowed at the catch.
         // WHEN TO REMOVE: When rethrows supports typed throw inference.
@@ -79,8 +67,6 @@ extension Test.Trait.Scope.Provider {
     }
 }
 
-// MARK: - Timeout
-
 extension Test.Trait.Scope.Provider {
     /// Sentinel error for timeout detection inside `withThrowingTaskGroup`.
     ///
@@ -91,8 +77,6 @@ extension Test.Trait.Scope.Provider {
         let limit: Duration
     }
 
-    // WORKAROUND: withoutActuallyEscaping needed because @Sendable closure
-    // parameters are non-escaping but addTask requires @escaping.
     // WHY: addTask requires `@escaping`; @Sendable closure parameters are
     //   non-escaping, so callers must launder via withoutActuallyEscaping.
     // WHEN TO REMOVE: When Swift supports @escaping on closure parameters

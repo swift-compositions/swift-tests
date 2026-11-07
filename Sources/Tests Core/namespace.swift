@@ -1,11 +1,3 @@
-//
-//  namespace.swift
-//  swift-tests
-//
-//  Establishes the Test namespace for this module.
-//  Resolves ambiguity with Apple's Testing.Test.
-//
-
 public import Test
 
 /// The Test namespace from Test.

@@ -42,7 +42,7 @@ extension Test::Test.Snapshot.Storage.Test.Unit {
 
     @Test
     func `path uses subdirectory when provided`() throws {
-        let sub = try File.Path.Component("PDF.Test.Snapshot")
+        let sub = File.Path.Component("PDF.Test.Snapshot")
         let path = Test::Test.Snapshot.Storage.path(
             testFilePath: "/path/to/Tests.swift",
             function: "testExample()",
@@ -90,7 +90,7 @@ extension Test::Test.Snapshot.Storage.Test.Unit {
 extension Test::Test.Snapshot.Storage.Test.`Edge Case` {
     @Test
     func `subdirectory combined with custom snapshot directory`() throws {
-        let sub = try File.Path.Component("MyType")
+        let sub = File.Path.Component("MyType")
         let path = Test::Test.Snapshot.Storage.path(
             testFilePath: "/path/to/Tests.swift",
             function: "testExample()",

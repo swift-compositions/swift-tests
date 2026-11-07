@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Collection.Modifier.swift
-//  swift-tests
-//
-//  Closure-based trait transport that sets witness values on a collection.
-//
-
 extension Test.Trait.Collection {
     /// A closure that sets witness values on a trait collection.
     ///
@@ -20,9 +13,6 @@ extension Test.Trait.Collection {
         internal let _apply: @Sendable (inout Test.Trait.Collection) -> Void
 
         // swiftlint:disable typed_throws_required
-        // Reason: closure type mirrors the signature forced by external protocol
-        // Testing.TestScoping (untyped throws upstream); the Apple Testing bridge
-        // forwards this closure verbatim, so its throws cannot be typed.
         /// Optional scope provider for Apple Testing integration.
         ///
         /// When present, the `TestScoping` conformance (in the Apple Testing Bridge)

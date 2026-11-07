@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Key.TimeLimit.swift
-//  swift-tests
-//
-//  Witness key for time limit traits.
-//
-
 extension Test.Trait {
     /// Witness key for time limit configuration.
     public struct TimeLimit: Sendable {}

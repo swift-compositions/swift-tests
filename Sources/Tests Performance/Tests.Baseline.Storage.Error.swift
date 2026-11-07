@@ -1,10 +1,3 @@
-//
-//  Tests.Baseline.Storage.Error.swift
-//  swift-tests
-//
-//  Typed errors for baseline storage operations.
-//
-
 public import File_System_Core
 
 extension Tests.Baseline.Storage {

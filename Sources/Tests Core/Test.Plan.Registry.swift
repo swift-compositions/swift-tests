@@ -1,10 +1,3 @@
-//
-//  Test.Plan.Registry.swift
-//  swift-tests
-//
-//  ~Copyable builder for test plans.
-//
-
 public import Test
 internal import Tree_Keyed
 
@@ -125,7 +118,6 @@ extension Test.Plan.Registry {
     public consuming func finalize() -> Test.Plan {
         var tree = __Tree<TreeStorage.Keyed<Test.Plan.Node?, String>>()
 
-        // 1. Insert suites
         for suite in suites {
             tree[Test.Plan.components(for: suite.id)] = Test.Plan.Node(
                 id: suite.id,
@@ -134,7 +126,6 @@ extension Test.Plan.Registry {
             )
         }
 
-        // 2. Insert tests
         for entry in entries {
             tree[Test.Plan.components(for: entry.id)] = Test.Plan.Node(
                 id: entry.id,
@@ -144,7 +135,6 @@ extension Test.Plan.Registry {
             )
         }
 
-        // 3. Propagate traits from parents to children
         if let root = tree.root {
             Self.propagate(through: &tree, from: root, inherited: [])
         }
@@ -157,8 +147,6 @@ extension Test.Plan.Registry {
         entries.count
     }
 }
-
-// MARK: - Trait Propagation
 
 extension Test.Plan.Registry {
     /// Propagates inherited modifiers from parent nodes to children.
@@ -197,7 +185,6 @@ extension Test.Plan.Registry {
             do throws(__Tree<TreeStorage.Keyed<Test.Plan.Node?, String>>.Error) {
                 try tree.update(at: position, node)
             } catch {
-                // best-effort: position validated by peek above; update failure is non-fatal
             }
             passDown = inherited + node.modifiers
         }

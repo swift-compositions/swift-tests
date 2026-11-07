@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Collection.swift
-//  swift-tests
-//
-//  Type-safe, extensible collection of traits backed by Witness.Values.
-//
-
 extension Test.Trait {
     /// A type-safe, extensible collection of traits backed by ``Witness/Values``.
     public struct Collection: Sendable {

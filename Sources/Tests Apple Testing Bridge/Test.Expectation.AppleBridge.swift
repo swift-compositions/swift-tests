@@ -1,17 +1,5 @@
 import Text
 
-//
-//  Test.Expectation.Bridge.swift
-//  swift-tests
-//
-//  Installs the Apple Testing failure bridge.
-//
-//  When tests run under Apple's Swift Testing runner (without the
-//  Institute's Test.Runner), Collector.current is nil and failures
-//  would be silently dropped. This bridge forwards them to
-//  Testing.Issue.record so they surface in test output.
-//
-
 #if canImport(Testing)
     import Tests_Core
     import Testing

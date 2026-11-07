@@ -1,10 +1,3 @@
-//
-//  Test.Reporter.swift
-//  swift-tests
-//
-//  Reporter factory type.
-//
-
 public import Test
 
 extension Test {

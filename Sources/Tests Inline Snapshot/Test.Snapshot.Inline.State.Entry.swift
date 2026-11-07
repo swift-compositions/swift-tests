@@ -1,10 +1,3 @@
-//
-//  Test.Snapshot.Inline.State.Entry.swift
-//  swift-tests
-//
-//  A single pending inline snapshot entry.
-//
-
 public import Test
 
 extension Test::Test.Snapshot.Inline.State {

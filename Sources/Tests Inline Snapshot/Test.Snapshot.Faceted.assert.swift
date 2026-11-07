@@ -1,13 +1,4 @@
-//
-//  Test.Snapshot.Faceted.assert.swift
-//  swift-tests
-//
-//  Faceted snapshot assertion functions.
-//
-
 public import Test
-
-// MARK: - assertFacetedSnapshot (Synchronous)
 
 /// Asserts that a value matches all facets of a faceted snapshot.
 ///
@@ -85,8 +76,6 @@ public func assertFacetedSnapshot<Value: Sendable>(
         at: location
     )
 }
-
-// MARK: - assertFacetedSnapshot (Asynchronous)
 
 /// Asserts that a value matches all facets of a faceted snapshot (async variant).
 ///

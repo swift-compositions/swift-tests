@@ -1,13 +1,4 @@
-//
-//  Test.Snapshot.Faceted.verify.swift
-//  swift-tests
-//
-//  Faceted snapshot verification functions.
-//
-
 public import Test
-
-// MARK: - verifyFacetedSnapshot (Synchronous)
 
 /// Verifies that a value matches all facets of a faceted snapshot.
 ///
@@ -41,7 +32,6 @@ public func verifyFacetedSnapshot<Value: Sendable>(
 ) -> Swift.String? {
     let mode = Test::Test.Snapshot.Configuration.resolve(recording: recording)
 
-    // Verify primary strategy against file-based reference.
     guard let syncSnapshot = faceted.primary.syncSnapshot else {
         return "[primary] Strategy does not support synchronous capture."
     }
@@ -59,7 +49,6 @@ public func verifyFacetedSnapshot<Value: Sendable>(
         return "[primary] \(failure)"
     }
 
-    // Verify each facet.
     for (facetName, facetStrategy) in faceted.facets {
         guard let syncFacet = facetStrategy.syncSnapshot else {
             return "[\(facetName)] Strategy does not support synchronous capture."
@@ -67,7 +56,6 @@ public func verifyFacetedSnapshot<Value: Sendable>(
         let facetActual = syncFacet(value)
 
         if let expectedClosure = matches[facetName] {
-            // Inline verification for this facet.
             if let failure = Test::Test.Snapshot.Inline.resolve(
                 actual: facetActual,
                 strategy: facetStrategy,
@@ -81,7 +69,6 @@ public func verifyFacetedSnapshot<Value: Sendable>(
                 return "[\(facetName)] \(failure)"
             }
         } else {
-            // File-based verification with facet name suffix.
             let facetFullName = name.map { "\($0).\(facetName)" } ?? facetName
             if let failure = Test::Test.Snapshot.Storage.resolve(
                 actual: facetActual,
@@ -98,8 +85,6 @@ public func verifyFacetedSnapshot<Value: Sendable>(
 
     return nil
 }
-
-// MARK: - verifyFacetedSnapshot (Asynchronous)
 
 /// Verifies that a value matches all facets of a faceted snapshot (async variant).
 ///
@@ -127,7 +112,6 @@ public func verifyFacetedSnapshot<Value: Sendable>(
 ) async -> Swift.String? {
     let mode = Test::Test.Snapshot.Configuration.resolve(recording: recording)
 
-    // Verify primary strategy against file-based reference.
     let primaryActual = await faceted.primary.capture(value)
     let primaryName = name ?? "primary"
 
@@ -142,12 +126,10 @@ public func verifyFacetedSnapshot<Value: Sendable>(
         return "[primary] \(failure)"
     }
 
-    // Verify each facet.
     for (facetName, facetStrategy) in faceted.facets {
         let facetActual = await facetStrategy.capture(value)
 
         if let expectedClosure = matches[facetName] {
-            // Inline verification for this facet.
             if let failure = Test::Test.Snapshot.Inline.resolve(
                 actual: facetActual,
                 strategy: facetStrategy,
@@ -161,7 +143,6 @@ public func verifyFacetedSnapshot<Value: Sendable>(
                 return "[\(facetName)] \(failure)"
             }
         } else {
-            // File-based verification with facet name suffix.
             let facetFullName = name.map { "\($0).\(facetName)" } ?? facetName
             if let failure = Test::Test.Snapshot.Storage.resolve(
                 actual: facetActual,

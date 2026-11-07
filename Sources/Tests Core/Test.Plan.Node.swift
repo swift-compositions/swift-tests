@@ -1,10 +1,3 @@
-//
-//  Test.Plan.Node.swift
-//  swift-tests
-//
-//  Tree node value for hierarchical test plans.
-//
-
 public import Test
 
 extension Test.Plan {

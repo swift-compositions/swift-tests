@@ -1,10 +1,3 @@
-//
-//  Tests.History.Record+JSON.swift
-//  swift-tests
-//
-//  JSON serialization for history records.
-//
-
 public import JSON
 import Source
 import Time
@@ -66,7 +59,6 @@ extension Tests.History.Record: JSON.Serializable {
             nanosecondFraction: Int32((tsSeconds - tsWhole) * 1_000_000_000)
         )
 
-        // Parse test ID
         let module: Swift.String
         do throws(JSON.Error) {
             module = try Swift.String(json: json.id.m)
@@ -97,7 +89,6 @@ extension Tests.History.Record: JSON.Serializable {
             )
         )
 
-        // Parse metric
         let metricStr: Swift.String
         do throws(JSON.Error) {
             metricStr = try Swift.String(json: json.metric)
@@ -106,7 +97,6 @@ extension Tests.History.Record: JSON.Serializable {
         }
         let metric = _parseMetric(metricStr)
 
-        // Parse metric value
         let valueSeconds: Double
         do throws(JSON.Error) {
             valueSeconds = try Double(json: json.value_s)
@@ -114,7 +104,6 @@ extension Tests.History.Record: JSON.Serializable {
             throw .missingKey("value_s")
         }
 
-        // Parse durations
         guard let durationsArray = json.durations_s.array else {
             throw .missingKey("durations_s")
         }
@@ -130,10 +119,8 @@ extension Tests.History.Record: JSON.Serializable {
             durations.append(.seconds(seconds))
         }
 
-        // Parse environment
         let environment = try Test.Environment.deserialize(json.env)
 
-        // Optional fields
         let cv: Double?
         do throws(JSON.Error) {
             cv = try Double(json: json.cv)
@@ -159,8 +146,6 @@ extension Tests.History.Record: JSON.Serializable {
         )
     }
 }
-
-// MARK: - Metric Parsing
 
 /// Parses a metric string back to its enum case.
 private func _parseMetric(_ string: Swift.String) -> Test.Benchmark.Metric {

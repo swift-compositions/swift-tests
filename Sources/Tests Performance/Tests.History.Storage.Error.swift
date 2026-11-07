@@ -1,10 +1,3 @@
-//
-//  Tests.History.Storage.Error.swift
-//  swift-tests
-//
-//  Errors from history file operations.
-//
-
 public import File_System_Core
 
 extension Tests.History.Storage {

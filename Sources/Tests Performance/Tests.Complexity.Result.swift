@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity.Result.swift
-//  swift-tests
-//
-//  Interpreted complexity analysis result.
-//
-
 public import Test
 
 extension Tests.Complexity {

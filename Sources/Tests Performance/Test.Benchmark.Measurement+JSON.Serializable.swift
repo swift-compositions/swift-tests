@@ -1,10 +1,3 @@
-//
-//  Test.Benchmark.Measurement+JSON.swift
-//  swift-tests
-//
-//  JSON.Serializable conformance for Test.Benchmark.Measurement.
-//
-
 public import JSON
 import Time
 

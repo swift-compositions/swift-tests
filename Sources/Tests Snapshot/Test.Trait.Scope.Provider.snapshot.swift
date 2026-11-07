@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Scope.Provider.snapshot.swift
-//  swift-tests
-//
-//  Scope provider for snapshot configuration injection.
-//
-
 import Dependency
 
 extension Test.Trait.Scope.Provider {

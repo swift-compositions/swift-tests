@@ -1,10 +1,3 @@
-//
-//  Test.Environment+JSON.swift
-//  swift-tests
-//
-//  JSON.Serializable conformance for Test.Environment.
-//
-
 import Cardinal
 public import JSON
 import Kernel

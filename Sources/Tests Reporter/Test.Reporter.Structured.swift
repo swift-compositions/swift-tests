@@ -1,10 +1,3 @@
-//
-//  Test.Reporter.Structured.swift
-//  swift-tests
-//
-//  JSONL reporter that writes one JSON record per line.
-//
-
 import JSON
 import Kernel
 public import Path
@@ -25,8 +18,6 @@ extension Test.Reporter {
         }
     }
 }
-
-// MARK: - StructuredSink
 
 extension Test.Reporter {
     /// Sink that accumulates JSON records and writes JSONL on finish.
@@ -63,7 +54,7 @@ extension Test.Reporter {
             var lines: [UInt8] = []
             for record in records {
                 lines.append(contentsOf: record.serialize().utf8)
-                lines.append(0x0A)  // newline
+                lines.append(0x0A)
             }
 
             do {
@@ -83,11 +74,8 @@ extension Test.Reporter {
                     remaining = remaining.dropFirst(written)
                 }
             } catch {
-                // Silent failure — structured output is best-effort.
             }
         }
-
-        // MARK: - Event → JSON
 
         private static func record(for event: Test.Event) -> JSON? {
             switch event.kind {
@@ -121,7 +109,7 @@ extension Test.Reporter {
 
             case .expectationChecked:
                 guard let expectation = event.expectation, expectation.isFailing else {
-                    return nil  // Only record failures
+                    return nil
                 }
                 var fields = testFields(event)
                 fields.append(("expression", .string(expectation.expression.sourceCode)))
@@ -173,7 +161,6 @@ extension Test.Reporter {
                 return envelope("runEnded", payload: .object(fields))
 
             default:
-                // Extensible kinds (e.g., performanceDiagnostic) with payload
                 if let payload = event.payload {
                     let parsed: JSON
                     do throws(JSON.Error) {

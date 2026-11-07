@@ -1,10 +1,3 @@
-//
-//  Tests.Suite.swift
-//  swift-tests
-//
-//  Performance benchmark suite for running and reporting multiple benchmarks.
-//
-
 import Formatter
 import Time
 

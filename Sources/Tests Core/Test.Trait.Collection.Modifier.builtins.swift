@@ -1,12 +1,5 @@
 public import Sample
 
-//
-//  Test.Trait.Collection.Modifier.builtins.swift
-//  swift-tests
-//
-//  Modifier factories for all Layer 1 trait types.
-//
-
 extension Test.Trait.Collection.Modifier {
     /// Sets a time limit for test execution.
     ///

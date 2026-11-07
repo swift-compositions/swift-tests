@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity.Diagnostic+Format.swift
-//  swift-tests
-//
-//  Human-readable and JSON formatting for complexity diagnostics.
-//
-
 import Console
 import Formatter
 
@@ -16,7 +9,6 @@ extension Tests.Complexity.Diagnostic {
         let evidence = result.evidence
         var lines: [Swift.String] = []
 
-        // Header
         let header: Swift.String
         if result.confidence == .inconclusive {
             header = Console.Style.warning.apply(
@@ -36,7 +28,6 @@ extension Tests.Complexity.Diagnostic {
         }
         lines.append(header)
 
-        // Exponent
         lines.append("")
         lines.append("  Continuous Exponent:")
         let k = evidence.exponent.value.formatted(Formatter::Formatter.Number(fractionDigits: 3))
@@ -46,7 +37,6 @@ extension Tests.Complexity.Diagnostic {
         lines.append("    k = \(k)  (T ≈ c·nᵏ)")
         lines.append("    R² = \(r2)")
 
-        // Best candidate
         if let best = result.best {
             lines.append("")
             lines.append("  Best Candidate:")
@@ -55,7 +45,6 @@ extension Tests.Complexity.Diagnostic {
             )
             lines.append("    \(best.complexity.rawValue)  R² = \(bestR2)")
 
-            // Confidence
             let confidenceLabel: Swift.String
             switch result.confidence {
             case .high:
@@ -84,14 +73,12 @@ extension Tests.Complexity.Diagnostic {
             }
             lines.append("    Confidence: \(confidenceLabel)")
 
-            // Ambiguous alternatives
             if !result.ambiguousWith.isEmpty {
                 let alt = result.ambiguousWith.map(\.rawValue).joined(separator: ", ")
                 lines.append("    Ambiguous with: \(alt)")
             }
         }
 
-        // Reasons
         if !result.reasons.isEmpty {
             lines.append("")
             lines.append("  Reasons:")
@@ -100,7 +87,6 @@ extension Tests.Complexity.Diagnostic {
             }
         }
 
-        // Size points
         lines.append("")
         lines.append("  Measurements:")
         for point in points {
@@ -111,7 +97,6 @@ extension Tests.Complexity.Diagnostic {
             lines.append("    n=\(size)  →  \(duration)")
         }
 
-        // Doubling ratios
         if !evidence.growthRatios.isEmpty {
             lines.append("")
             lines.append("  Growth Ratios:")
@@ -121,7 +106,6 @@ extension Tests.Complexity.Diagnostic {
             lines.append("    [\(ratioStrs.joined(separator: ", "))]")
         }
 
-        // Top candidates
         let topN = Swift.min(evidence.candidates.count, 3)
         if topN > 0 {
             lines.append("")
@@ -134,7 +118,6 @@ extension Tests.Complexity.Diagnostic {
             }
         }
 
-        // Baseline comparison
         if let comparison = baselineComparison {
             lines.append("")
             lines.append("  Baseline Comparison:")
@@ -183,7 +166,6 @@ extension Tests.Complexity.Diagnostic {
         json.append("<!-- COMPLEXITY_DIAGNOSTIC_BEGIN -->")
         json.append("{")
 
-        // Exponent
         json.append("  \"exponent\": {")
         json.append(
             "    \"k\": \(evidence.exponent.value.formatted(Formatter::Formatter.Number(fractionDigits: 4))),"
@@ -193,7 +175,6 @@ extension Tests.Complexity.Diagnostic {
         )
         json.append("  },")
 
-        // Best
         if let best = result.best {
             json.append("  \"best\": {")
             json.append("    \"class\": \(_jsonString(best.complexity.rawValue)),")
@@ -205,18 +186,14 @@ extension Tests.Complexity.Diagnostic {
             json.append("  \"best\": null,")
         }
 
-        // Confidence
         json.append("  \"confidence\": \(_jsonString("\(result.confidence)")),")
 
-        // Ambiguous
         let ambStr = result.ambiguousWith.map { _jsonString($0.rawValue) }.joined(separator: ", ")
         json.append("  \"ambiguous_with\": [\(ambStr)],")
 
-        // Reasons
         let reasonStr = result.reasons.map { _jsonString("\($0)") }.joined(separator: ", ")
         json.append("  \"reasons\": [\(reasonStr)],")
 
-        // Candidates
         json.append("  \"candidates\": [")
         for (i, c) in evidence.candidates.enumerated() {
             let comma = i < evidence.candidates.count - 1 ? "," : ""
@@ -226,7 +203,6 @@ extension Tests.Complexity.Diagnostic {
         }
         json.append("  ],")
 
-        // Points
         json.append("  \"points\": [")
         for (i, p) in points.enumerated() {
             let comma = i < points.count - 1 ? "," : ""
@@ -236,7 +212,6 @@ extension Tests.Complexity.Diagnostic {
         }
         json.append("  ],")
 
-        // Doubling ratios
         let ratioStr = evidence.growthRatios.map {
             $0.formatted(Formatter::Formatter.Number(fractionDigits: 3))
         }.joined(
@@ -244,7 +219,6 @@ extension Tests.Complexity.Diagnostic {
         )
         json.append("  \"growth_ratios\": [\(ratioStr)],")
 
-        // Baseline
         if let comparison = baselineComparison {
             json.append("  \"baseline\": {")
             if let prevClass = comparison.previous.bestClass {

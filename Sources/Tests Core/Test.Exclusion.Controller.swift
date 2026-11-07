@@ -10,13 +10,6 @@ import Set_Ordered
 import Storage
 public import Test
 
-//
-//  Test.Exclusion.Controller.swift
-//  swift-tests
-//
-//  Actor that provides mutual exclusion for test execution.
-//
-
 extension Test.Exclusion {
     /// Actor that provides mutual exclusion for test execution.
     ///
@@ -62,14 +55,12 @@ extension Test.Exclusion.Controller {
         group: Swift.String,
         _ operation: @Sendable () async throws(E) -> T
     ) async throws(E) -> T {
-        // Wait until we can acquire the lock for this group
         while runningGroups.contains(group) {
             await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
                 waiters[group, default: []].append(continuation)
             }
         }
 
-        // Acquire lock
         runningGroups.insert(group)
 
         do throws(E) {
@@ -86,7 +77,6 @@ extension Test.Exclusion.Controller {
     private func release(group: Swift.String) {
         _ = runningGroups.remove(group)
 
-        // Resume one waiter for this group
         if var groupWaiters = waiters[group], !groupWaiters.isEmpty {
             let next = groupWaiters.removeFirst()
             if groupWaiters.isEmpty {

@@ -1,10 +1,3 @@
-//
-//  Test.Reporter.Sink.Implementation.swift
-//  swift-tests
-//
-//  Protocol for sink implementations.
-//
-
 extension Test.Reporter.Sink {
     /// Protocol for sink implementations.
     ///

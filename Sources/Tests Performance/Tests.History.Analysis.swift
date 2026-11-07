@@ -1,10 +1,3 @@
-//
-//  Tests.History.Analysis.swift
-//  swift-tests
-//
-//  Cross-run trend analysis from historical records.
-//
-
 public import Time
 
 extension Tests.History {
@@ -49,8 +42,6 @@ extension Tests.History {
         }
     }
 }
-
-// MARK: - Factory
 
 extension Tests.History.Analysis {
     /// Analyzes a sequence of historical records for temporal trend.

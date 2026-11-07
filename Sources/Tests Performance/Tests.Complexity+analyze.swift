@@ -1,10 +1,3 @@
-//
-//  Tests.Complexity+analyze.swift
-//  swift-tests
-//
-//  Full complexity analysis orchestrator.
-//
-
 import Kernel_Clock
 import Test
 
@@ -103,8 +96,6 @@ extension Tests.Complexity {
     }
 }
 
-// MARK: - Finalization
-
 extension Tests.Complexity {
     private static func _finalize(
         points: [(size: Int, metric: Duration)],
@@ -127,10 +118,8 @@ extension Tests.Complexity {
             policy: policy
         )
 
-        // Baseline comparison.
         _handleBaseline(key: baselineKey, result: result, diagnostic: &diagnostic)
 
-        // Print diagnostic output.
         if printDiagnostic {
             print(diagnostic.formatted())
         }
@@ -138,8 +127,6 @@ extension Tests.Complexity {
         return diagnostic
     }
 }
-
-// MARK: - Measurement
 
 extension Tests.Complexity {
     private static func _measure<E: Swift.Error>(
@@ -205,8 +192,6 @@ extension Tests.Complexity {
     }
 }
 
-// MARK: - Baseline
-
 extension Tests.Complexity {
     private static func _handleBaseline(
         key: Swift.String?,
@@ -218,10 +203,8 @@ extension Tests.Complexity {
         let path = Baseline.path(key: key)
         let recording = Tests.Baseline.Recording.current
 
-        // Load previous baseline.
         let previous = Baseline.load(at: path)
 
-        // Compare if previous exists.
         if let previous {
             let current = Baseline(result: result)
             diagnostic.baselineComparison = Baseline.Comparison(
@@ -230,7 +213,6 @@ extension Tests.Complexity {
             )
         }
 
-        // Save current baseline based on recording mode.
         let shouldSave: Bool
         switch recording {
         case .all:
@@ -248,7 +230,6 @@ extension Tests.Complexity {
             do throws(Tests.Baseline.Storage.Error) {
                 try current.save(to: path)
             } catch {
-                // best-effort: complexity baseline save failure is non-fatal
             }
         }
     }

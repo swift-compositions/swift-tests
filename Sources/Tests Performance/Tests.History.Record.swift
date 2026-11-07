@@ -1,10 +1,3 @@
-//
-//  Tests.History.Record.swift
-//  swift-tests
-//
-//  Single run record for JSONL history.
-//
-
 public import Sample
 public import Time
 

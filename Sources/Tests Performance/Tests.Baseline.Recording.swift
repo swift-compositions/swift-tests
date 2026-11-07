@@ -1,10 +1,3 @@
-//
-//  Tests.Baseline.Recording.swift
-//  swift-tests
-//
-//  Recording mode for baseline storage.
-//
-
 import Environment
 
 extension Tests.Baseline {

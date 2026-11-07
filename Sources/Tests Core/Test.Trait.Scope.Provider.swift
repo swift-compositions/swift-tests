@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Scope.Provider.swift
-//  swift-tests
-//
-//  A scope provider that wraps test execution.
-//
-
 public import Witness
 
 extension Test.Trait.Scope {

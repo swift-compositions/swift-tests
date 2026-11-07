@@ -1,10 +1,3 @@
-//
-//  Test.Snapshot.Inline.Rewriter.Error.swift
-//  swift-tests
-//
-//  Errors from inline snapshot source rewriting.
-//
-
 public import Test
 
 extension Test::Test.Snapshot.Inline.Rewriter {

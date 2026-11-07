@@ -1,10 +1,3 @@
-//
-//  Tests.History.Storage.swift
-//  swift-tests
-//
-//  Append-only JSONL storage for run history.
-//
-
 import Environment
 public import File_System
 public import IO_Kernel
@@ -19,8 +12,6 @@ extension Tests.History {
     /// line. Reading loads all records for trend analysis.
     public enum Storage {}
 }
-
-// MARK: - Path Generation
 
 extension Tests.History.Storage {
     /// Computes the history file path from test identity and fingerprint.
@@ -42,7 +33,6 @@ extension Tests.History.Storage {
 
         if let suite = testID.suite {
             for component in suite.split(separator: ".") {
-                // No `/=` overload for File.Path; `/` is a heterogeneous path-append (Path / Path.Component).
                 // swiftlint:disable:next shorthand_operator
                 result = result / File.Path.Component(stringLiteral: "\(component)")
             }
@@ -52,8 +42,6 @@ extension Tests.History.Storage {
     }
 
 }
-
-// MARK: - Configuration
 
 extension Tests.History.Storage {
     /// Whether history recording is enabled.
@@ -81,8 +69,6 @@ extension Tests.History.Storage {
     }
 }
 
-// MARK: - Append
-
 extension Tests.History.Storage {
     /// Appends a record to the history file.
     ///
@@ -105,17 +91,14 @@ extension Tests.History.Storage {
             fingerprint: record.environment.fingerprint
         )
 
-        // Ensure parent directory exists
         if let parent = filePath.parent {
             try _ensureDirectory(at: parent)
         }
 
-        // Serialize record to compact JSON line
         let json = Tests.History.Record.serialize(record)
         let bytes = json.serialize(pretty: false, as: [UInt8].self)
         let line = Swift.String(decoding: bytes, as: UTF8.self) + "\n"
 
-        // Append to file
         do throws(File.System.Write.Append.Error) {
             try File(filePath).write.append(line)
         } catch {
@@ -125,7 +108,6 @@ extension Tests.History.Storage {
             )
         }
 
-        // Prune if max records configured
         if let max = maxRecords {
             _pruneIfNeeded(at: filePath, max: max)
         }
@@ -155,7 +137,6 @@ extension Tests.History.Storage {
         let sorted = records.sorted { $0.timestamp < $1.timestamp }
         let kept = [Tests.History.Record](sorted.suffix(max))
 
-        // Rewrite the file with only the kept records
         var lines: [Swift.String] = []
         for record in kept {
             let json = Tests.History.Record.serialize(record)
@@ -166,12 +147,9 @@ extension Tests.History.Storage {
         do throws(File.System.Write.Atomic.Error) {
             try File(path).write.atomic(content)
         } catch {
-            // best-effort: history prune rewrite failure is non-fatal
         }
     }
 }
-
-// MARK: - Append (Async)
 
 extension Tests.History.Storage {
     /// Appends a record to the history file.
@@ -192,8 +170,6 @@ extension Tests.History.Storage {
         }
     }
 }
-
-// MARK: - Load
 
 extension Tests.History.Storage {
     /// Loads all history records from a JSONL file.
@@ -248,8 +224,6 @@ extension Tests.History.Storage {
     }
 }
 
-// MARK: - Load (Async)
-
 extension Tests.History.Storage {
     /// Loads all history records from a JSONL file.
     ///
@@ -261,11 +235,6 @@ extension Tests.History.Storage {
         at path: File.Path
     ) async throws(Kernel.Thread.Pool.Error) -> [Tests.History.Record] {
         let path = path
-        // See the disambiguation note in Tests.Baseline.Storage.swift: a
-        // plain closure literal is ambiguous between Thread_Pool's two
-        // `run(timeout:_:)` overloads, and explicit specialization is not
-        // permitted on this instance method. Binding the member to its
-        // exact, non-generic function type selects the matching overload.
         let run:
             (
                 Duration?, sending @escaping () -> [Tests.History.Record]
@@ -291,11 +260,6 @@ extension Tests.History.Storage {
         fingerprint: Swift.String
     ) async throws(Kernel.Thread.Pool.Error) -> [Tests.History.Record] {
         let filePath = path(root: root, testID: testID, fingerprint: fingerprint)
-        // See the disambiguation note in Tests.Baseline.Storage.swift: a
-        // plain closure literal is ambiguous between Thread_Pool's two
-        // `run(timeout:_:)` overloads, and explicit specialization is not
-        // permitted on this instance method. Binding the member to its
-        // exact, non-generic function type selects the matching overload.
         let run:
             (
                 Duration?, sending @escaping () -> [Tests.History.Record]

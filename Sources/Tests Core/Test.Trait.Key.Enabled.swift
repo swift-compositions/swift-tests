@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Key.Enabled.swift
-//  swift-tests
-//
-//  Witness key for enabled traits.
-//
-
 extension Test.Trait {
     /// Witness key for enabled/disabled state.
     public struct Enabled: Sendable {

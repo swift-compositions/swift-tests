@@ -31,8 +31,6 @@ extension Test.Environment {
     }
 }
 
-// MARK: - Compile-Time Detection
-
 extension Test.Environment {
     private static var _architecture: Swift.String {
         #if arch(arm64)

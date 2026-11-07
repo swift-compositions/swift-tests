@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Collection.Modifier+Snapshot.swift
-//  swift-tests
-//
-//  Snapshot modifier factory for macro-declared snapshot configuration.
-//
-
 import Dependency
 
 extension Test.Trait.Collection.Modifier {

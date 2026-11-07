@@ -1,10 +1,3 @@
-//
-//  Test.Plan.Entry.swift
-//  swift-tests
-//
-//  A single entry in an execution plan.
-//
-
 public import Test
 
 extension Test.Plan {

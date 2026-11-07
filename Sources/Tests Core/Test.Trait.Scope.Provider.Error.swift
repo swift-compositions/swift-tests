@@ -1,10 +1,3 @@
-//
-//  Test.Trait.Scope.Provider.Error.swift
-//  swift-tests
-//
-//  Typed error for scope provider execution.
-//
-
 extension Test.Trait.Scope.Provider {
     /// Errors thrown during scope-provided test execution.
     public enum Error: Swift.Error, Sendable {

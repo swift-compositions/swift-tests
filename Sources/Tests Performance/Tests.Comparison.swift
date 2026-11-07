@@ -1,10 +1,3 @@
-//
-//  Tests.Comparison.swift
-//  swift-tests
-//
-//  Performance comparison report between current and baseline measurements.
-//
-
 import Console
 import Formatter
 public import Sample

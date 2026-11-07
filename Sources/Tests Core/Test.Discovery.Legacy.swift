@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-tests open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-tests project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 extension Test {
     /// Protocol for legacy test content record containers.
     ///
@@ -20,7 +9,6 @@ extension Test {
     /// - Warning: This protocol is an implementation detail of the `@Test` macro.
     @_alwaysEmitConformanceMetadata
     public protocol __TestContentRecordContainer {
-        // The name is mandated by the `@Test` macro's expansion on Swift < 6.3.
         // swift-format-ignore: AlwaysUseLowerCamelCase
         nonisolated static var __testContentRecord: Test.__TestContentRecord { get }
     }

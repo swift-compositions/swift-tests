@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-tests open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-tests project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 /**
  Pending: Replace with swift-json when available.
 
@@ -32,8 +21,6 @@ extension Test.Reporter {
         }
     }
 }
-
-// MARK: - JSONSink
 
 extension Test.Reporter {
     /// A test reporter sink that outputs JSON with thread-safe event collection.
@@ -134,7 +121,6 @@ extension Test.Reporter {
                     remaining = remaining.dropFirst(written)
                 }
             } catch {
-                // Failed to write — silent failure
             }
         }
 

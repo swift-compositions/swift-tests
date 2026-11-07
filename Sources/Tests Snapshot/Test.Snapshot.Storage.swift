@@ -1,10 +1,3 @@
-//
-//  Test.Snapshot.Storage.swift
-//  swift-tests
-//
-//  Snapshot file storage using swift-file-system.
-//
-
 public import File_System
 public import Test
 
@@ -36,8 +29,6 @@ extension Test.Snapshot {
     public enum Storage {}
 }
 
-// MARK: - Path Generation
-
 extension Test.Snapshot.Storage {
     /// Computes the snapshot file path.
     ///
@@ -66,7 +57,6 @@ extension Test.Snapshot.Storage {
 
         var snapshotDir = snapshotDirectory ?? (testDir / ".snapshots")
         if let subdirectory {
-            // No `/=` overload for File.Path; `/` is a heterogeneous path-append (Path / Path.Component).
             // swiftlint:disable:next shorthand_operator
             snapshotDir = snapshotDir / subdirectory
         }
@@ -88,8 +78,6 @@ extension Test.Snapshot.Storage {
         return function
     }
 }
-
-// MARK: - Read Operations
 
 extension Test.Snapshot.Storage {
     /// Reads a reference snapshot from disk.
@@ -118,8 +106,6 @@ extension Test.Snapshot.Storage {
     }
 }
 
-// MARK: - Write Operations
-
 extension Test.Snapshot.Storage {
     /// Writes a snapshot to disk.
     ///
@@ -133,12 +119,10 @@ extension Test.Snapshot.Storage {
         bytes: [Byte],
         to path: File.Path
     ) throws(Self.Error) {
-        // Ensure parent directory exists
         if let parent = path.parent {
             try ensure(directory: parent)
         }
 
-        // Write atomically
         do throws(File.System.Write.Atomic.Error) {
             try File(path).write.atomic(contentsOf: bytes)
         } catch {
@@ -156,12 +140,10 @@ extension Test.Snapshot.Storage {
     public static func ensure(directory path: File.Path) throws(Self.Error) {
         let dir = File.Directory(path)
 
-        // If already exists, we're done
         if dir.stat.exists {
             return
         }
 
-        // Create recursively (creates parent directories too)
         do throws(File.System.Create.Directory.Error) {
             try dir.create.recursive()
         } catch {
@@ -172,8 +154,6 @@ extension Test.Snapshot.Storage {
         }
     }
 }
-
-// MARK: - Errors
 
 extension Test.Snapshot.Storage {
     /// Errors that can occur during snapshot storage operations.

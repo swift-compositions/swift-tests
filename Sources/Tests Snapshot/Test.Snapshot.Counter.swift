@@ -1,10 +1,3 @@
-//
-//  Test.Snapshot.Counter.swift
-//  swift-tests
-//
-//  Per-test counter for unnamed snapshots.
-//
-
 public import Dependency
 import Synchronization
 public import Test
@@ -82,8 +75,6 @@ extension Test.Snapshot.Counter {
     }
 }
 
-// MARK: - Counter Key
-
 extension Test.Snapshot.Counter {
     /// Dependency key for snapshot counter.
     ///
@@ -98,8 +89,6 @@ extension Test.Snapshot.Counter.Key {
     public static var testValue: Value { Value() }
 }
 
-// MARK: - Counter Key Generation
-
 extension Test.Snapshot.Counter {
     /// Generates a counter key from source location and function.
     ///
@@ -113,8 +102,6 @@ extension Test.Snapshot.Counter {
         "\(filePath)/\(function)"
     }
 }
-
-// MARK: - Scoped Counter
 
 extension Test.Snapshot {
     /// Runs an operation with a fresh counter.

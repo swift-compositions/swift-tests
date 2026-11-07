@@ -1,10 +1,3 @@
-//
-//  Test.Plan.swift
-//  swift-tests
-//
-//  Test execution plan.
-//
-
 import Buffer
 import Buffer_Linear_Bounded_Primitive
 import Buffer_Linear_Primitive
@@ -119,8 +112,6 @@ extension Test.Plan {
     }
 }
 
-// MARK: - Key Path Components
-
 extension Test.Plan {
     /// Converts a Test.ID into tree key path components.
     ///
@@ -147,8 +138,6 @@ extension Test.Plan {
         return path
     }
 }
-
-// MARK: - Filtering
 
 extension Test.Plan {
     /// Returns a new plan containing only entries matching the predicate.
@@ -183,8 +172,6 @@ extension Test.Plan {
         filter { $0.id.module == module }
     }
 }
-
-// MARK: - Sorting
 
 extension Test.Plan {
     /// Returns a new plan with entries sorted by their IDs.

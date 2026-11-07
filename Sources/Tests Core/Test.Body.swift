@@ -1,10 +1,3 @@
-//
-//  Test.Body.swift
-//  swift-tests
-//
-//  Test body wrapper.
-//
-
 public import Test
 
 extension Test {
@@ -115,8 +108,6 @@ extension Test.Body {
     }
 }
 
-// MARK: - Kind
-
 extension Test.Body {
     /// The kind of test body.
     private enum Kind: Sendable {
@@ -124,8 +115,6 @@ extension Test.Body {
         case `async`(@Sendable () async throws(Test.Body.Error) -> Void)
     }
 }
-
-// MARK: - Error
 
 extension Test.Body {
     /// Error wrapping any error thrown by user test code.

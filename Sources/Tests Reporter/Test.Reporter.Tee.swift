@@ -1,10 +1,3 @@
-//
-//  Test.Reporter.Tee.swift
-//  swift-tests
-//
-//  Reporter that forwards events to two reporters.
-//
-
 import Test
 
 extension Test.Reporter {

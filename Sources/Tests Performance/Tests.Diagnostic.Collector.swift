@@ -1,10 +1,3 @@
-//
-//  Tests.Diagnostic.Collector.swift
-//  swift-tests
-//
-//  Thread-safe collector for performance diagnostics across test suites.
-//
-
 import Synchronization
 
 extension Tests.Diagnostic {
