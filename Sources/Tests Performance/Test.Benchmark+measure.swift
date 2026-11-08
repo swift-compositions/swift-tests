@@ -1,0 +1,143 @@
+import Formatter
+import Kernel_Clock
+public import Test
+public import Time
+
+private let durationFormat = Formatter::Formatter.Duration(numeric: Formatter::Formatter.Number())
+
+extension Test.Benchmark {
+    /// Measures the execution time of a block of code with multiple iterations.
+    ///
+    /// Use this when you need stable state across iterations (e.g., the test struct's
+    /// init runs expensive setup). The `.timed()` trait creates a new test instance
+    /// per iteration, while `measure` runs all iterations within a single invocation.
+    ///
+    /// ```swift
+    /// @Test("move files benchmark")
+    /// func moveFiles() async throws {
+    ///     // Setup (done once)
+    ///     let fixture = try await FileSystemFixture.make()
+    ///     createFiles(fixture)
+    ///
+    ///     // Measured iterations (same state)
+    ///     try Test.Benchmark.measure(iterations: 3, warmup: 1, name: "move x 1000") {
+    ///         for i in 0..<1000 {
+    ///             try moveFile(i)
+    ///         }
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - iterations: Number of timed iterations to run.
+    ///   - warmup: Number of warmup iterations (not timed).
+    ///   - name: Optional name for the measurement output.
+    ///   - threshold: Optional performance threshold to enforce.
+    ///   - metric: Which metric to check against threshold.
+    ///   - body: The code block to measure.
+    /// - Throws: Rethrows any error from the body, or fails if threshold exceeded.
+    @discardableResult
+    public static func measure<E: Swift.Error>(
+        iterations: Int = 10,
+        warmup: Int = 0,
+        name: Swift.String? = nil,
+        threshold: Duration? = nil,
+        metric: Metric = .median,
+        _ body: () throws(E) -> Void
+    ) throws(E) -> Measurement {
+        for _ in 0..<warmup {
+            try body()
+        }
+
+        var durations: [Duration] = []
+        durations.reserveCapacity(iterations)
+
+        for _ in 0..<iterations {
+            let start = Clock::Clock.Continuous.now
+            try body()
+            durations.append(Clock::Clock.Continuous.now.offset - start.offset)
+        }
+
+        let measurement = Measurement(durations: durations)
+
+        let displayName = name ?? "Benchmark"
+        printPerformance(displayName, measurement)
+
+        if let threshold {
+            let actualMetric = metric.extract(from: measurement)
+            if actualMetric > threshold {
+                print(
+                    """
+                    ⚠️ Performance threshold exceeded in '\(displayName)':
+                    Expected \(metric): < \(threshold.formatted(durationFormat))
+                    Actual \(metric): \(actualMetric.formatted(durationFormat))
+                    """
+                )
+            }
+        }
+
+        return measurement
+    }
+
+    /// Async version of measure for async test bodies.
+    @discardableResult
+    public static func measure<E: Swift.Error>(
+        iterations: Int = 10,
+        warmup: Int = 0,
+        name: Swift.String? = nil,
+        threshold: Duration? = nil,
+        metric: Metric = .median,
+        _ body: () async throws(E) -> Void
+    ) async throws(E) -> Measurement {
+        for _ in 0..<warmup {
+            try await body()
+        }
+
+        var durations: [Duration] = []
+        durations.reserveCapacity(iterations)
+
+        for _ in 0..<iterations {
+            let start = Clock::Clock.Continuous.now
+            try await body()
+            durations.append(Clock::Clock.Continuous.now.offset - start.offset)
+        }
+
+        let measurement = Measurement(durations: durations)
+
+        let displayName = name ?? "Benchmark"
+        printPerformance(displayName, measurement)
+
+        if let threshold {
+            let actualMetric = metric.extract(from: measurement)
+            if actualMetric > threshold {
+                print(
+                    """
+                    ⚠️ Performance threshold exceeded in '\(displayName)':
+                    Expected \(metric): < \(threshold.formatted(durationFormat))
+                    Actual \(metric): \(actualMetric.formatted(durationFormat))
+                    """
+                )
+            }
+        }
+
+        return measurement
+    }
+
+    /// Prints a performance measurement summary.
+    @usableFromInline
+    static func printPerformance(_ name: Swift.String, _ measurement: Measurement) {
+        print(
+            """
+            ⏱️ \(name)
+               Iterations: \(measurement.durations.count)
+               Min:        \(measurement.min.formatted(durationFormat))
+               Median:     \(measurement.median.formatted(durationFormat))
+               Mean:       \(measurement.mean.formatted(durationFormat))
+               p95:        \(measurement.p95.formatted(durationFormat))
+               p99:        \(measurement.p99.formatted(durationFormat))
+               Max:        \(measurement.max.formatted(durationFormat))
+               StdDev:     \(measurement.standardDeviation.formatted(durationFormat))
+            """
+        )
+    }
+}
