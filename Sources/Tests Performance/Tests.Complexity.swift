@@ -297,12 +297,12 @@ extension Tests.Complexity {
                     effectiveExponent: 0
                 )
             let confidence: Confidence
-            if evidence.metricCV < policy.constantCVThreshold * 0.2 {
-                confidence = .high
+            confidence = if evidence.metricCV < policy.constantCVThreshold * 0.2 {
+                .high
             } else if evidence.metricCV < policy.constantCVThreshold * 0.5 {
-                confidence = .medium
+                .medium
             } else {
-                confidence = .low
+                .low
             }
             return Result(
                 evidence: evidence,
@@ -371,12 +371,12 @@ extension Tests.Complexity {
         }.map(\.complexity)
 
         var confidence: Confidence
-        if separation >= policy.highSeparationThreshold {
-            confidence = .high
+        confidence = if separation >= policy.highSeparationThreshold {
+            .high
         } else if separation >= policy.mediumSeparationThreshold {
-            confidence = .medium
+            .medium
         } else {
-            confidence = .low
+            .low
         }
 
         let tolerance = Swift.max(
