@@ -251,10 +251,10 @@ extension Test.Runner {
         }
 
         let effective: Concurrency
-        effective = if let traits, traits[Test.Trait.Serialized.self] {
-            .serial
+        if let traits, traits[Test.Trait.Serialized.self] {
+            effective = .serial
         } else {
-            concurrency
+            effective = concurrency
         }
 
         switch effective {
@@ -376,12 +376,12 @@ extension Test.Runner {
             bodyThrew = true
 
             let isRequirementFailure: Bool
-            isRequirementFailure = if let runnerError = error as? Self.Error,
+            if let runnerError = error as? Self.Error,
                 case .bodyFailed(.requirementFailed) = runnerError
             {
-                true
+                isRequirementFailure = true
             } else {
-                false
+                isRequirementFailure = false
             }
 
             if !isRequirementFailure {
@@ -430,10 +430,10 @@ extension Test.Runner {
             }
         }
 
-        testResult = if bodyThrew || hasExpectationFailures {
-            .failed
+        if bodyThrew || hasExpectationFailures {
+            testResult = .failed
         } else {
-            .passed
+            testResult = .passed
         }
 
         await sender.send(
@@ -565,10 +565,22 @@ extension Test.Runner {
     /// Each `walk` call returns a `Counters` value. These are aggregated
     /// functionally — no shared mutable state needed, even across concurrent
     /// task groups.
-    fileprivate struct Counters: Sendable {
+    private struct Counters: Sendable {
         var passed: Int = 0
         var failed: Int = 0
         var skipped: Int = 0
+
+        static func + (lhs: Self, rhs: Self) -> Self {
+            Self(
+                passed: lhs.passed + rhs.passed,
+                failed: lhs.failed + rhs.failed,
+                skipped: lhs.skipped + rhs.skipped
+            )
+        }
+
+        static func += (lhs: inout Self, rhs: Self) {
+            lhs = lhs + rhs
+        }
     }
 }
 
@@ -627,19 +639,4 @@ extension Test.Runner.Result {
 extension Test.Runner {
     /// Errors thrown during test execution.
     public typealias Error = Test.Trait.Scope.Provider.Error
-}
-
-extension Test.Runner.Counters {
-
-    static func + (lhs: Self, rhs: Self) -> Self {
-        Self(
-            passed: lhs.passed + rhs.passed,
-            failed: lhs.failed + rhs.failed,
-            skipped: lhs.skipped + rhs.skipped
-        )
-    }
-
-    static func += (lhs: inout Self, rhs: Self) {
-        lhs = lhs + rhs
-    }
 }

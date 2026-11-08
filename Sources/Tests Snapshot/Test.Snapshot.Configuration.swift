@@ -73,6 +73,11 @@ extension Test.Snapshot.Configuration {
         Self()
     }
 
+    /// Dependency key for snapshot configuration.
+    ///
+    /// Provides optional configuration for each scope.
+    public enum Key: Dependency.Key {
+    }
 
     /// Current configuration for this scope.
     public static var current: Self? {
