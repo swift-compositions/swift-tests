@@ -48,11 +48,12 @@ extension Tests.Complexity.Baseline: JSON.Serializable {
         }
 
         let bestRSquared: Double?
-        bestRSquared = if json.bestRSquared.isNull || !json.bestRSquared.isNumber {
-            nil
-        } else {
-            Double(json.bestRSquared)
-        }
+        bestRSquared =
+            if json.bestRSquared.isNull || !json.bestRSquared.isNumber {
+                nil
+            } else {
+                Double(json.bestRSquared)
+            }
 
         return Self(
             bestClass: bestClass,
