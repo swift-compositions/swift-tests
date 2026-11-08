@@ -251,10 +251,10 @@ extension Test.Runner {
         }
 
         let effective: Concurrency
-        if let traits, traits[Test.Trait.Serialized.self] {
-            effective = .serial
+        effective = if let traits, traits[Test.Trait.Serialized.self] {
+            .serial
         } else {
-            effective = concurrency
+            concurrency
         }
 
         switch effective {
@@ -376,12 +376,12 @@ extension Test.Runner {
             bodyThrew = true
 
             let isRequirementFailure: Bool
-            if let runnerError = error as? Self.Error,
+            isRequirementFailure = if let runnerError = error as? Self.Error,
                 case .bodyFailed(.requirementFailed) = runnerError
             {
-                isRequirementFailure = true
+                true
             } else {
-                isRequirementFailure = false
+                false
             }
 
             if !isRequirementFailure {
@@ -430,10 +430,10 @@ extension Test.Runner {
             }
         }
 
-        if bodyThrew || hasExpectationFailures {
-            testResult = .failed
+        testResult = if bodyThrew || hasExpectationFailures {
+            .failed
         } else {
-            testResult = .passed
+            .passed
         }
 
         await sender.send(
