@@ -219,7 +219,7 @@ public func snapshot<Value, Format: Sendable>(
 
     let actual = syncSnapshot(value())
     let mode = Test::Test.Snapshot.Configuration.resolve(recording: recording)
-    let snapshotDir = Test::Test.Snapshot.Configuration.current?.snapshotDirectory
+    let config = Test::Test.Snapshot.Configuration.current
 
     let failure = Test::Test.Snapshot.Storage.resolve(
         actual: actual,
@@ -228,7 +228,8 @@ public func snapshot<Value, Format: Sendable>(
         mode: mode,
         filePath: filePath,
         function: function,
-        snapshotDirectory: snapshotDir
+        snapshotDirectory: config?.snapshotDirectory,
+        subdirectory: config?.subdirectory
     )
 
     if let failure {
@@ -265,7 +266,7 @@ public func snapshot<Value, Format: Sendable>(
 
     let actual = await effective.capture(value())
     let mode = Test::Test.Snapshot.Configuration.resolve(recording: recording)
-    let snapshotDir = Test::Test.Snapshot.Configuration.current?.snapshotDirectory
+    let config = Test::Test.Snapshot.Configuration.current
 
     let failure = Test::Test.Snapshot.Storage.resolve(
         actual: actual,
@@ -274,7 +275,8 @@ public func snapshot<Value, Format: Sendable>(
         mode: mode,
         filePath: filePath,
         function: function,
-        snapshotDirectory: snapshotDir
+        snapshotDirectory: config?.snapshotDirectory,
+        subdirectory: config?.subdirectory
     )
 
     if let failure {
@@ -291,7 +293,11 @@ extension Test::Test.Snapshot.Inline {
     // swiftlint:disable function_parameter_count
     /// Resolves an inline snapshot against the closure-provided expected value.
     ///
-    /// Returns a failure message, or `nil` when the snapshot matches.
+    /// Each recording mode behaves as it does for a file-backed snapshot: recording a
+    /// value (`.all`, or a missing one under `.missing` and `.failed`) passes, and only a
+    /// mismatch, or a missing value under `.never`, fails.
+    ///
+    /// Returns a failure message, or `nil` when the snapshot matches or was recorded.
     static func resolve<Value>(
         actual: Swift.String,
         strategy: Test::Test.Snapshot.Strategy<Value, Swift.String>,
@@ -321,11 +327,11 @@ extension Test::Test.Snapshot.Inline {
         switch mode {
         case .all:
             register()
-            return "Recorded inline snapshot. Re-run to assert."
+            return nil
 
         case .missing where expectedValue == nil:
             register()
-            return "Recorded inline snapshot. Re-run to assert."
+            return nil
 
         case .missing, .never:
             guard let expectedValue else {
@@ -341,7 +347,7 @@ extension Test::Test.Snapshot.Inline {
         case .failed:
             guard let expectedValue else {
                 register()
-                return "Recorded inline snapshot. Re-run to assert."
+                return nil
             }
             if let diff = strategy.diffing.diff(expectedValue, actual) {
                 register()

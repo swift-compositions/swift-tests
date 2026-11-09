@@ -1,3 +1,4 @@
+import File_System
 import Testing
 import Tests_Inline_Snapshot
 import Tests_Test_Support
@@ -114,5 +115,86 @@ extension Test::Test.Snapshot.Test.Unit {
             #expect(expectations[0].isPassing)
             #expect(expectations[1].isFailing)
         }
+    }
+
+    @Test
+    func `record all passes for an inline snapshot as it does for a file-backed one`() {
+        let collector = Test::Test.Expectation.Collector()
+        Test::Test.Expectation.Collector.with(collector) {
+            snapshot(
+                as: .lines,
+                record: .all,
+                { "hello" },
+                matches: { "world" },
+                filePath: "/tmp/swift-tests-unit/SnapshotInlineAll.swift",
+                function: "inlineAll()"
+            )
+            snapshot(
+                as: .lines,
+                named: "record-all",
+                record: .all,
+                { "hello" },
+                filePath: "/tmp/swift-tests-unit/SnapshotFileAll.swift",
+                function: "fileAll()"
+            )
+        }
+        let expectations = collector.drain()
+        #expect(expectations.count == 2)
+        if expectations.count == 2 {
+            #expect(expectations[0].isPassing)
+            #expect(expectations[1].isPassing)
+        }
+    }
+
+    @Test
+    func `a missing inline snapshot is recorded and passes as a missing file-backed one does`() {
+        let collector = Test::Test.Expectation.Collector()
+        Test::Test.Expectation.Collector.with(collector) {
+            snapshot(
+                as: .lines,
+                record: .missing,
+                { "hello" },
+                filePath: "/tmp/swift-tests-unit/SnapshotInlineMissing.swift",
+                function: "inlineMissing()"
+            )
+        }
+        let expectations = collector.drain()
+        #expect(expectations.count == 1)
+        if expectations.count == 1 {
+            #expect(expectations[0].isPassing)
+        }
+    }
+
+    @Test
+    func `a non-String file-backed snapshot is stored under the configured subdirectory`() {
+        let filePath = "/tmp/swift-tests-unit/SnapshotSubdirectory.swift"
+        let subdirectory = File.Path.Component("Configured")
+        let collector = Test::Test.Expectation.Collector()
+        Test::Test.Expectation.Collector.with(collector) {
+            _ = Test::Test.Snapshot.withConfiguration(.init(recording: .all, subdirectory: subdirectory)) {
+                snapshot(
+                    as: .data,
+                    named: "bytes",
+                    { [] },
+                    filePath: filePath,
+                    function: "subdirectory()"
+                )
+            }
+        }
+        let expectations = collector.drain()
+        #expect(expectations.count == 1)
+        if expectations.count == 1 {
+            #expect(expectations[0].isPassing)
+        }
+
+        let path = Test::Test.Snapshot.Storage.path(
+            testFilePath: filePath,
+            function: "subdirectory()",
+            name: "bytes",
+            counter: 0,
+            pathExtension: "bin",
+            subdirectory: subdirectory
+        )
+        #expect(Test::Test.Snapshot.Storage.exists(at: path))
     }
 }
