@@ -15,7 +15,7 @@ extension Test.Trait.Collection.Modifier {
         Self(
             apply: { collection in
                 collection[Test.Trait.Snapshot.self] = Test.Trait.Snapshot(
-                    recording: configuration.recording
+                    configuration: configuration
                 )
             },
             provideScope: { function in

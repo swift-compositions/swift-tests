@@ -3,6 +3,7 @@ import JSON
 import Kernel_Clock
 import Standard_Library_Extensions
 public import Tests_Core
+import Tests_Snapshot
 import Tree_Keyed
 
 extension Test {
@@ -39,7 +40,9 @@ extension Test {
         public let reporter: Reporter
 
         /// Scope providers that wrap test execution.
-        public var scopeProviders: [Test.Trait.Scope.Provider] = [.timed, .timeLimit, .exclusive]
+        ///
+        /// Includes `.snapshot`, so a `.snapshots(...)` modifier takes effect under this runner.
+        public var scopeProviders: [Test.Trait.Scope.Provider] = [.timed, .timeLimit, .exclusive, .snapshot]
 
         /// Actions to execute after all tests complete but before the reporter finishes.
         ///

@@ -1,3 +1,4 @@
+import File_System
 import Testing
 import Tests_Test_Support
 
@@ -80,6 +81,34 @@ extension Test::Test.Runner.Test.Expectations {
 
         #expect(result.passed == 1)
         #expect(result.failed == 1)
+    }
+}
+
+extension Test::Test.Runner.Test.Expectations {
+
+    @Test
+    func `snapshots modifier installs its configuration under the default runner`() async {
+        var registry = Test::Test.Plan.Registry()
+        registry.add(
+            id: .stub("snapshotScope"),
+            modifiers: [
+                .snapshots(
+                    configuration: .init(recording: .all, subdirectory: File.Path.Component("Sub"))
+                )
+            ]
+        ) {
+            let current = Test::Test.Snapshot.Configuration.current
+            expect(current?.recording == .all)
+            expect(current?.subdirectory != nil)
+        }
+        let plan = registry.finalize()
+
+        let (reporter, _) = SpyReporter.make()
+        let runner = Test::Test.Runner(reporter: reporter)
+        let result = await runner.run(plan)
+
+        #expect(result.allPassed)
+        #expect(result.passed == 1)
     }
 }
 

@@ -200,6 +200,7 @@ let package = Package(
             name: "Tests Performance",
             dependencies: [
                 .target(name: "Tests Core"),
+                .target(name: "Tests Snapshot"),
                 .product(name: "Sample", package: "swift-sample"),
                 .product(name: "Time", package: "swift-time"),
                 .product(name: "Console", package: "swift-console"),

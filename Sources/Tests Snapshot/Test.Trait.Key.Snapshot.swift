@@ -1,12 +1,17 @@
 extension Test.Trait {
-    /// Witness key for snapshot recording mode.
+    /// Witness key for snapshot configuration.
     public struct Snapshot: Sendable {
-        /// The recording mode for snapshots.
-        public let recording: Test.Snapshot.Recording
+        /// The snapshot configuration the scope installs.
+        public let configuration: Test.Snapshot.Configuration
 
-        /// Creates a snapshot value.
+        /// Creates a snapshot value carrying a whole configuration.
+        public init(configuration: Test.Snapshot.Configuration) {
+            self.configuration = configuration
+        }
+
+        /// Creates a snapshot value that sets only the recording mode.
         public init(recording: Test.Snapshot.Recording) {
-            self.recording = recording
+            self.init(configuration: .init(recording: recording))
         }
     }
 }
@@ -29,5 +34,12 @@ extension Test.Trait.Collection {
                 self[Test.Trait.Snapshot.self] = nil
             }
         }
+    }
+}
+
+extension Test.Trait.Snapshot {
+    /// The recording mode for snapshots.
+    public var recording: Test.Snapshot.Recording {
+        configuration.recording
     }
 }

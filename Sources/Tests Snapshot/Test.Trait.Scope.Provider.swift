@@ -20,9 +20,8 @@ extension Test.Trait.Scope.Provider {
         guard let snapshot = traits[Test.Trait.Snapshot.self] else {
             preconditionFailure("the snapshot scope runs only for entries carrying the trait")
         }
-        let config = Test.Snapshot.Configuration(recording: snapshot.recording)
         try await Dependency.Scope.with(
-            { $0[Test.Snapshot.Configuration.Key.self] = config },
+            { $0[Test.Snapshot.Configuration.Key.self] = snapshot.configuration },
             operation: operation
         )
     }
