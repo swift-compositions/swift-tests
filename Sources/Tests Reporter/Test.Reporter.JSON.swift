@@ -1,10 +1,4 @@
-/**
- Pending: Replace with swift-json when available.
-
- Current implementation is intentionally minimal and does not fully
- implement string escaping semantics.
- */
-
+import JSON
 import Kernel
 public import Path
 import Synchronization
@@ -25,7 +19,7 @@ extension Test.Reporter {
 extension Test.Reporter {
     /// A test reporter sink that outputs JSON with thread-safe event collection.
     ///
-    /// Produces JSON without Foundation by manually constructing UTF-8 bytes.
+    /// Serializes with swift-json, as the structured reporter does, so strings are escaped.
     ///
     /// ## Safety Invariant
     ///
@@ -53,54 +47,13 @@ extension Test.Reporter {
 
         func finish() async {
             let events = _events.withLock { $0 }
-            let json = self.json(from: events)
-            let bytes = Array(json.utf8)
+            let bytes = Array((Test.Reporter.jsonDocument(for: events).serialize(pretty: true) + "\n").utf8)
 
             if let path = outputPath {
                 write(to: path, bytes: bytes)
             } else {
                 write(stdout: bytes)
             }
-        }
-
-        private func json(from events: [Test.Event]) -> Swift.String {
-            var json = "{\n"
-            json += "  \"events\": [\n"
-
-            for (index, event) in events.enumerated() {
-                json += "    "
-                json += self.json(from: event)
-                if index < events.count - 1 {
-                    json += ","
-                }
-                json += "\n"
-            }
-
-            json += "  ]\n"
-            json += "}\n"
-
-            return json
-        }
-
-        private func json(from event: Test.Event) -> Swift.String {
-            var json = "{"
-            json += "\"kind\": \"\(event.kind.underlying)\""
-
-            if let id = event.id {
-                json += ", \"test_id\": \"\(id.fullyQualifiedName)\""
-            }
-
-            if let result = event.result {
-                json += ", \"result\": \"\(result)\""
-            }
-
-            if let duration = event.elapsed {
-                let nanoseconds = duration.components.attoseconds / 1_000_000_000
-                json += ", \"elapsed_ns\": \(nanoseconds)"
-            }
-
-            json += "}"
-            return json
         }
 
         private func write(to path: Swift.String, bytes: [UInt8]) {
@@ -127,5 +80,34 @@ extension Test.Reporter {
         private func write(stdout bytes: [UInt8]) {
             print(Swift.String(decoding: bytes, as: UTF8.self), terminator: "")
         }
+    }
+}
+
+extension Test.Reporter {
+    /// The document the JSON reporter writes: `{"events": [...]}`, one object per event.
+    static func jsonDocument(for events: [Test.Event]) -> JSON {
+        .object([("events", .array(events.map { jsonRecord(for: $0) }))])
+    }
+
+    static func jsonRecord(for event: Test.Event) -> JSON {
+        var fields: [(Swift.String, JSON)] = [("kind", .string(event.kind.underlying))]
+
+        if let id = event.id {
+            fields.append(("test_id", .string(id.fullyQualifiedName)))
+        }
+
+        if let result = event.result {
+            fields.append(("result", .string("\(result)")))
+        }
+
+        if let duration = event.elapsed {
+            let components = duration.components
+            let nanoseconds =
+                Swift.Int(components.seconds) * 1_000_000_000
+                + Swift.Int(components.attoseconds / 1_000_000_000)
+            fields.append(("elapsed_ns", .number(nanoseconds)))
+        }
+
+        return .object(fields)
     }
 }
