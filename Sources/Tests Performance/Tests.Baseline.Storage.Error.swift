@@ -1,4 +1,4 @@
-public import File_System_Core
+public import File_System
 
 extension Tests.Baseline.Storage {
     /// Errors that can occur during baseline storage operations.

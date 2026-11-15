@@ -90,6 +90,7 @@ let package = Package(
         .package(url: "https://github.com/swift-compositions/swift-io-kernel.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-json.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-loader.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-standard-library-extensions.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-issue-reporting.git", branch: "main"),
         .package(
             url: "https://github.com/swift-atoms/swift-sample.git",
@@ -145,6 +146,7 @@ let package = Package(
                 .product(name: "Set Ordered", package: "swift-set-ordered"),
                 .product(name: "Tree Keyed", package: "swift-tree-keyed"),
                 .product(name: "Hash Indexed Primitive", package: "swift-hash-table"),
+                .product(name: "Hash Table Primitive", package: "swift-hash-table"),
                 .product(
                     name: "Ownership Shared Primitive",
                     package: "swift-ownership-shared"
@@ -220,6 +222,7 @@ let package = Package(
                 .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Formatter", package: "swift-formatter"),
                 .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
             ]
         ),
 
