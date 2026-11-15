@@ -90,6 +90,7 @@ let package = Package(
         .package(url: "https://github.com/swift-compositions/swift-io-kernel.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-json.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-loader.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-issue-reporting.git", branch: "main"),
         .package(
             url: "https://github.com/swift-atoms/swift-sample.git",
             branch: "main"
@@ -138,6 +139,7 @@ let package = Package(
                 .product(name: "Ownership", package: "swift-ownership"),
                 .product(name: "Dependency", package: "swift-dependency"),
                 .product(name: "Loader", package: "swift-loader"),
+                .product(name: "Issue Reporting", package: "swift-issue-reporting"),
                 .product(name: "Witnesses", package: "swift-witnesses"),
                 .product(name: "Set", package: "swift-set"),
                 .product(name: "Set Ordered", package: "swift-set-ordered"),
@@ -254,6 +256,7 @@ let package = Package(
             name: "Tests Apple Testing Bridge",
             dependencies: [
                 .target(name: "Tests Snapshot"),
+                .product(name: "Issue Reporting Apple Testing", package: "swift-issue-reporting"),
                 .product(name: "Dependency", package: "swift-dependency"),
             ]
         ),

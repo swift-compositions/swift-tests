@@ -11,6 +11,13 @@ struct TestExpectTests {
 extension TestExpectTests.Unit {
 
     @Test
+    func `a failing expect without a collector is recorded in Swift Testing`() {
+        withKnownIssue {
+            expect(false)
+        }
+    }
+
+    @Test
     func `expect registers with collector when present`() {
         let collector = Test::Test.Expectation.Collector()
         Test::Test.Expectation.Collector.with(collector) {
