@@ -91,7 +91,11 @@ let package = Package(
         .package(url: "https://github.com/swift-compositions/swift-json.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-loader.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-standard-library-extensions.git", branch: "main"),
-        .package(url: "https://github.com/swift-compositions/swift-issue-reporting.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-compositions/swift-issue-reporting.git",
+            branch: "main",
+            traits: ["AppleTesting"]
+        ),
         .package(
             url: "https://github.com/swift-atoms/swift-sample.git",
             branch: "main"
